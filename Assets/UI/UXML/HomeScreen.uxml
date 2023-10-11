@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS/Common.uss?fileID=7433441132597879392&amp;guid=df8a138bff3c4344098f6e68c074f796&amp;type=3#Common" />
+    <Style src="project://database/Assets/UI/USS/HomeScreen.uss?fileID=7433441132597879392&amp;guid=fc705ff02f66d9843bc4e8d07da3ba7a&amp;type=3#HomeScreen" />
+    <ui:VisualElement name="home__panel" style="opacity: 1; position: absolute; width: 100%; height: 100%; align-items: center; justify-content: flex-end; left: 0; top: 0; -unity-background-image-tint-color: rgb(255, 255, 255); -unity-text-outline-color: rgb(255, 0, 0); -unity-text-outline-width: 0; background-image: none; -unity-background-scale-mode: scale-and-crop;">
+        <ui:VisualElement name="home-title__graphic" class="title__graphic" style="transition-property: opacity; transition-duration: 5s; top: -50%; background-image: none;">
+            <ui:VisualElement name="home-title__graphic--default" class="title__graphic" style="position: absolute; top: -10px; background-image: url(&apos;project://database/Assets/Art/Icons/Logo.png?fileID=21300000&amp;guid=ca35d0415a708d148aa43818d778e0c9&amp;type=3#Logo&apos;); -unity-font: url(&apos;project://database/Assets/Art/Fonts/Dimitri/DIMIS___.TTF?fileID=12800000&amp;guid=3af376e6be88f314fa0e504bd87e4806&amp;type=3#DIMIS___&apos;);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="home-title__subtitle" style="background-image: url(&apos;project://database/Assets/Art/Icons/Subtitle.png?fileID=21300000&amp;guid=a325e13b61f673d418b94cbb6e2a5377&amp;type=3#Subtitle&apos;); width: 422px; height: 82px; top: -35%;" />
+    </ui:VisualElement>
+</ui:UXML>
