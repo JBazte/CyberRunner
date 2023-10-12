@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour {
         m_anim = GetComponent<Animator>();
         m_side = SIDE.Middle;
         xPos = 0;
-        xValue = 2;
+        xValue = 3.0f;
         m_initHeight = m_player.height;
         m_colCenterY = m_player.center.y;
         isJumping = false;
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (moveDown) {
             // TODO: check animation duration
-            slideTimer = 0.2f;
+            slideTimer = 0.8f;
             transitionYPos -= 10f;
             m_player.center = new Vector3(0, m_colCenterY / 2, 0);
             m_player.height = m_initHeight / 2f;
