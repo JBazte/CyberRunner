@@ -5,7 +5,9 @@ using UnityEngine;
 public class WorldGenerator : MonoBehaviour
 {
     public GameObject Tile1;
-   
+    public GameObject Tile2;
+
+
     public GameObject StartTile;
 
     private float Index = 0;
@@ -32,8 +34,8 @@ public class WorldGenerator : MonoBehaviour
             }
             else if (RandomInt1 == 0)
             {
-                GameObject TempTile1 = Instantiate(Tile1, transform);
-                TempTile1.transform.position = new Vector3(0, 0, 105);
+                GameObject TempTile2 = Instantiate(Tile2, transform);
+                TempTile2.transform.position = new Vector3(0, 0, 105);
             }
 
             Index = Index - 100.0f;

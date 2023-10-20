@@ -472,6 +472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tile1: {fileID: 4944664883414536695, guid: 1c078fc045844a240abbde480493ff10, type: 3}
+  Tile2: {fileID: 4544125126975241371, guid: de0d0ca903b093443ab202324a077816, type: 3}
   StartTile: {fileID: 71931606487738385, guid: 6dadd0d8fcf29c84db0881f7d7ed53f8, type: 3}
 --- !u!1 &665911857
 GameObject:
