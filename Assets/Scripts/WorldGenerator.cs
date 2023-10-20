@@ -14,16 +14,7 @@ public class WorldGenerator : MonoBehaviour
     {
         GameObject StartPlane1 = Instantiate(StartTile, transform);
         StartPlane1.transform.position = new Vector3(0, 0, 15);
-        GameObject StartPlane2 = Instantiate(StartTile, transform);
-        StartPlane2.transform.position = new Vector3(0, 0, 30);
-        GameObject StartPlane3 = Instantiate(StartTile, transform);
-        StartPlane3.transform.position = new Vector3(0, 0, 45);
-        GameObject StartPlane4 = Instantiate(StartTile, transform);
-        StartPlane4.transform.position = new Vector3(0, 0, 60);
-        GameObject StartPlane5 = Instantiate(StartTile, transform);
-        StartPlane5.transform.position = new Vector3(0, 0, 75);
-        GameObject StartPlane6 = Instantiate(StartTile, transform);
-        StartPlane6.transform.position = new Vector3(0, 0, 90);
+        
     }
 
     private void Update()
@@ -45,7 +36,7 @@ public class WorldGenerator : MonoBehaviour
                 TempTile1.transform.position = new Vector3(0, 0, 105);
             }
 
-            Index = Index - 15.0f;
+            Index = Index - 100.0f;
         }
 
 
