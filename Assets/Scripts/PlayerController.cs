@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum SIDE { Left, Middle, Right }
 
@@ -20,7 +21,7 @@ public class PlayerController : MonoBehaviour {
     private float xPos, xValue;
     private Animator m_anim;
     [SerializeField]
-    private float jumpForce = 7f;
+    private float jumpForce;
     private float m_initHeight, m_colCenterY;
 
     void Start() {
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour {
         moveUp = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || InputManager.Instance.SwipeUp;
         moveDown = Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || InputManager.Instance.SwipeDown;
 
-        if (moveLeft && !isSliding) {
+        if (moveLeft) {
             if (m_side == SIDE.Middle) {
                 xPos = -xValue;
                 m_side = SIDE.Left;
@@ -54,7 +55,7 @@ public class PlayerController : MonoBehaviour {
                 // TODO: Enable player instant death on next bump 
                 //m_anim.Play("bumpLeft");
             }
-        } else if (moveRight && !isSliding) {
+        } else if (moveRight) {
             if (m_side == SIDE.Middle) {
                 xPos = xValue;
                 m_side = SIDE.Right;
@@ -92,7 +93,7 @@ public class PlayerController : MonoBehaviour {
                 isJumping = true;
             }
         } else {
-            transitionYPos -= jumpForce * 2 * Time.deltaTime;
+            transitionYPos -= jumpForce * 2f * Time.deltaTime;
             if (m_player.velocity.y < -0.1f) {
                 //m_anim.Play("isFalling");
             }
