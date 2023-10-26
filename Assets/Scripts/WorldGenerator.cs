@@ -20,13 +20,13 @@ public class WorldGenerator : MonoBehaviour
 
     private void Update() 
     {
-        for (int i = 0; i <= 6; i++)
+        for (int i = 0; i < Tiles.Length; i++)
         {
             Tiles[i].transform.position += new Vector3(0, 0, -worldVelocity * Time.deltaTime);
         }
         gameObject.transform.position += new Vector3(0, 0, -worldVelocity * Time.deltaTime);
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < Tiles.Length; i++)
         {
             if (Tiles[i].active && Tiles[i].transform.position.z <= -100)
             {
@@ -36,7 +36,7 @@ public class WorldGenerator : MonoBehaviour
 
         if (transform.position.z <= Index) 
         {
-            int RandomInt1 = Random.Range(0, 6);
+            int RandomInt1 = Random.Range(0, Tiles.Length);
 
             if (Tiles[RandomInt1].active && Tiles[RandomInt1].transform.position.z <= -30)
             {
