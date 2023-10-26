@@ -14,8 +14,11 @@ public class WorldGenerator : MonoBehaviour
     {
         GameObject StartPlane1 = Instantiate(StartTile, transform);
         StartPlane1.transform.position = new Vector3(0, 0, 41);
-
-        
+        Tiles = GameObject.FindGameObjectsWithTag("Module");
+        foreach (GameObject tile in Tiles){
+            tile.SetActive(false);
+        }
+        Debug.Log(Tiles.Length);
     }
 
     private void Update() 
