@@ -13,7 +13,7 @@ public class WorldGenerator : MonoBehaviour
     private void Start()
     {
         GameObject StartPlane1 = Instantiate(StartTile, transform);
-        StartPlane1.transform.position = new Vector3(0, 0, 15);
+        StartPlane1.transform.position = new Vector3(0, 0, 41);
 
         
     }
@@ -28,7 +28,7 @@ public class WorldGenerator : MonoBehaviour
 
         for (int i = 0; i < Tiles.Length; i++)
         {
-            if (Tiles[i].active && Tiles[i].transform.position.z <= -100)
+            if (Tiles[i].active && Tiles[i].transform.position.z <= -80)
             {
                 Tiles[i].SetActive(false);
             }
@@ -40,12 +40,12 @@ public class WorldGenerator : MonoBehaviour
 
             if (Tiles[RandomInt1].active && Tiles[RandomInt1].transform.position.z <= -30)
             {
-                Tiles[RandomInt1].transform.position = new Vector3(0, 0, 105);
+                Tiles[RandomInt1].transform.position = new Vector3(0, 0, 139);
             }
             else if (!Tiles[RandomInt1].active)
             {
                 Tiles[RandomInt1].SetActive(true);
-                Tiles[RandomInt1].transform.position = new Vector3(0, 0, 105);
+                Tiles[RandomInt1].transform.position = new Vector3(0, 0, 139);
             }
             else
             {
@@ -53,12 +53,12 @@ public class WorldGenerator : MonoBehaviour
 
                 if (Tiles[RandomInt1].active && Tiles[RandomInt1].transform.position.z <= -30)
                 {
-                    Tiles[RandomInt1].transform.position = new Vector3(0, 0, 105);
+                    Tiles[RandomInt1].transform.position = new Vector3(0, 0, 139);
                 }
                 else if (!Tiles[RandomInt1].active)
                 {
                     Tiles[RandomInt1].SetActive(true);
-                    Tiles[RandomInt1].transform.position = new Vector3(0, 0, 105);
+                    Tiles[RandomInt1].transform.position = new Vector3(0, 0, 139);
                 }
 
             }      
