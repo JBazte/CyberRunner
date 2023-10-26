@@ -125,7 +125,7 @@ MonoBehaviour:
   m_side: 1
   forwardSpeed: 0
   dodgeSpeed: 5
-  jumpForce: 8
+  jumpForce: 12
 --- !u!143 &7727583532351852941
 CharacterController:
   m_ObjectHideFlags: 0
