@@ -940,10 +940,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8039245739943830426, guid: a67e80f2de9a3144cbc0bd0bbfc89b7f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1950643367}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a67e80f2de9a3144cbc0bd0bbfc89b7f, type: 3}
 --- !u!1 &1647950488
 GameObject:
@@ -1235,28 +1232,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9efdf590b2530d941899a5370fbd0052, type: 3}
---- !u!1 &1950643359 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8039245739943830426, guid: a67e80f2de9a3144cbc0bd0bbfc89b7f, type: 3}
-  m_PrefabInstance: {fileID: 1611423036}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1950643367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1950643359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d0219188974d6148a0a96eec84d834a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1950643359}
-  distancia: 2
-  distanciaEliminacion: 10
-  enemyTag: Enemy
-  "esferaAcompa\xF1ante": {fileID: 7793717618629759713, guid: 781ceca6ced193b4597a30ddd5318f48, type: 3}
 --- !u!1001 &2021043204
 PrefabInstance:
   m_ObjectHideFlags: 0
