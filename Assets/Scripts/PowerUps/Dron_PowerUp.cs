@@ -12,14 +12,11 @@ public class Dron : Powerup
     [SerializeField] public GameObject dronObject;
     private CharacterController playerController;
 
-    public Dron(double interval) : base(interval)
-    {
-    }
-
     void Start()
     {
         playerController = player.GetComponent<CharacterController>();
         CrearDron();
+        StartCountdown(5f); 
     }
 
     void Update()
@@ -49,7 +46,7 @@ public class Dron : Powerup
         {
             float distance = Vector3.Distance(playerController.transform.position, enemy.transform.position);
 
-            Debug.Log("Distancia a enemigo: " + distance);
+            //Debug.Log("Distancia a enemigo: " + distance);
 
             if (distance < distanciaEliminacion)
             {
@@ -58,5 +55,24 @@ public class Dron : Powerup
             }
         }
     }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PowerUp")) //Hay que añadir este tag
+        {
+            enabled = true;
+        }
+    }
+
+    protected override void CountdownFinished()
+    {
+        base.CountdownFinished(); // Llama al método de la clase base para desactivar el script
+        if (dronObject != null)
+        {
+            Destroy(dronObject); // Destruye el objeto "dron"
+        }
+        Debug.Log("Cuenta atrás finalizada y dron destruido.");
+    }
 }
+
 
