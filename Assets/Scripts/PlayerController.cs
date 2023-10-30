@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float jumpForce;
     private float m_initHeight, m_colCenterY;
+    private bool  m_invulnerability;
 
     void Start() {
         m_player = GetComponent<CharacterController>();
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour {
         m_colCenterY = m_player.center.y;
         isJumping = false;
         transform.position = Vector3.zero;
+        m_invulnerability = false;
     }
 
     void Update() {
