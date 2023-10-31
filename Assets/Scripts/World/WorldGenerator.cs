@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldGenerator : MonoBehaviour 
+public class WorldGenerator : TemporalSingleton<WorldGenerator> 
 {
     public GameObject StartTile;
     public GameObject[] Tiles;
-    public float worldVelocity;
     private float Index = 0;
-
 
     private void Start()
     {
@@ -25,9 +23,9 @@ public class WorldGenerator : MonoBehaviour
     {
         for (int i = 0; i < Tiles.Length; i++)
         {
-            Tiles[i].transform.position += new Vector3(0, 0, -worldVelocity * Time.deltaTime);
+            Tiles[i].transform.position += new Vector3(0, 0, -SpeedManager.Instance.getRunSpeed() * Time.deltaTime);
         }
-        gameObject.transform.position += new Vector3(0, 0, -worldVelocity * Time.deltaTime);
+        gameObject.transform.position += new Vector3(0, 0, -SpeedManager.Instance.getRunSpeed() * Time.deltaTime);
 
         for (int i = 0; i < Tiles.Length; i++)
         {
