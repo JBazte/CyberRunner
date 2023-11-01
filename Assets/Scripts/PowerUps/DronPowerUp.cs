@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dron : Powerup
+public class DronPowerUp : Powerup
 {
     public GameObject player;
     public float distancia = 2.0f;
@@ -14,9 +14,7 @@ public class Dron : Powerup
 
     void Start()
     {
-        playerController = player.GetComponent<CharacterController>();
-        CrearDron();
-        StartCountdown(5f); 
+       
     }
 
     void Update()
@@ -72,6 +70,18 @@ public class Dron : Powerup
             Destroy(dronObject); // Destruye el objeto "dron"
         }
         Debug.Log("Cuenta atrás finalizada y dron destruido.");
+    }
+
+    public override void ActivatePowerUp()
+    {
+        playerController = player.GetComponent<CharacterController>();
+        CrearDron();
+        StartCountdown(5f);
+    }
+
+    public override void DeactivatePowerUp()
+    {
+        throw new System.NotImplementedException();
     }
 }
 

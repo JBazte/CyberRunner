@@ -6,7 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum SIDE { Left, Middle, Right }
+public enum SIDE { Left, Middle, Right, LeftWall, RightWall }
 
 public class PlayerController : MonoBehaviour {
     private CharacterController m_player;
@@ -120,6 +120,18 @@ public class PlayerController : MonoBehaviour {
             //m_anim.CrossFadeInFixedTime("isSliding", 0.1f);
             isSliding = true;
             isJumping = false;
+        }
+    }
+
+    public float jumpForceManager
+    {
+        get
+        {
+            return this.jumpForce;
+        }
+        set
+        {
+            jumpForce = value;
         }
     }
 }

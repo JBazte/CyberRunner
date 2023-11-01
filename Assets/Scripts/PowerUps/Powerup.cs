@@ -4,15 +4,23 @@ using UnityEngine;
 
 public abstract class Powerup : MonoBehaviour
 {
-    protected float countdownTimer;
+    protected float timerDuration;
+    protected float timerElapsed;
     protected bool isCountingDown = false;
-    protected MonoBehaviour powerUpScript;
+
+    public abstract void ActivatePowerUp();
+    public abstract void DeactivatePowerUp();
 
     // Método para iniciar una cuenta atrás con un temporizador
     public void StartCountdown(float seconds)
     {
-        countdownTimer = seconds;
-        isCountingDown = true;
+        if (!isCountingDown)
+        {
+            timerDuration = seconds;
+            isCountingDown = true;
+            timerElapsed = 0;
+            ActivatePowerUp();
+        }
     }
 
     // Método para detectar una colisión OnTrigger
@@ -20,13 +28,14 @@ public abstract class Powerup : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("Tiempo: "+timerDuration.ToString()); //Debug
+
         if (isCountingDown)
         {
-            countdownTimer -= Time.deltaTime;
-            if (countdownTimer <= 0)
+            timerElapsed += Time.deltaTime;
+            if (timerElapsed >= timerDuration)
             {
                 CountdownFinished();
-                isCountingDown = false;
             }
         }
     }
@@ -34,6 +43,10 @@ public abstract class Powerup : MonoBehaviour
     // Método llamado cuando la cuenta atrás termina
     protected virtual void CountdownFinished()
     {
-        this.enabled = false;
+        if (isCountingDown)
+        {
+            DeactivatePowerUp();
+            isCountingDown = false;
+        }
     }
 }
