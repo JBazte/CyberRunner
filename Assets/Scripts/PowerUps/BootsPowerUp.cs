@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BootsPowerUp : Powerup
 {
-    PlayerController playerController;
+    PlayerController playerController = new PlayerController();
     // Start is called before the first frame update
     void Start()
     {
-        
+        ActivatePowerUp();
     }
 
     // Update is called once per frame
@@ -27,10 +27,11 @@ public class BootsPowerUp : Powerup
 
     public override void ActivatePowerUp()
     {
-        throw new System.NotImplementedException();
+        playerController.JumpForce = 24.0f;
     }
 
-    public override void DectivatePowerDown()
+
+    public override void DeactivatePowerUp()
     {
         throw new System.NotImplementedException();
     }

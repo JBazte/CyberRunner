@@ -19,11 +19,24 @@ public class PlayerController : MonoBehaviour {
     private float dodgeSpeed;
     private float transitionXPos, transitionYPos;
     private float xPos, xValue;
+    private float yPos, yValue;
     private Animator m_anim;
     [SerializeField]
     private float jumpForce;
     private float m_initHeight, m_colCenterY;
     private bool  m_invulnerability;
+
+    public float JumpForce
+    {
+        get
+        {
+            return this.jumpForce;
+        }
+        set
+        {
+            jumpForce = value;
+        }
+    }
 
     void Start() {
         m_player = GetComponent<CharacterController>();
@@ -31,6 +44,8 @@ public class PlayerController : MonoBehaviour {
         m_side = SIDE.Middle;
         xPos = 0;
         xValue = 3.0f;
+        yPos = 0;
+        yValue = 5.5f;
         m_initHeight = m_player.height;
         m_colCenterY = m_player.center.y;
         isJumping = false;
@@ -53,6 +68,13 @@ public class PlayerController : MonoBehaviour {
                 xPos = 0;
                 m_side = SIDE.Middle;
                 //m_anim.Play("moveLeft");
+            } else if (m_side == SIDE.Left){
+                yPos = yValue;
+                m_side = SIDE.LeftWall;
+            } else if (m_side == SIDE.RightWall){
+                xPos = xValue;
+                yPos = 0;
+                m_side = SIDE.Right;
             } else {
                 // TODO: Enable player instant death on next bump 
                 //m_anim.Play("bumpLeft");
@@ -66,6 +88,13 @@ public class PlayerController : MonoBehaviour {
                 xPos = 0;
                 m_side = SIDE.Middle;
                 //m_anim.Play("moveRight");
+            } else if (m_side == SIDE.Right){
+                yPos = yValue;
+                m_side = SIDE.RightWall;
+            } else if (m_side == SIDE.LeftWall){
+                xPos = -xValue;
+                yPos = 0;
+                m_side = SIDE.Left;
             } else {
                 // TODO: Enable player instant death on next bump 
                 //m_anim.Play("bumpRight");
@@ -120,18 +149,6 @@ public class PlayerController : MonoBehaviour {
             //m_anim.CrossFadeInFixedTime("isSliding", 0.1f);
             isSliding = true;
             isJumping = false;
-        }
-    }
-
-    public float jumpForceManager
-    {
-        get
-        {
-            return this.jumpForce;
-        }
-        set
-        {
-            jumpForce = value;
         }
     }
 }

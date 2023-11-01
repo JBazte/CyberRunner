@@ -14,7 +14,7 @@ public class DronPowerUp : Powerup
 
     void Start()
     {
-       
+        ActivatePowerUp();
     }
 
     void Update()
@@ -31,9 +31,7 @@ public class DronPowerUp : Powerup
 
     void CrearDron()
     {
-        Vector3 playerPosition = playerController.transform.position;
-        Vector3 startPosition = playerPosition + new Vector3(0, distancia, 0);
-        dronObject = Instantiate(dronObject, startPosition, Quaternion.identity);
+        dronObject.SetActive(true);
     }
 
     void DetectarYEliminarEnemigosCercanos()
@@ -62,16 +60,6 @@ public class DronPowerUp : Powerup
         }
     }
 
-    protected override void CountdownFinished()
-    {
-        base.CountdownFinished(); // Llama al método de la clase base para desactivar el script
-        if (dronObject != null)
-        {
-            Destroy(dronObject); // Destruye el objeto "dron"
-        }
-        Debug.Log("Cuenta atrás finalizada y dron destruido.");
-    }
-
     public override void ActivatePowerUp()
     {
         playerController = player.GetComponent<CharacterController>();
@@ -81,7 +69,7 @@ public class DronPowerUp : Powerup
 
     public override void DeactivatePowerUp()
     {
-        throw new System.NotImplementedException();
+        Destroy(dronObject);
     }
 }
 
