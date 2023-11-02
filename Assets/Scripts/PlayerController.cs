@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour {
     private float m_initHeight, m_colCenterY;
     private bool  m_invulnerability;
 
+    private bool isOnWall = false;  // Para rastrear si el jugador está en una pared
+    private Vector3 originalPosition;  // Para rastrear la posición original del jugador
+
     public float JumpForce
     {
         get
@@ -51,6 +54,9 @@ public class PlayerController : MonoBehaviour {
         isJumping = false;
         transform.position = Vector3.zero;
         m_invulnerability = false;
+
+        //TEST
+        originalPosition = transform.position;
     }
 
     void Update() {
@@ -59,44 +65,72 @@ public class PlayerController : MonoBehaviour {
         moveUp = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || InputManager.Instance.SwipeUp;
         moveDown = Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || InputManager.Instance.SwipeDown;
 
-        if (moveLeft) {
-            if (m_side == SIDE.Middle) {
+        if (moveLeft)
+        {
+            if (m_side == SIDE.Middle)
+            {
                 xPos = -xValue;
                 m_side = SIDE.Left;
                 //m_anim.Play("moveLeft");
-            } else if (m_side == SIDE.Right) {
+            }
+            else if (m_side == SIDE.Right)
+            {
                 xPos = 0;
                 m_side = SIDE.Middle;
                 //m_anim.Play("moveLeft");
-            } else if (m_side == SIDE.Left){
+            }
+            else if (m_side == SIDE.Left)
+            {
                 yPos = yValue;
                 m_side = SIDE.LeftWall;
-            } else if (m_side == SIDE.RightWall){
+                // Aquí actualizamos la posición en el eje Y
+                transitionYPos = yPos;
+            }
+            else if (m_side == SIDE.RightWall)
+            {
                 xPos = xValue;
                 yPos = 0;
                 m_side = SIDE.Right;
-            } else {
+                // Aquí también actualizamos la posición en el eje Y
+                transitionYPos = yPos;
+            }
+            else
+            {
                 // TODO: Enable player instant death on next bump 
                 //m_anim.Play("bumpLeft");
             }
-        } else if (moveRight) {
-            if (m_side == SIDE.Middle) {
+        }
+        else if (moveRight)
+        {
+            if (m_side == SIDE.Middle)
+            {
                 xPos = xValue;
                 m_side = SIDE.Right;
                 //m_anim.Play("moveRight");
-            } else if (m_side == SIDE.Left) {
+            }
+            else if (m_side == SIDE.Left)
+            {
                 xPos = 0;
                 m_side = SIDE.Middle;
                 //m_anim.Play("moveRight");
-            } else if (m_side == SIDE.Right){
-                print("pared derecha");
+            }
+            else if (m_side == SIDE.Right)
+            {
                 yPos = yValue;
                 m_side = SIDE.RightWall;
-            } else if (m_side == SIDE.LeftWall){
+                // Aquí actualizamos la posición en el eje Y
+                transitionYPos = yPos;
+            }
+            else if (m_side == SIDE.LeftWall)
+            {
                 xPos = -xValue;
                 yPos = 0;
                 m_side = SIDE.Left;
-            } else {
+                // Aquí también actualizamos la posición en el eje Y
+                transitionYPos = yPos;
+            }
+            else
+            {
                 // TODO: Enable player instant death on next bump 
                 //m_anim.Play("bumpRight");
             }
@@ -107,6 +141,30 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (m_side == SIDE.LeftWall || m_side == SIDE.RightWall)
+        {
+            if (!isOnWall)
+            {
+                // El jugador acaba de entrar en la pared, ajusta su posición en Y a 5.5
+                transform.position = new Vector3(transform.position.x, 5.5f, transform.position.z);
+                isOnWall = true;
+            }
+        }
+        else
+        {
+            if (isOnWall)
+            {
+                // El jugador ha dejado la pared, restaura su posición original en Y
+                transform.position = new Vector3(transform.position.x, originalPosition.y, transform.position.z);
+                isOnWall = false;
+            }
+
+            // Aquí puedes controlar manualmente la caída del jugador si no está en la pared
+            // Por ejemplo, puedes disminuir gradualmente la posición en Y para simular la caída.
+            // Asegúrate de que la lógica sea lo que necesitas en este caso.
+        }
+
+
         transitionXPos = Mathf.Lerp(transitionXPos, xPos, dodgeSpeed * Time.fixedDeltaTime);
         Vector3 moveVector = new Vector3(transitionXPos - transform.position.x, transitionYPos * Time.fixedDeltaTime, forwardSpeed * Time.fixedDeltaTime);
         m_player.Move(moveVector);
