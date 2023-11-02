@@ -14,7 +14,7 @@ public class DronPowerUp : Powerup
 
     void Start()
     {
-        ActivatePowerUp();
+        //ActivatePowerUp();
     }
 
     void Update()
