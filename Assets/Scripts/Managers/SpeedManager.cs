@@ -19,18 +19,19 @@ public class SpeedManager : TemporalSingleton<SpeedManager>
 
     private void FixedUpdate()
     {
-        if (m_runSpeed <= m_maxSpeed && GameManager.Instance.getRunActive())
-        {
-            m_runSpeed += m_acceleration * Time.fixedDeltaTime;
-            Debug.Log("SPEED ------->    " + m_runSpeed);
-        }
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (m_runSpeed <= m_maxSpeed && GameManager.Instance.GetRunActive())
+        {
+            m_runSpeed += m_acceleration * Time.deltaTime;
+            Debug.Log("SPEED ------->    " + m_runSpeed);
+        }
     }
 
-    public float getRunSpeed() { return m_runSpeed; }
-    public void setRunSpeed(float runSpeed) { m_runSpeed = runSpeed; }
+    public float GetRunSpeed() { return m_runSpeed; }
+    public void SetRunSpeed(float runSpeed) { m_runSpeed = runSpeed; }
 }

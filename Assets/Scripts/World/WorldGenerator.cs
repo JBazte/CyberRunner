@@ -5,8 +5,8 @@ using UnityEngine;
 public class WorldGenerator : TemporalSingleton<WorldGenerator> 
 {
     public GameObject StartTile;
-    public GameObject[] Tiles;
-    private float Index = 0;
+    private GameObject[] Tiles;
+    private float index = 0;
 
     private void Start()
     {
@@ -23,9 +23,9 @@ public class WorldGenerator : TemporalSingleton<WorldGenerator>
     {
         for (int i = 0; i < Tiles.Length; i++)
         {
-            Tiles[i].transform.position += new Vector3(0, 0, -SpeedManager.Instance.getRunSpeed() * Time.deltaTime);
+            Tiles[i].transform.position += new Vector3(0, 0, -SpeedManager.Instance.GetRunSpeed() * Time.deltaTime);
         }
-        gameObject.transform.position += new Vector3(0, 0, -SpeedManager.Instance.getRunSpeed() * Time.deltaTime);
+        gameObject.transform.position += new Vector3(0, 0, -SpeedManager.Instance.GetRunSpeed() * Time.deltaTime);
 
         for (int i = 0; i < Tiles.Length; i++)
         {
@@ -35,7 +35,7 @@ public class WorldGenerator : TemporalSingleton<WorldGenerator>
             }
         }
 
-        if (transform.position.z <= Index) 
+        if (transform.position.z <= index) 
         {
             int RandomInt1 = Random.Range(0, Tiles.Length);
 
@@ -64,7 +64,7 @@ public class WorldGenerator : TemporalSingleton<WorldGenerator>
 
             }      
             
-            Index = Index - 100.0f;
+            index = index - 100.0f;
         }
 
     }
