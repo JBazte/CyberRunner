@@ -8,7 +8,7 @@ public class BootsPowerUp : Powerup
     // Start is called before the first frame update
     void Start()
     {
-        ActivatePowerUp();
+       
     }
 
     // Update is called once per frame
@@ -33,6 +33,6 @@ public class BootsPowerUp : Powerup
 
     public override void DeactivatePowerUp()
     {
-        throw new System.NotImplementedException();
+        playerController.JumpForce = 12.0f;
     }
 }

@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour {
                 m_side = SIDE.Middle;
                 //m_anim.Play("moveRight");
             } else if (m_side == SIDE.Right){
+                print("pared derecha");
                 yPos = yValue;
                 m_side = SIDE.RightWall;
             } else if (m_side == SIDE.LeftWall){
