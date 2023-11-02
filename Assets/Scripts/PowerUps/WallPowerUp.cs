@@ -1,6 +1,6 @@
 using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WallPowerUp : Powerup
@@ -11,16 +11,26 @@ public class WallPowerUp : Powerup
     [SerializeField] public GameObject wallRight;
     private CharacterController playerController;
 
+    private Coroutine followPlayerCoroutineWallRight;
+    private Coroutine followPlayerCoroutineWallLeft;
+
     public override void ActivatePowerUp()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void DeactivatePowerUp()
     {
+        // Detenemos específicamente las coroutines de wallRight y wallLeft
+        if (followPlayerCoroutineWallRight != null)
+        {
+            StopCoroutine(followPlayerCoroutineWallRight);
+        }
 
-        // Detenemos la actualización de la posición de las paredes
-        StopAllCoroutines();
+        if (followPlayerCoroutineWallLeft != null)
+        {
+            StopCoroutine(followPlayerCoroutineWallLeft);
+        }
 
         // Borramos las paredes después de 5 segundos
         StartCoroutine(DestroyWallsAfterDelay(5f));
@@ -28,13 +38,17 @@ public class WallPowerUp : Powerup
 
     protected override void OnTriggerEnter(Collider other)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        playerController = player.GetComponent<CharacterController>();
+        playerController = player.GetComponent <CharacterController>();
+
+        // Iniciamos las coroutines para seguir al jugador
+        followPlayerCoroutineWallRight = StartCoroutine(FollowPlayerPosition(wallRight));
+        followPlayerCoroutineWallLeft = StartCoroutine(FollowPlayerPosition(wallLeft));
     }
 
     // Update is called once per frame
@@ -49,8 +63,6 @@ public class WallPowerUp : Powerup
             wallRight.transform.position = new Vector3(wallRight.transform.position.x, wallRight.transform.position.y, playerPosition.z);
             wallLeft.transform.position = new Vector3(wallLeft.transform.position.x, wallLeft.transform.position.y, playerPosition.z);
         }
-
-        DeactivatePowerUp();
     }
 
     private IEnumerator DestroyWallsAfterDelay(float delay)
@@ -60,5 +72,22 @@ public class WallPowerUp : Powerup
         // Destruimos las paredes
         Destroy(wallRight);
         Destroy(wallLeft);
+    }
+
+    private IEnumerator FollowPlayerPosition(GameObject wall)
+    {
+        while (true)
+        {
+            if (wall != null && playerController != null)
+            {
+                // Obtén la posición del jugador
+                Vector3 playerPosition = playerController.transform.position;
+
+                // Establece la posición de la pared en función de la posición del jugador en el eje Z
+                wall.transform.position = new Vector3(wall.transform.position.x, wall.transform.position.y, playerPosition.z);
+            }
+
+            yield return null;
+        }
     }
 }
