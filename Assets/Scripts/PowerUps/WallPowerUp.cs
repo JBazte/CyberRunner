@@ -70,8 +70,8 @@ public class WallPowerUp : Powerup
         yield return new WaitForSeconds(delay);
 
         // Destruimos las paredes
-        Destroy(wallRight);
-        Destroy(wallLeft);
+        wallRight.SetActive(false);
+        wallLeft.SetActive(false);
     }
 
     private IEnumerator FollowPlayerPosition(GameObject wall)
