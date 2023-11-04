@@ -20,15 +20,16 @@ public abstract class Powerup : MonoBehaviour
             isCountingDown = true;
             timerElapsed = 0;
             ActivatePowerUp();
+            Debug.Log("activado, " + isCountingDown);
         }
     }
 
     // Método para detectar una colisión OnTrigger
     protected abstract void OnTriggerEnter(Collider other);
 
-    private void Update()
+    void Update()
     {
-        Debug.Log("Tiempo: "+timerDuration.ToString()); //Debug
+        Debug.Log("Tiempo: "+timerDuration); //Debug
 
         if (isCountingDown)
         {
