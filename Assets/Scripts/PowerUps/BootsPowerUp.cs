@@ -1,10 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class BootsPowerUp : Powerup
+[CreateAssetMenu(menuName = "PowerUps/BootsPowerUp")]
+public class BootsPowerUp : PowerUpEffect
 {
-    PlayerController playerController = new PlayerController();
+    [SerializeField]
+    private float m_jumpIncrease;
+
+    public override void ExecuteAction(GameObject player)
+    {
+        m_player = player;
+        m_player.GetComponent<PlayerController>().JumpForce += m_jumpIncrease;
+    }
+
+    public override void FinishAction()
+    {
+        Debug.Log("LLEGA");
+        m_player.GetComponent<PlayerController>().JumpForce -= m_jumpIncrease;
+    }
+
+    public override IEnumerator StartCountDown()
+    {
+        yield return new WaitForSeconds(m_duration);
+        FinishAction();
+    }
+
+    private void Awake()
+    {
+        m_jumpIncrease = 13.0f;
+        m_duration = 10.0f;
+    }
+
+    /*PlayerController playerController = new PlayerController();
     // Start is called before the first frame update
     void Start()
     {
@@ -35,4 +64,6 @@ public class BootsPowerUp : Powerup
     {
         playerController.JumpForce = 12.0f;
     }
+    */
+
 }

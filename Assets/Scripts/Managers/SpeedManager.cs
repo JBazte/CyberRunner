@@ -28,7 +28,6 @@ public class SpeedManager : TemporalSingleton<SpeedManager>
         if (m_runSpeed <= m_maxSpeed && GameManager.Instance.GetRunActive())
         {
             m_runSpeed += m_acceleration * Time.deltaTime;
-            Debug.Log("SPEED ------->    " + m_runSpeed);
         }
     }
 

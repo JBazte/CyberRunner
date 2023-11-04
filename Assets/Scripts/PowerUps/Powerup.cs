@@ -1,52 +1,18 @@
-using System;
-using System.Timers;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Powerup : MonoBehaviour
+public class PowerUp : MonoBehaviour
 {
-    protected float timerDuration;
-    protected float timerElapsed;
-    protected bool isCountingDown = false;
+    public PowerUpEffect m_powerUpEffect;
 
-    public abstract void ActivatePowerUp();
-    public abstract void DeactivatePowerUp();
-
-    // Método para iniciar una cuenta atrás con un temporizador
-    public void StartCountdown(float seconds)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!isCountingDown)
+        if(other.GetComponent<PlayerController>() != null)
         {
-            timerDuration = seconds;
-            isCountingDown = true;
-            timerElapsed = 0;
-            ActivatePowerUp();
-        }
-    }
-
-    // Método para detectar una colisión OnTrigger
-    protected abstract void OnTriggerEnter(Collider other);
-
-    private void Update()
-    {
-        Debug.Log("Tiempo: "+timerDuration.ToString()); //Debug
-
-        if (isCountingDown)
-        {
-            timerElapsed += Time.deltaTime;
-            if (timerElapsed >= timerDuration)
-            {
-                CountdownFinished();
-            }
-        }
-    }
-
-    // Método llamado cuando la cuenta atrás termina
-    protected virtual void CountdownFinished()
-    {
-        if (isCountingDown)
-        {
-            DeactivatePowerUp();
-            isCountingDown = false;
+            m_powerUpEffect.ExecuteAction(other.gameObject);
+            StartCoroutine(m_powerUpEffect.StartCountDown());
+            GetComponent<MeshRenderer>().enabled = false;
         }
     }
 }

@@ -3,9 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallPowerUp : Powerup
+public class WallPowerUp : PowerUpEffect
 {
-    public GameObject player;
+    public override void ExecuteAction(GameObject player)
+    {
+        
+    }
+
+    public override void FinishAction()
+    {
+        
+    }
+
+    public override IEnumerator StartCountDown()
+    {
+        yield return new WaitForSeconds(m_duration);
+        FinishAction();
+    }
+
+    /*public GameObject player;
 
     [SerializeField] public GameObject wallLeft;
     [SerializeField] public GameObject wallRight;
@@ -90,4 +106,5 @@ public class WallPowerUp : Powerup
             yield return null;
         }
     }
+    */
 }
