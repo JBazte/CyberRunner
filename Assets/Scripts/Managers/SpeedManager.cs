@@ -8,6 +8,7 @@ public class SpeedManager : TemporalSingleton<SpeedManager>
     [SerializeField]
     private float m_acceleration;
     private float m_maxSpeed;
+    private float m_currentspeed;
 
     // Start is called before the first frame update
     void Start()
@@ -28,10 +29,13 @@ public class SpeedManager : TemporalSingleton<SpeedManager>
         if (m_runSpeed <= m_maxSpeed && GameManager.Instance.GetRunActive())
         {
             m_runSpeed += m_acceleration * Time.deltaTime;
+            m_currentspeed = m_runSpeed;
             Debug.Log("SPEED ------->    " + m_runSpeed);
+            
         }
     }
 
     public float GetRunSpeed() { return m_runSpeed; }
+    public float GetCurrentSpeed() { return m_currentspeed; }
     public void SetRunSpeed(float runSpeed) { m_runSpeed = runSpeed; }
 }

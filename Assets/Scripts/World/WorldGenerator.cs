@@ -18,6 +18,7 @@ public class WorldGenerator : TemporalSingleton<WorldGenerator>
         }
         Debug.Log(Tiles.Length);
     }
+    
 
     private void Update() 
     {
@@ -54,12 +55,12 @@ public class WorldGenerator : TemporalSingleton<WorldGenerator>
 
                 if (Tiles[RandomInt1].activeSelf && Tiles[RandomInt1].transform.position.z <= -60)
                 {
-                    Tiles[RandomInt1].transform.position = new Vector3(0, 0, 139);
+                    Tiles[RandomInt1].transform.position = new Vector3(0, 0, 138);
                 }
                 else if (!Tiles[RandomInt1].activeSelf)
                 {
                     Tiles[RandomInt1].SetActive(true);
-                    Tiles[RandomInt1].transform.position = new Vector3(0, 0, 139);
+                    Tiles[RandomInt1].transform.position = new Vector3(0, 0, 138);
                 }
 
             }      

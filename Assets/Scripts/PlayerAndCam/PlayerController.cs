@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,7 +13,7 @@ public class PlayerController : MonoBehaviour {
     private CharacterController m_player;
     [SerializeField]
     private SIDE m_side = SIDE.Middle;
-    private bool moveLeft, moveRight, moveUp, moveDown, isJumping, isSliding;
+    private bool moveLeft, moveRight, moveUp, moveDown, isJumping, isSliding, Tap, DoubleTap;
     [SerializeField]
     private float forwardSpeed;
     [SerializeField]
@@ -26,8 +27,15 @@ public class PlayerController : MonoBehaviour {
     private float m_initHeight, m_colCenterY;
     private bool  m_invulnerability;
 
-    private bool isOnWall = false;  // Para rastrear si el jugador está en una pared
-    private Vector3 originalPosition;  // Para rastrear la posición original del jugador
+    private bool isOnWall = false;  // Para rastrear si el jugador estï¿½ en una pared
+    private Vector3 originalPosition;  // Para rastrear la posiciï¿½n original del jugador
+    private int Motocharge = 0;
+    private bool MotActive = false;
+    private float timer;
+    private Mesh PlayerModel;
+    
+    [SerializeField] private MeshFilter ActualPlayerModel;
+    [SerializeField] private Mesh MotoModel;
 
     public float JumpForce
     {
@@ -41,7 +49,10 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    void Start() {
+    void Start()
+    {
+        Motocharge = 0;
+        PlayerModel = ActualPlayerModel.mesh;
         m_player = GetComponent<CharacterController>();
         m_anim = GetComponent<Animator>();
         m_side = SIDE.Middle;
@@ -54,6 +65,7 @@ public class PlayerController : MonoBehaviour {
         isJumping = false;
         transform.position = Vector3.zero;
         m_invulnerability = false;
+        PlayerPrefs.SetInt("charges",0);
 
         //TEST
         originalPosition = transform.position;
@@ -64,6 +76,9 @@ public class PlayerController : MonoBehaviour {
         moveRight = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow) || InputManager.Instance.SwipeRight;
         moveUp = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || InputManager.Instance.SwipeUp;
         moveDown = Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || InputManager.Instance.SwipeDown;
+        Tap = Input.GetKeyDown(KeyCode.Space) || InputManager.Instance.Tap;
+        
+
 
         if (moveLeft)
         {
@@ -83,7 +98,7 @@ public class PlayerController : MonoBehaviour {
             {
                 yPos = yValue;
                 m_side = SIDE.LeftWall;
-                // Aquí actualizamos la posición en el eje Y
+                // Aquï¿½ actualizamos la posiciï¿½n en el eje Y
                 transitionYPos = yPos;
             }
             else if (m_side == SIDE.RightWall)
@@ -91,7 +106,7 @@ public class PlayerController : MonoBehaviour {
                 xPos = xValue;
                 yPos = 0;
                 m_side = SIDE.Right;
-                // Aquí también actualizamos la posición en el eje Y
+                // Aquï¿½ tambiï¿½n actualizamos la posiciï¿½n en el eje Y
                 transitionYPos = yPos;
             }
             else
@@ -118,7 +133,7 @@ public class PlayerController : MonoBehaviour {
             {
                 yPos = yValue;
                 m_side = SIDE.RightWall;
-                // Aquí actualizamos la posición en el eje Y
+                // Aquï¿½ actualizamos la posiciï¿½n en el eje Y
                 transitionYPos = yPos;
             }
             else if (m_side == SIDE.LeftWall)
@@ -126,7 +141,7 @@ public class PlayerController : MonoBehaviour {
                 xPos = -xValue;
                 yPos = 0;
                 m_side = SIDE.Left;
-                // Aquí también actualizamos la posición en el eje Y
+                // Aquï¿½ tambiï¿½n actualizamos la posiciï¿½n en el eje Y
                 transitionYPos = yPos;
             }
             else
@@ -135,7 +150,13 @@ public class PlayerController : MonoBehaviour {
                 //m_anim.Play("bumpRight");
             }
         }
-
+        Motocharge = PlayerPrefs.GetInt("charges");
+        if (Motocharge >= 1 && Tap && !MotActive)
+        {
+            Byke();
+            PlayerPrefs.SetInt("charges",PlayerPrefs.GetInt("charges")-1);
+        }
+        
         Jump();
         Slide();
     }
@@ -146,7 +167,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (!isOnWall)
             {
-                // El jugador acaba de entrar en la pared, ajusta su posición en Y a 5.5
+                // El jugador acaba de entrar en la pared, ajusta su posiciï¿½n en Y a 5.5
                 transform.position = new Vector3(transform.position.x, 5.5f, transform.position.z);
                 isOnWall = true;
             }
@@ -155,16 +176,41 @@ public class PlayerController : MonoBehaviour {
         {
             if (isOnWall)
             {
-                // El jugador ha dejado la pared, restaura su posición original en Y
+                // El jugador ha dejado la pared, restaura su posiciï¿½n original en Y
                 transform.position = new Vector3(transform.position.x, originalPosition.y, transform.position.z);
                 isOnWall = false;
             }
+<<<<<<< Updated upstream
+=======
+
+            // Aquï¿½ puedes controlar manualmente la caï¿½da del jugador si no estï¿½ en la pared
+            // Por ejemplo, puedes disminuir gradualmente la posiciï¿½n en Y para simular la caï¿½da.
+            // Asegï¿½rate de que la lï¿½gica sea lo que necesitas en este caso.
+>>>>>>> Stashed changes
         }
 
 
         transitionXPos = Mathf.Lerp(transitionXPos, xPos, dodgeSpeed * Time.fixedDeltaTime);
         Vector3 moveVector = new Vector3(transitionXPos - transform.position.x, transitionYPos * Time.fixedDeltaTime, forwardSpeed * Time.fixedDeltaTime);
         m_player.Move(moveVector);
+    }
+
+    private void Byke()
+    {
+        MotActive = true;
+        ActualPlayerModel.mesh = MotoModel;
+    }
+    
+    void DestroyObstacles(Vector3 center, float radius)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.name != ("ModuleFloor") && hitCollider.gameObject.name != ("Player") && hitCollider.gameObject.name != ("LeftLane") && hitCollider.gameObject.name != ("MiddleLane") && hitCollider.gameObject.name != ("RightLane"))
+            {
+                hitCollider.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void Jump() {
@@ -207,4 +253,6 @@ public class PlayerController : MonoBehaviour {
             isJumping = false;
         }
     }
+    public bool GetMotActive() { return MotActive; }
+    public void SetMotActive(bool Activate) { MotActive = Activate; }
 }

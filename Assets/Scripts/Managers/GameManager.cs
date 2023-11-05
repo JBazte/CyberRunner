@@ -15,6 +15,7 @@ public class GameManager : TemporalSingleton<GameManager>
     private float     m_score;
     private float     m_accumulatedCombo;
     private uint      m_coinsObtained;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -42,10 +43,13 @@ public class GameManager : TemporalSingleton<GameManager>
 
         m_score = m_metersTravelled * TraduceCombo();
         Debug.Log(m_score);
+        
     }
 
     public void AddComboPoint() { m_accumulatedCombo++; }
     public void ResetCombo() { m_accumulatedCombo = 0; }
+
+    
 
     public void AddCoin() 
     { 
@@ -70,5 +74,12 @@ public class GameManager : TemporalSingleton<GameManager>
         m_runActive = false;
     }
 
+    public void Motorbyke()
+    {
+
+    }
+
     public bool GetRunActive() { return m_runActive; }
+    public void SetRunActive(bool runSpeed) { m_runActive = runSpeed; }
+
 }
