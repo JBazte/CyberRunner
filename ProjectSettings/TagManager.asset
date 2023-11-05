@@ -7,6 +7,9 @@ TagManager:
   - Module
   - Ramp
   - DynamicObstacle
+  - Enemy
+  - WallLeft
+  - WallRight
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - 
   - 
