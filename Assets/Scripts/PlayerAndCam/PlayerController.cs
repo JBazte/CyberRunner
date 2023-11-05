@@ -141,6 +141,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        Debug.Log("Estado: " + isOnWall + " Side: " + m_side);
         if (m_side == SIDE.LeftWall || m_side == SIDE.RightWall)
         {
             if (!isOnWall)
@@ -158,10 +159,6 @@ public class PlayerController : MonoBehaviour {
                 transform.position = new Vector3(transform.position.x, originalPosition.y, transform.position.z);
                 isOnWall = false;
             }
-
-            // Aquí puedes controlar manualmente la caída del jugador si no está en la pared
-            // Por ejemplo, puedes disminuir gradualmente la posición en Y para simular la caída.
-            // Asegúrate de que la lógica sea lo que necesitas en este caso.
         }
 
 
