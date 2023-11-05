@@ -3,20 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-    public float SmoothTime = 0.3f;
-    private Vector3 velocity = Vector3.zero;
     [SerializeField] private Transform player;
-    [SerializeField] private float yOffset;
-    [SerializeField] private float zOffset;
+    private Vector3 m_offset;
+    private float yPos;
+    private float smoothTime;
+    private float shakeDuration;
+    private float shakeMagnitude;
+    private float shakeSpeed;
+    private Vector3 originalPosition;
 
-    void Start() {
-        player = FindObjectOfType<PlayerController>().transform;
-        transform.position = new Vector3(player.position.x, player.position.y + yOffset, player.position.z + zOffset);
+    private void Start() {
+        smoothTime = 5f;
+        shakeSpeed = 1f;
+        m_offset = transform.position;
+        originalPosition = transform.position;
     }
 
-    void FixedUpdate() {
-        float posX = Mathf.SmoothDamp(transform.position.x, player.position.x, ref velocity.x, SmoothTime);
-        float posY = Mathf.SmoothDamp(transform.position.y, player.position.y + yOffset, ref velocity.y, SmoothTime);
-        transform.position = new Vector3(posX, posY, transform.position.z);
+    private void LateUpdate() {
+        Vector3 followPos = player.position + m_offset;
+        RaycastHit hit;
+        if (Physics.Raycast(player.position, Vector3.down, out hit, 4.5f)) {
+            yPos = Mathf.Lerp(yPos, hit.point.y, Time.deltaTime * smoothTime);
+        } else {
+            yPos = Mathf.Lerp(yPos, player.position.y, Time.deltaTime * smoothTime);
+        }
+        followPos.y = m_offset.y + yPos;
+        if (shakeDuration > 0) {
+            Vector3 shake = Random.insideUnitSphere * shakeMagnitude;
+            transform.position = followPos + shake;
+            shakeDuration -= Time.deltaTime * shakeSpeed;
+        } else {
+            transform.position = followPos;
+        }
+
+    }
+
+    public void ShakeCamera(float duration, float magnitude) {
+        shakeDuration = duration;
+        shakeMagnitude = magnitude;
     }
 }

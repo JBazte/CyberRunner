@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleController : MonoBehaviour {
+public class ObstacleController : MonoBehaviour
+{
+    /*
     private CameraShake cameraShake;
 
     private void Start() {
@@ -24,4 +26,5 @@ public class ObstacleController : MonoBehaviour {
             }
         }
     }
+    */
 }
