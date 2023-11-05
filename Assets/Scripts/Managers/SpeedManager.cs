@@ -18,11 +18,6 @@ public class SpeedManager : TemporalSingleton<SpeedManager>
         m_acceleration = 0.1f;
     }
 
-    private void FixedUpdate()
-    {
-       
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -33,6 +28,5 @@ public class SpeedManager : TemporalSingleton<SpeedManager>
     }
 
     public float GetRunSpeed() { return m_runSpeed; }
-    public float GetCurrentSpeed() { return m_currentspeed; }
     public void SetRunSpeed(float runSpeed) { m_runSpeed = runSpeed; }
 }

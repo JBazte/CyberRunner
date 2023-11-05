@@ -12,8 +12,11 @@ public enum SIDE { Left, Middle, Right, LeftWall, RightWall }
 public class PlayerController : MonoBehaviour {
     private CharacterController m_player;
     [SerializeField]
-    private SIDE m_side = SIDE.Middle;
-    private bool moveLeft, moveRight, moveUp, moveDown, isJumping, isSliding, Tap, DoubleTap;
+    private SIDE  m_side = SIDE.Middle;
+    private bool  moveLeft, moveRight, moveUp, moveDown, isJumping, isSliding, Tap, DoubleTap;
+    private float m_doubleTapTime = 0.25f;
+    private float m_lastClickTime;
+
     [SerializeField]
     private float forwardSpeed;
     [SerializeField]
@@ -27,26 +30,25 @@ public class PlayerController : MonoBehaviour {
     private float m_initHeight, m_colCenterY;
     private bool  m_invulnerability;
 
-<<<<<<< HEAD
-    private bool isOnWall = false;  // Para rastrear si el jugador estï¿½ en una pared
-    private Vector3 originalPosition;  // Para rastrear la posiciï¿½n original del jugador
-    private int Motocharge = 0;
-    private bool MotActive = false;
+    private bool  isOnWall = false;  // Para rastrear si el jugador esta en una pared
+    private Vector3 originalPosition;  // Para rastrear la posicion original del jugador
+    private bool  m_motorbikeActive = false;
     private float timer;
-    private Mesh PlayerModel;
-    
-    [SerializeField] private MeshFilter ActualPlayerModel;
-    [SerializeField] private Mesh MotoModel;
-=======
-    private bool isOnWall = false;  // Para rastrear si el jugador está en una pared
-    //private Vector3 originalPosition;  // Para rastrear la posición original del jugador
->>>>>>> f9660a83aa1f55015ab067af62002e40f404955f
+
+    [SerializeField]
+    private MeshFilter m_actualPlayerModel;
+    [SerializeField]
+    private Mesh       m_playerModel;
+    [SerializeField]
+    private Mesh       m_motorbikeModel;
+
+    private MotorbikeObject m_motorbike;
 
     public float JumpForce
     {
         get
         {
-            return this.jumpForce;
+            return jumpForce;
         }
         set
         {
@@ -54,10 +56,12 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
+
     void Start()
     {
-        Motocharge = 0;
-        PlayerModel = ActualPlayerModel.mesh;
+        m_playerModel = gameObject.GetComponent<MeshFilter>().mesh;
+        m_actualPlayerModel = gameObject.GetComponent<MeshFilter>();
         m_player = GetComponent<CharacterController>();
         m_anim = GetComponent<Animator>();
         m_side = SIDE.Middle;
@@ -70,13 +74,11 @@ public class PlayerController : MonoBehaviour {
         isJumping = false;
         transform.position = Vector3.zero;
         m_invulnerability = false;
-<<<<<<< HEAD
-        PlayerPrefs.SetInt("charges",0);
+
+        m_motorbike = new MotorbikeObject(gameObject, m_motorbikeModel);
 
         //TEST
         originalPosition = transform.position;
-=======
->>>>>>> f9660a83aa1f55015ab067af62002e40f404955f
     }
 
     void Update() {
@@ -85,8 +87,6 @@ public class PlayerController : MonoBehaviour {
         moveUp = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow) || InputManager.Instance.SwipeUp;
         moveDown = Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) || InputManager.Instance.SwipeDown;
         Tap = Input.GetKeyDown(KeyCode.Space) || InputManager.Instance.Tap;
-        
-
 
         if (moveLeft)
         {
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour {
             {
                 yPos = yValue;
                 m_side = SIDE.LeftWall;
-                // Aquï¿½ actualizamos la posiciï¿½n en el eje Y
+                // Aquí actualizamos la posiciï¿½n en el eje Y
                 transitionYPos = yPos;
             }
             else if (m_side == SIDE.RightWall)
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour {
                 xPos = xValue;
                 yPos = 0;
                 m_side = SIDE.Right;
-                // Aquï¿½ tambiï¿½n actualizamos la posiciï¿½n en el eje Y
+                // Aquí también actualizamos la posición en el eje Y
                 transitionYPos = yPos;
             }
             else
@@ -158,11 +158,25 @@ public class PlayerController : MonoBehaviour {
                 //m_anim.Play("bumpRight");
             }
         }
-        Motocharge = PlayerPrefs.GetInt("charges");
-        if (Motocharge >= 1 && Tap && !MotActive)
+
+        if (Tap)  //HERE WE CHECK IF MOTORBIKE IS AVAILABLE TO USE IT
         {
-            Byke();
-            PlayerPrefs.SetInt("charges",PlayerPrefs.GetInt("charges")-1);
+            if (Time.time - m_lastClickTime < m_doubleTapTime)
+            {
+                if (PlayerPrefs.GetInt("MotorbikeCharges") < 0)
+                {
+                    Debug.Log("NO MOTORBIKE CHARGES");
+                }
+                else if (m_motorbikeActive)
+                {
+                    Debug.Log("MOTORBIKE ALREADY ACTIVE");
+                }
+                else
+                {
+                    ActivateMotorbike();
+                }
+            }
+            m_lastClickTime = Time.time;
         }
         
         Jump();
@@ -184,22 +198,13 @@ public class PlayerController : MonoBehaviour {
         {
             if (isOnWall)
             {
-<<<<<<< HEAD
                 // El jugador ha dejado la pared, restaura su posiciï¿½n original en Y
                 transform.position = new Vector3(transform.position.x, originalPosition.y, transform.position.z);
-=======
+
                 // El jugador ha dejado la pared, restaura su posición original en Y
-                transform.position = new Vector3(transform.position.x, 1.25f, transform.position.z);
->>>>>>> f9660a83aa1f55015ab067af62002e40f404955f
+                //transform.position = new Vector3(transform.position.x, 1.25f, transform.position.z);
                 isOnWall = false;
             }
-<<<<<<< Updated upstream
-=======
-
-            // Aquï¿½ puedes controlar manualmente la caï¿½da del jugador si no estï¿½ en la pared
-            // Por ejemplo, puedes disminuir gradualmente la posiciï¿½n en Y para simular la caï¿½da.
-            // Asegï¿½rate de que la lï¿½gica sea lo que necesitas en este caso.
->>>>>>> Stashed changes
         }
 
 
@@ -208,22 +213,14 @@ public class PlayerController : MonoBehaviour {
         m_player.Move(moveVector);
     }
 
-    private void Byke()
+    private void ActivateMotorbike()
     {
-        MotActive = true;
-        ActualPlayerModel.mesh = MotoModel;
+        m_motorbike.ActivateMotorbike();
     }
-    
-    void DestroyObstacles(Vector3 center, float radius)
+
+    public void MotorbikeCrashed()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
-        foreach (var hitCollider in hitColliders)
-        {
-            if (hitCollider.gameObject.name != ("ModuleFloor") && hitCollider.gameObject.name != ("Player") && hitCollider.gameObject.name != ("LeftLane") && hitCollider.gameObject.name != ("MiddleLane") && hitCollider.gameObject.name != ("RightLane"))
-            {
-                hitCollider.gameObject.SetActive(false);
-            }
-        }
+        m_motorbike.DeactivateMotorbike();
     }
 
     private void Jump() {
@@ -266,6 +263,9 @@ public class PlayerController : MonoBehaviour {
             isJumping = false;
         }
     }
-    public bool GetMotActive() { return MotActive; }
-    public void SetMotActive(bool Activate) { MotActive = Activate; }
+    public bool GetMotoActive() { return m_motorbikeActive; }
+    public void SetMotoActive(bool Activate) { m_motorbikeActive = Activate; }
+    public void SetMesh(Mesh mesh) { m_actualPlayerModel.mesh = mesh; }
+
+    public Mesh GetPlayerMesh() { return m_playerModel; }
 }

@@ -5,27 +5,20 @@ using System.ComponentModel;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-
-public class MotorbikePowerup : Powerup
+[CreateAssetMenu(menuName = "PowerUps/MotorbikePowerUp")]
+public class MotorbikePowerup : PowerUpEffect
 {
+    /*
     private int Counter;
     private bool taping;
 
+    
     [SerializeField] private MeshFilter ActualPlayerModel;
-    [SerializeField] private Mesh MotoModel;
+    [SerializeField] private Mesh MotorbikeModel;
     [SerializeField] private Mesh PlayerModel;
+    */
 
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {   
-        
-    }
-
-    // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         taping = Input.GetKeyDown(KeyCode.Space) || InputManager.Instance.Tap;
         if (Counter >= 1 && taping)
@@ -33,25 +26,24 @@ public class MotorbikePowerup : Powerup
             ActivatePowerUp();
             Counter++;
         }
+    }*/
+
+    public override void ExecuteAction(GameObject player)
+    {
+        Debug.Log("INITIAL CHARGES: " + PlayerPrefs.GetInt("MotorbikeCharges"));
+        PlayerPrefs.SetInt("MotorbikeCharges", PlayerPrefs.GetInt("MotorbikeCharges") + 1);
+        //ActualPlayerModel.mesh = MotorbikeModel;
     }
 
-
-    protected override void OnTriggerEnter(Collider other)
+    public override void FinishAction()
     {
-        if (other.CompareTag("PowerUp")) //Hay que añadir este tag
-        {
-            
-        }
+        Debug.Log("FINAL CHARGES: " + PlayerPrefs.GetInt("MotorbikeCharges"));
+        //ActualPlayerModel.mesh = PlayerModel;
     }
 
-    public override void ActivatePowerUp()
+    public override IEnumerator StartCountDown()
     {
-        ActualPlayerModel.mesh = MotoModel;
-        StartCountdown(5f);
-    }
-
-    public override void DeactivatePowerUp()
-    {
-        ActualPlayerModel.mesh = PlayerModel;
+        yield return new WaitForSeconds(m_duration);
+        FinishAction();
     }
 }

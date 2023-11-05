@@ -46,12 +46,7 @@ public class GameManager : TemporalSingleton<GameManager>
     public void AddComboPoint() { m_accumulatedCombo++; }
     public void ResetCombo() { m_accumulatedCombo = 0; }
 
-    
-
-    public void AddCoin() 
-    { 
-        m_coinsObtained++;
-    }
+    public void AddCoin() { m_coinsObtained++; }
     
     public float TraduceCombo() //This function will control the combo traduction to score multiplicator
     {

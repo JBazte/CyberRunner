@@ -14,9 +14,9 @@ public class ObstacleController : MonoBehaviour {
             // Shake camera & inflict damage to player
             StartCoroutine(cameraShake.Shake(.3f, .2f));
             GameManager.Instance.GameOver();
-            if (col.gameObject.GetComponent<PlayerController>().GetMotActive())
+            if (col.gameObject.GetComponent<PlayerController>().GetMotoActive())
             {
-                col.gameObject.GetComponent<PlayerController>().SetMotActive(false);
+                col.gameObject.GetComponent<PlayerController>().MotorbikeCrashed();
                 GameManager.Instance.Resume();
             }
         }
