@@ -5,18 +5,18 @@ using System.ComponentModel;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "PowerUps/MotorbikePowerUp")]
-public class MotorbikePowerup : PowerUpEffect
+[CreateAssetMenu(menuName = "PowerUps/HyperspeedPowerUp")]
+public class HyperspeedPowerUp : PowerUpEffect
 {
     public override void ExecuteAction(GameObject player)
     {
-        Debug.Log("INITIAL CHARGES: " + PlayerPrefs.GetInt("MotorbikeCharges"));
-        PlayerPrefs.SetInt("MotorbikeCharges", PlayerPrefs.GetInt("MotorbikeCharges") + 1);
+        Debug.Log("INITIAL CHARGES: " + PlayerPrefs.GetInt("HyperspeedCharges"));
+        PlayerPrefs.SetInt("HyperspeedCharges", PlayerPrefs.GetInt("HyperspeedCharges") + 1);
     }
 
     public override void FinishAction()
     {
-        Debug.Log("FINAL CHARGES: " + PlayerPrefs.GetInt("MotorbikeCharges"));
+        Debug.Log("FINAL CHARGES: " + PlayerPrefs.GetInt("HyperspeedCharges"));
     }
 
     public override IEnumerator StartCountDown()

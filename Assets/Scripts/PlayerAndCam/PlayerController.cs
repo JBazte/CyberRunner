@@ -159,11 +159,11 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        if (Tap)  //HERE WE CHECK IF MOTORBIKE IS AVAILABLE TO USE IT
+        if (Tap)                                              // HERE WE DETECT THE FIRST TAP AND SAVE THE TIME WHEN IT HAS BEEN DONE
         {
-            if (Time.time - m_lastClickTime < m_doubleTapTime)
+            if (Time.time - m_lastClickTime < m_doubleTapTime)// HERE WE CHECK IF ITS A DOUBLE TAP
             {
-                if (PlayerPrefs.GetInt("MotorbikeCharges") < 0)
+                if (PlayerPrefs.GetInt("MotorbikeCharges") < 0)//HERE WE CHECK IF MOTORBIKE IS AVAILABLE TO USE IT
                 {
                     Debug.Log("NO MOTORBIKE CHARGES");
                 }
@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (!isOnWall)
             {
-                // El jugador acaba de entrar en la pared, ajusta su posiciï¿½n en Y a 5.5
+                // El jugador acaba de entrar en la pared, ajusta su posición en Y a 5.5
                 transform.position = new Vector3(transform.position.x, 5.5f, transform.position.z);
                 isOnWall = true;
             }
@@ -198,7 +198,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (isOnWall)
             {
-                // El jugador ha dejado la pared, restaura su posiciï¿½n original en Y
+                // El jugador ha dejado la pared, restaura su posición original en Y
                 transform.position = new Vector3(transform.position.x, originalPosition.y, transform.position.z);
 
                 // El jugador ha dejado la pared, restaura su posición original en Y

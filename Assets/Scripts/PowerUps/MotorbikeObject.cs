@@ -22,14 +22,15 @@ public class MotorbikeObject : MonoBehaviour
     {
         m_playerScript.SetMotoActive(true);
         m_playerScript.SetMesh(m_motoModel);
-        DestroyObstacles(m_player.transform.position, 10.0f);
         PlayerPrefs.SetInt("MotorbikeCharges", PlayerPrefs.GetInt("MotorbikeCharges") - 1);
     }
 
     public void DeactivateMotorbike()
     {
+        DestroyObstacles(m_player.transform.position, 30.0f);
         m_playerScript.SetMotoActive(false);
         m_playerScript.SetMesh(m_playerScript.GetPlayerMesh());
+
     }
 
     public void DestroyObstacles(Vector3 center, float radius)
