@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class DronObject : TemporalSingleton<GameManager>
+public class DronObject : MonoBehaviour
 {
     [SerializeField]
     private float            m_killingDistance;
@@ -12,6 +12,8 @@ public class DronObject : TemporalSingleton<GameManager>
     private bool             m_isActive;
     private Queue<Transform> m_enemyList;
     private LineRenderer     m_laser;
+    [SerializeField]
+    private Transform        m_aimPoint;
 
     private void Start()
     {
@@ -29,10 +31,10 @@ public class DronObject : TemporalSingleton<GameManager>
 
     void Update()
     {
-        m_laser.SetPosition(0, transform.position);
-        m_laser.positionCount = m_enemyList.Count + 1;
+        //m_laser.SetPosition(0, m_aimPoint.position);
         if (m_isActive)
         {
+            //m_laser.positionCount = m_enemyList.Count + 1;
             KillEnemies();
         }
     }
@@ -44,15 +46,17 @@ public class DronObject : TemporalSingleton<GameManager>
             foreach (Transform enemy in m_enemyList)
             {
                 float distance = enemy.position.z - transform.position.z;
-                m_laser.enabled = true;
-                AimEnemy(enemy);
-
+                //m_laser.enabled = true;
+                //AimEnemy(enemy);
+                //m_laser.SetPosition(m_enemyList.ToList().IndexOf(enemy), enemy.position);
                 if (distance < m_killingDistance && enemy.gameObject.activeSelf)
                 {
-                    Debug.Log("Enemigo eliminado");
+                    Debug.Log("Enemigo eliminado  ----  " + m_enemyList.ToList().IndexOf(enemy));
                     enemy.gameObject.SetActive(false);
-                    m_laser.SetPosition(m_enemyList.ToList().IndexOf(enemy), Vector3.zero);
+                    
                     m_enemyList.Dequeue();
+                    //m_laser.SetPosition(m_enemyList.ToList().IndexOf(enemy), Vector3.);
+                    //m_laser.positionCount--;
                 }
             }
         }
@@ -67,7 +71,9 @@ public class DronObject : TemporalSingleton<GameManager>
     {
         if(other.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("Enemigo detectado");
             m_enemyList.Enqueue(other.gameObject.transform);
+            //m_laser.positionCount++;
         }
     }
 
