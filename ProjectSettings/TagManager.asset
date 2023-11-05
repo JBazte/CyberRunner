@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Module
+  - Ramp
+  - DynamicObstacle
   layers:
   - Default
   - TransparentFX

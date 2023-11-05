@@ -123,9 +123,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_side: 1
+  m_hitBoxX: 3
+  m_hitBoxY: 4
+  m_hitBoxZ: 3
   forwardSpeed: 0
   dodgeSpeed: 5
   jumpForce: 12
+  CollisionCol: {fileID: 5035718600179339975}
 --- !u!143 &7727583532351852941
 CharacterController:
   m_ObjectHideFlags: 0
