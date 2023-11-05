@@ -1,44 +1,87 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DronObject : TemporalSingleton<GameManager>
 {
-    public GameObject player;
-    public float distancia = 2.0f;
-    public float distanciaEliminacion = 5.0f; // Distancia para eliminar enemigos
-    public string enemyTag = "Enemy"; // Tag de los enemigos
+    [SerializeField]
+    private float            m_killingDistance;
+    private MeshRenderer     m_renderer;
+    private Collider         m_collider;
+    private bool             m_isActive;
+    private Queue<Transform> m_enemyList;
+    private LineRenderer     m_laser;
 
-    [SerializeField] public GameObject dronObject;
-    private CharacterController playerController;
+    private void Start()
+    {
+        m_killingDistance  = 15.0f;
+        m_isActive         = false;
+        m_renderer         = GetComponent<MeshRenderer>();
+        m_renderer.enabled = false;
+        m_collider         = GetComponent<Collider>();
+        m_collider.enabled = false;
+        m_enemyList        = new Queue<Transform>();
+        m_laser            = GetComponent<LineRenderer>();
+        m_laser.positionCount = 1;
+        m_laser.enabled    = false;
+    }
 
     void Update()
     {
-        if (dronObject != null && playerController != null)
+        m_laser.SetPosition(0, transform.position);
+        m_laser.positionCount = m_enemyList.Count + 1;
+        if (m_isActive)
         {
-            Vector3 newPosition = playerController.transform.position + new Vector3(0, distancia, 0);
-            dronObject.transform.position = newPosition;
-
-            // Verificar y eliminar enemigos que están cerca del jugador
-            DetectarYEliminarEnemigosCercanos();
+            KillEnemies();
         }
     }
 
-    void DetectarYEliminarEnemigosCercanos()
+    public void KillEnemies()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
-
-        foreach (var enemy in enemies)
+        if (m_enemyList.Count > 0)
         {
-            float distance = Vector3.Distance(playerController.transform.position, enemy.transform.position);
-
-            //Debug.Log("Distancia a enemigo: " + distance);
-
-            if (distance < distanciaEliminacion)
+            foreach (Transform enemy in m_enemyList)
             {
-                Debug.Log("Eliminando enemigo");
-                Destroy(enemy);
+                float distance = enemy.position.z - transform.position.z;
+                m_laser.enabled = true;
+                AimEnemy(enemy);
+
+                if (distance < m_killingDistance && enemy.gameObject.activeSelf)
+                {
+                    Debug.Log("Enemigo eliminado");
+                    enemy.gameObject.SetActive(false);
+                    m_laser.SetPosition(m_enemyList.ToList().IndexOf(enemy), Vector3.zero);
+                    m_enemyList.Dequeue();
+                }
             }
         }
+    }
+
+    private void AimEnemy(Transform enemyToAim)
+    {
+        m_laser.SetPosition(m_enemyList.ToList().IndexOf(enemyToAim), enemyToAim.position);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Enemy"))
+        {
+            m_enemyList.Enqueue(other.gameObject.transform);
+        }
+    }
+
+    public void ActivateDron()
+    {
+        m_isActive = true;
+        m_renderer.enabled = true;
+        m_collider.enabled = true;
+    }
+
+    public void DeactivateDron()
+    {
+        m_isActive = false;
+        m_renderer.enabled = false;
+        m_collider.enabled = false;
     }
 }

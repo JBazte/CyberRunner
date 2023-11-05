@@ -12,10 +12,5 @@ public abstract class PowerUpEffect : ScriptableObject
     public abstract void ExecuteAction(GameObject player);
     public abstract void FinishAction();
 
-    public void isPickedUp()
-    {
-        
-    }
-
     public abstract IEnumerator StartCountDown();
 }

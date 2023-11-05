@@ -11,7 +11,6 @@ public class ObstacleController : MonoBehaviour {
 
     private void OnCollisionEnter(Collision col) {
         if (col.gameObject.CompareTag("Player")) {
-            Debug.Log(col.gameObject.name);
             // Shake camera & inflict damage to player
             StartCoroutine(cameraShake.Shake(.3f, .2f));
             GameManager.Instance.GameOver();

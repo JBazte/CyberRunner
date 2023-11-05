@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0219188974d6148a0a96eec84d834a, type: 3}
   m_Name: DronPowerUp
   m_EditorClassIdentifier: 
-  m_duration: 2
+  m_duration: 10
   m_dron: {fileID: 0}
