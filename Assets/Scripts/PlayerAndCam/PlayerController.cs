@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
     private float m_initHeight, m_colCenterY;
     private bool  m_invulnerability;
 
+<<<<<<< HEAD
     private bool isOnWall = false;  // Para rastrear si el jugador estï¿½ en una pared
     private Vector3 originalPosition;  // Para rastrear la posiciï¿½n original del jugador
     private int Motocharge = 0;
@@ -36,6 +37,10 @@ public class PlayerController : MonoBehaviour {
     
     [SerializeField] private MeshFilter ActualPlayerModel;
     [SerializeField] private Mesh MotoModel;
+=======
+    private bool isOnWall = false;  // Para rastrear si el jugador está en una pared
+    //private Vector3 originalPosition;  // Para rastrear la posición original del jugador
+>>>>>>> f9660a83aa1f55015ab067af62002e40f404955f
 
     public float JumpForce
     {
@@ -65,10 +70,13 @@ public class PlayerController : MonoBehaviour {
         isJumping = false;
         transform.position = Vector3.zero;
         m_invulnerability = false;
+<<<<<<< HEAD
         PlayerPrefs.SetInt("charges",0);
 
         //TEST
         originalPosition = transform.position;
+=======
+>>>>>>> f9660a83aa1f55015ab067af62002e40f404955f
     }
 
     void Update() {
@@ -176,8 +184,13 @@ public class PlayerController : MonoBehaviour {
         {
             if (isOnWall)
             {
+<<<<<<< HEAD
                 // El jugador ha dejado la pared, restaura su posiciï¿½n original en Y
                 transform.position = new Vector3(transform.position.x, originalPosition.y, transform.position.z);
+=======
+                // El jugador ha dejado la pared, restaura su posición original en Y
+                transform.position = new Vector3(transform.position.x, 1.25f, transform.position.z);
+>>>>>>> f9660a83aa1f55015ab067af62002e40f404955f
                 isOnWall = false;
             }
 <<<<<<< Updated upstream
