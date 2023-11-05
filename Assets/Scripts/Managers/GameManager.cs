@@ -65,12 +65,9 @@ public class GameManager : TemporalSingleton<GameManager>
         m_runActive = false;
     }
 
-    public void Motorbyke()
-    {
-
-    }
-
     public bool GetRunActive() { return m_runActive; }
     public void SetRunActive(bool runSpeed) { m_runActive = runSpeed; }
+
+    public float GetTraveledMeters() { return m_metersTravelled; }
 
 }

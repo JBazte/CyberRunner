@@ -11,13 +11,16 @@ public class ObstacleController : MonoBehaviour {
 
     private void OnCollisionEnter(Collision col) {
         if (col.gameObject.CompareTag("Player")) {
-            // Shake camera & inflict damage to player
-            StartCoroutine(cameraShake.Shake(.3f, .2f));
-            GameManager.Instance.GameOver();
-            if (col.gameObject.GetComponent<PlayerController>().GetMotoActive())
+            if (!col.gameObject.GetComponent<PlayerController>().GetInvulneravility())
             {
-                col.gameObject.GetComponent<PlayerController>().MotorbikeCrashed();
-                GameManager.Instance.Resume();
+                // Shake camera & inflict damage to player
+                StartCoroutine(cameraShake.Shake(.3f, .2f));
+                GameManager.Instance.GameOver();
+                if (col.gameObject.GetComponent<PlayerController>().GetMotoActive())
+                {
+                    col.gameObject.GetComponent<PlayerController>().MotorbikeCrashed();
+                    GameManager.Instance.Resume();
+                }
             }
         }
     }

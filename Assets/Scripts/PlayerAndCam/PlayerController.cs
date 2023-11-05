@@ -30,10 +30,10 @@ public class PlayerController : MonoBehaviour {
     private float m_initHeight, m_colCenterY;
     private bool  m_invulnerability;
 
-    private bool  isOnWall = false;  // Para rastrear si el jugador esta en una pared
+    private bool    isOnWall = false;  // Para rastrear si el jugador esta en una pared
     private Vector3 originalPosition;  // Para rastrear la posicion original del jugador
-    private bool  m_motorbikeActive = false;
-    private float timer;
+    private bool    m_motorbikeActive = false;
+    private float   timer;
 
     [SerializeField]
     private MeshFilter m_actualPlayerModel;
@@ -42,7 +42,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private Mesh       m_motorbikeModel;
 
-    private MotorbikeObject m_motorbike;
+    private MotorbikeObject   m_motorbike;
+    private HyperspeedAbility m_hyperspeedAbility;
+    private bool              m_isOnHyperspeed;
+    private float             m_hyperspeedPointEnd;
 
     public float JumpForce
     {
@@ -60,22 +63,24 @@ public class PlayerController : MonoBehaviour {
 
     void Start()
     {
-        m_playerModel = gameObject.GetComponent<MeshFilter>().mesh;
+        m_playerModel       = gameObject.GetComponent<MeshFilter>().mesh;
         m_actualPlayerModel = gameObject.GetComponent<MeshFilter>();
-        m_player = GetComponent<CharacterController>();
-        m_anim = GetComponent<Animator>();
-        m_side = SIDE.Middle;
-        xPos = 0;
-        xValue = 3.0f;
-        yPos = 0;
-        yValue = 5.5f;
-        m_initHeight = m_player.height;
-        m_colCenterY = m_player.center.y;
-        isJumping = false;
-        transform.position = Vector3.zero;
-        m_invulnerability = false;
+        m_player            = GetComponent<CharacterController>();
+        m_anim              = GetComponent<Animator>();
+        m_side              = SIDE.Middle;
+        xPos                = 0;
+        xValue              = 3.0f;
+        yPos                = 0;
+        yValue              = 5.5f;
+        m_initHeight        = m_player.height;
+        m_colCenterY        = m_player.center.y;
+        isJumping           = false;
+        transform.position  = Vector3.zero;
+        m_invulnerability   = false;
 
-        m_motorbike = new MotorbikeObject(gameObject, m_motorbikeModel);
+        m_motorbike         = new MotorbikeObject(gameObject, m_motorbikeModel);
+        m_hyperspeedAbility = new HyperspeedAbility(gameObject);
+        m_isOnHyperspeed    = false;
 
         //TEST
         originalPosition = transform.position;
@@ -178,9 +183,25 @@ public class PlayerController : MonoBehaviour {
             }
             m_lastClickTime = Time.time;
         }
+
+        if(!m_isOnHyperspeed && Input.GetKeyDown(KeyCode.H) && GameManager.Instance.GetTraveledMeters() < 100.0f /*&& PlayerPrefs.GetInt("HyperspeedCharges") > 0*/) //HERE WE ACTIVATE HYPERSPEED
+        {
+            m_hyperspeedPointEnd  = GameManager.Instance.GetTraveledMeters() + m_hyperspeedAbility.GetMetersDuration();
+            ActivateHyperspeed();
+        }
+
+        if(m_isOnHyperspeed)
+        {
+            if(GameManager.Instance.GetTraveledMeters() >= m_hyperspeedPointEnd) 
+                ExitHyperspeed();
+            else transitionYPos = 10.0f;
+        }
+        else { 
+            Jump();
+            Slide();
+        }
         
-        Jump();
-        Slide();
+        
     }
 
     private void FixedUpdate() {
@@ -221,6 +242,16 @@ public class PlayerController : MonoBehaviour {
     public void MotorbikeCrashed()
     {
         m_motorbike.DeactivateMotorbike();
+    }
+
+    private void ActivateHyperspeed()
+    {
+        m_hyperspeedAbility.ActivateHyperspeed();
+    }
+
+    private void ExitHyperspeed()
+    {
+        m_hyperspeedAbility.ExitHyperspeed();
     }
 
     private void Jump() {
@@ -268,4 +299,9 @@ public class PlayerController : MonoBehaviour {
     public void SetMesh(Mesh mesh) { m_actualPlayerModel.mesh = mesh; }
 
     public Mesh GetPlayerMesh() { return m_playerModel; }
+
+    public void SetInvulneravility(bool invulnerability) { m_invulnerability = invulnerability; }
+    public bool GetInvulneravility() {  return m_invulnerability; }
+
+    public void SetIsOnHyperspeed(bool isOnHS) { m_isOnHyperspeed = isOnHS; }
 }
