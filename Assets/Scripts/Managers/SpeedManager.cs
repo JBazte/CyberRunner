@@ -8,6 +8,7 @@ public class SpeedManager : TemporalSingleton<SpeedManager>
     [SerializeField]
     private float m_acceleration;
     private float m_maxSpeed;
+    private float m_currentspeed;
 
     // Start is called before the first frame update
     void Start()
@@ -32,5 +33,6 @@ public class SpeedManager : TemporalSingleton<SpeedManager>
     }
 
     public float GetRunSpeed() { return m_runSpeed; }
+    public float GetCurrentSpeed() { return m_currentspeed; }
     public void SetRunSpeed(float runSpeed) { m_runSpeed = runSpeed; }
 }

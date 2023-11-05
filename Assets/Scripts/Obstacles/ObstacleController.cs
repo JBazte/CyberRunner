@@ -14,6 +14,11 @@ public class ObstacleController : MonoBehaviour {
             // Shake camera & inflict damage to player
             StartCoroutine(cameraShake.Shake(.3f, .2f));
             GameManager.Instance.GameOver();
+            if (col.gameObject.GetComponent<PlayerController>().GetMotActive())
+            {
+                col.gameObject.GetComponent<PlayerController>().SetMotActive(false);
+                GameManager.Instance.Resume();
+            }
         }
     }
 }
