@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour {
     private bool  m_invulnerability;
 
     private bool isOnWall = false;  // Para rastrear si el jugador está en una pared
-    private Vector3 originalPosition;  // Para rastrear la posición original del jugador
+    //private Vector3 originalPosition;  // Para rastrear la posición original del jugador
 
     public float JumpForce
     {
@@ -54,9 +54,6 @@ public class PlayerController : MonoBehaviour {
         isJumping = false;
         transform.position = Vector3.zero;
         m_invulnerability = false;
-
-        //TEST
-        originalPosition = transform.position;
     }
 
     void Update() {
@@ -156,7 +153,7 @@ public class PlayerController : MonoBehaviour {
             if (isOnWall)
             {
                 // El jugador ha dejado la pared, restaura su posición original en Y
-                transform.position = new Vector3(transform.position.x, originalPosition.y, transform.position.z);
+                transform.position = new Vector3(transform.position.x, 1.25f, transform.position.z);
                 isOnWall = false;
             }
         }
