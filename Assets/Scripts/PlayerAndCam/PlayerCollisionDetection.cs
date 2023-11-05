@@ -13,7 +13,13 @@ public class PlayerCollisionDetection : MonoBehaviour {
         if (col.gameObject.CompareTag("Player")) {
             return;
         }
-        playerController.OnPlayerColliderHit(col.collider);
-        Debug.Log(col.gameObject.name);
+        if (!playerController.GetInvulneravility()) {
+            Debug.Log(col.gameObject.name);
+            if (playerController.GetMotoActive()) {
+                playerController.MotorbikeCrashed();
+            } else {
+                playerController.OnPlayerColliderHit(col.collider);
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8588435417512205796}
   - component: {fileID: 7727583532351852941}
   - component: {fileID: 5493514551310339070}
+  - component: {fileID: 3975706605032347552}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -106,7 +107,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -129,7 +130,11 @@ MonoBehaviour:
   forwardSpeed: 0
   dodgeSpeed: 5
   jumpForce: 12
+  cameraController: {fileID: 0}
   CollisionCol: {fileID: 5035718600179339975}
+  m_actualPlayerModel: {fileID: 0}
+  m_playerModel: {fileID: 0}
+  m_motorbikeModel: {fileID: 0}
 --- !u!143 &7727583532351852941
 CharacterController:
   m_ObjectHideFlags: 0
@@ -177,3 +182,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3975706605032347552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8039245739943830426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b061db88362c9194480a0cf481969be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

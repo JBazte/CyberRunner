@@ -8,8 +8,7 @@ TagManager:
   - Ramp
   - DynamicObstacle
   - Enemy
-  - WallLeft
-  - WallRight
+  - Wall
   layers:
   - Default
   - TransparentFX
