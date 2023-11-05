@@ -16,7 +16,6 @@ public class WorldGenerator : TemporalSingleton<WorldGenerator>
         foreach (GameObject tile in Tiles){
             tile.SetActive(false);
         }
-        Debug.Log(Tiles.Length);
     }
     
 

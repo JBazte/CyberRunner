@@ -1,38 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class BootsPowerUp : Powerup
+[CreateAssetMenu(menuName = "PowerUps/BootsPowerUp")]
+public class BootsPowerUp : PowerUpEffect
 {
-    PlayerController playerController = new PlayerController();
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private float m_jumpIncrease;
+
+    public override void ExecuteAction(GameObject player)
     {
-       
+        m_player = player;
+        m_player.GetComponent<PlayerController>().JumpForce += m_jumpIncrease;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void FinishAction()
     {
-        
+        m_player.GetComponent<PlayerController>().JumpForce -= m_jumpIncrease;
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    public override IEnumerator StartCountDown()
     {
-        if (other.CompareTag("PowerUp")) //Hay que añadir este tag
-        {
-            enabled = true;
-        };
-    }
-
-    public override void ActivatePowerUp()
-    {
-        playerController.JumpForce = 24.0f;
-    }
-
-
-    public override void DeactivatePowerUp()
-    {
-        playerController.JumpForce = 12.0f;
+        yield return new WaitForSeconds(m_duration);
+        FinishAction();
     }
 }
