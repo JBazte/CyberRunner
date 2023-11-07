@@ -9,10 +9,13 @@ public class WallPowerUp : PowerUpEffect {
     private GameObject m_wallLeft;
     [SerializeField]
     private GameObject m_wallRight;
+    [SerializeField]
+    private GameObject[] m_walls;
     public override void ExecuteAction(GameObject player) {
         m_player = player;
-        m_wallLeft = GameObject.FindGameObjectWithTag("WallLeft");
-        m_wallRight = GameObject.FindGameObjectWithTag("WallRight");
+        m_walls = GameObject.FindGameObjectsWithTag("Wall");
+        m_wallLeft = m_walls[0];
+        m_wallRight = m_walls[1];
         m_wallRight.GetComponent<MeshRenderer>().enabled = true;
         m_wallLeft.GetComponent<MeshRenderer>().enabled = true;
         m_wallRight.GetComponent<Collider>().enabled = true;

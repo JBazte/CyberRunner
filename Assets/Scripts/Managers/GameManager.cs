@@ -35,7 +35,7 @@ public class GameManager : TemporalSingleton<GameManager>
         //e = v * t
         m_metersTraveled += (m_timer + Time.deltaTime) * SpeedManager.Instance.GetRunSpeed();
 
-        m_score = m_metersTraveled * TraduceCombo();
+        m_score += m_metersTraveled * TranslateCombo();
     }
 
     public void AddComboPoint() { m_accumulatedCombo++; }
@@ -43,7 +43,7 @@ public class GameManager : TemporalSingleton<GameManager>
 
     public void AddCoin() { m_coinsObtained++; }
 
-    public float TraduceCombo() //This function will control the combo traduction to score multiplicator
+    public float TranslateCombo() //This function will control the combo traduction to score multiplicator
     {
         return 1 + m_accumulatedCombo / 10;
     }
