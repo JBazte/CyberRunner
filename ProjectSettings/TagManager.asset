@@ -9,6 +9,7 @@ TagManager:
   - DynamicObstacle
   - Enemy
   - Wall
+  - Walls
   layers:
   - Default
   - TransparentFX

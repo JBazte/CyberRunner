@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b174cb2b33914742b0017d1037c0518, type: 3}
   m_Name: MotorbikePowerUp
   m_EditorClassIdentifier: 
-  m_duration: 1
+  m_duration: 10

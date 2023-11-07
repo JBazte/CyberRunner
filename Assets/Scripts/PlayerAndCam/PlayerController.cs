@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
     public HitBoxY m_hitBoxY = HitBoxY.None;
     public HitBoxZ m_hitBoxZ = HitBoxZ.None;
     private bool moveLeft, moveRight, moveUp, moveDown, isJumping, isSliding, Tap, DoubleTap;
-    private float m_doubleTapTime = 0.25f;
+    private float m_doubleTapTime = 0.2f;
     private float m_lastClickTime;
 
     [SerializeField]
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour {
                 m_lastSide = m_side;
                 m_side = SIDE.Middle;
                 //PlayAnimation("moveLeft");
-            } else if (m_side == SIDE.Left && leftWallDetected) {
+            } else if (m_side == SIDE.Left && leftWallDetected && !m_motorbikeActive) {
                 m_lastSide = m_side;
                 m_side = SIDE.LeftWall;
                 isOnWall = true;
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour {
                 m_lastSide = m_side;
                 m_side = SIDE.Middle;
                 //PlayAnimation("moveRight");
-            } else if (m_side == SIDE.Right && rightWallDetected) {
+            } else if (m_side == SIDE.Right && rightWallDetected && !m_motorbikeActive) {
                 m_lastSide = m_side;
                 m_side = SIDE.RightWall;
                 isOnWall = true;
@@ -178,19 +178,22 @@ public class PlayerController : MonoBehaviour {
         {
             if (Time.time - m_lastClickTime < m_doubleTapTime)// HERE WE CHECK IF ITS A DOUBLE TAP
             {
-                if (PlayerPrefs.GetInt("MotorbikeCharges") < 0)//HERE WE CHECK IF MOTORBIKE IS AVAILABLE TO USE IT
+                if (PlayerPrefs.GetInt("MotorbikeCharges") <= 0)//HERE WE CHECK IF MOTORBIKE IS AVAILABLE TO USE IT
                 {
+                    if(PlayerPrefs.GetInt("MotorbikeCharges") < 0) PlayerPrefs.SetInt("MotorbikeCharges", 0);
                     Debug.Log("NO MOTORBIKE CHARGES");
                 } else if (m_motorbikeActive) {
                     Debug.Log("MOTORBIKE ALREADY ACTIVE");
                 } else {
                     ActivateMotorbike();
+                    StartCoroutine(m_motorbike.StartCountDown());
                 }
             }
             m_lastClickTime = Time.time;
         }
 
-        if (!m_isOnHyperspeed && Input.GetKeyDown(KeyCode.H) && GameManager.Instance.GetTraveledMeters() < 100.0f /*&& PlayerPrefs.GetInt("HyperspeedCharges") > 0*/) //HERE WE ACTIVATE HYPERSPEED
+        //HERE WE ACTIVATE HYPERSPEED
+        if (!m_isOnHyperspeed && Input.GetKeyDown(KeyCode.H) && GameManager.Instance.GetTraveledMeters() < 100.0f && PlayerPrefs.GetInt("HyperspeedCharges") > 0)
         {
             m_hyperspeedPointEnd = GameManager.Instance.GetTraveledMeters() + m_hyperspeedAbility.GetMetersDuration();
             ActivateHyperspeed();
@@ -402,6 +405,10 @@ public class PlayerController : MonoBehaviour {
     }
     public bool GetMotoActive() { return m_motorbikeActive; }
     public void SetMotoActive(bool Activate) { m_motorbikeActive = Activate; }
+    public MotorbikeObject  GetMotorbike()
+    {
+        return m_motorbike;
+    }
     public void SetMesh(Mesh mesh) { m_currentPlayerModel.mesh = mesh; }
     public Mesh GetPlayerMesh() { return m_playerModel; }
     public void SetInvulneravility(bool invulnerability) { m_invulnerability = invulnerability; }
