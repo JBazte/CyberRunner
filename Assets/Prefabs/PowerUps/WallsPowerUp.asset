@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b51ef1658aeaa624ba3e9c8e6978fe29, type: 3}
   m_Name: WallsPowerUp
   m_EditorClassIdentifier: 
-  m_duration: 1
+  m_duration: 10
   m_wallLeft: {fileID: 0}
   m_wallRight: {fileID: 0}
   m_walls:
