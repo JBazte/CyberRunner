@@ -308,14 +308,19 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //This corroutine controls the time the player can be walking on a wall without going down
     public IEnumerator JumpOffWall(SIDE destinySide)
     {
         yield return new WaitForSeconds(m_maxTimeOnWall);
-        m_isOnWall = false;
-        m_side = destinySide;
-        StartCoroutine(WallWalkCooldown());
+        if(m_isOnWall)
+        { 
+            m_isOnWall = false;
+            m_side = destinySide;
+            StartCoroutine(WallWalkCooldown());
+        }
     }
 
+    //This corroutine controls the cooldown the player has to be able to get up to a wall again
     public IEnumerator WallWalkCooldown()
     {
         m_wallOnCooldown = true;
