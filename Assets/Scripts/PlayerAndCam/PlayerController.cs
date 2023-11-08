@@ -11,47 +11,52 @@ public enum HitBoxZ { Forward, Middle, Backward, None }
 public class PlayerController : MonoBehaviour {
     private CharacterController m_player;
     [SerializeField]
-    private SIDE m_side = SIDE.Middle;
+    private SIDE   m_side = SIDE.Middle;
     public HitBoxX m_hitBoxX = HitBoxX.None;
     public HitBoxY m_hitBoxY = HitBoxY.None;
     public HitBoxZ m_hitBoxZ = HitBoxZ.None;
-    private bool moveLeft, moveRight, moveUp, moveDown, isJumping, isSliding, Tap, DoubleTap;
-    private float m_doubleTapTime = 0.2f;
-    private float m_lastClickTime;
+    private bool   moveLeft, moveRight, moveUp, moveDown, isJumping, isSliding, Tap, DoubleTap;
+    private float  m_doubleTapTime = 0.2f;
+    private float  m_lastClickTime;
 
     [SerializeField]
-    private float forwardSpeed;
+    private float    forwardSpeed;
     [SerializeField]
-    private float dodgeSpeed;
-    private float transitionXPos, transitionYPos;
-    private SIDE m_lastSide;
+    private float    dodgeSpeed;
+    private float    transitionXPos, transitionYPos;
+    private SIDE     m_lastSide;
     private Animator m_anim;
     [SerializeField]
-    private float jumpForce;
-    private float m_initHeight, m_colCenterY;
+    private float   jumpForce;
+    private float   m_initHeight, m_colCenterY;
     public CameraController cameraController;
-    private bool stopAllAnim = false;
-    private float stumbleTolerance = 10f;
-    private float StumbleTime;
-    private bool isInputEnabled = true;
+    private bool    stopAllAnim = false;
+    private float   stumbleTolerance = 10f;
+    private float   StumbleTime;
+    private bool    isInputEnabled = true;
     [SerializeField]
     private Collider CollisionCol;
-    private bool m_invulnerability;
-    public bool leftWallDetected, rightWallDetected, isOnWall = false;
+    private bool    m_invulnerability;
+    public bool     leftWallDetected, rightWallDetected, m_isOnWall = false;
+    [SerializeField]
+    private float   m_maxTimeOnWall;
+    [SerializeField]
+    private float   m_wallWalkCooldown;
+    private bool    m_wallOnCooldown = false;
     private RaycastHit m_hitLeft, m_hitRight;
-    private bool m_motorbikeActive = false;
+    private bool    m_motorbikeActive = false;
 
     [SerializeField]
     private MeshFilter m_currentPlayerModel;
     [SerializeField]
-    private Mesh m_playerModel;
+    private Mesh       m_playerModel;
     [SerializeField]
-    private Mesh m_motorbikeModel;
+    private Mesh       m_motorbikeModel;
 
-    private MotorbikeObject m_motorbike;
+    private MotorbikeObject   m_motorbike;
     private HyperspeedAbility m_hyperspeedAbility;
-    private bool m_isOnHyperspeed;
-    private float m_hyperspeedPointEnd;
+    private bool              m_isOnHyperspeed;
+    private float             m_hyperspeedPointEnd;
 
     public float JumpForce {
         get {
@@ -69,17 +74,19 @@ public class PlayerController : MonoBehaviour {
         m_anim = GetComponent<Animator>();
         cameraController = FindObjectOfType<CameraController>();
 
-        StumbleTime = stumbleTolerance;
-        m_side = SIDE.Middle;
-        m_initHeight = m_player.height;
-        m_colCenterY = m_player.center.y;
-        isJumping = false;
+        StumbleTime        = stumbleTolerance;
+        m_side             = SIDE.Middle;
+        m_initHeight       = m_player.height;
+        m_colCenterY       = m_player.center.y;
+        isJumping          = false;
         transform.position = Vector3.up;
-        m_invulnerability = false;
+        m_invulnerability  = false;
+        m_maxTimeOnWall    = 2.0f;
+        m_wallWalkCooldown = 1.0f;
 
-        m_motorbike = new MotorbikeObject(gameObject, m_motorbikeModel);
+        m_motorbike        = new MotorbikeObject(gameObject, m_motorbikeModel);
         m_hyperspeedAbility = new HyperspeedAbility(gameObject);
-        m_isOnHyperspeed = false;
+        m_isOnHyperspeed   = false;
     }
 
     void Update() {
@@ -120,15 +127,17 @@ public class PlayerController : MonoBehaviour {
                 m_lastSide = m_side;
                 m_side = SIDE.Middle;
                 //PlayAnimation("moveLeft");
-            } else if (m_side == SIDE.Left && leftWallDetected && !m_motorbikeActive) {
+            } else if (m_side == SIDE.Left && leftWallDetected && !m_motorbikeActive && !m_wallOnCooldown) {
                 m_lastSide = m_side;
                 m_side = SIDE.LeftWall;
-                isOnWall = true;
+                m_isOnWall = true;
+                StartCoroutine(JumpOffWall(SIDE.Left));
                 //PlayAnimation("jumpUpWallLeft");
             } else if (m_side == SIDE.RightWall) {
                 m_lastSide = m_side;
                 m_side = SIDE.Right;
-                isOnWall = false;
+                m_isOnWall = false;
+                StartCoroutine(WallWalkCooldown());
                 //PlayAnimation("jumpOffWallRight");
             } else if (m_side != m_lastSide) {
                 m_lastSide = m_side;
@@ -143,15 +152,17 @@ public class PlayerController : MonoBehaviour {
                 m_lastSide = m_side;
                 m_side = SIDE.Middle;
                 //PlayAnimation("moveRight");
-            } else if (m_side == SIDE.Right && rightWallDetected && !m_motorbikeActive) {
+            } else if (m_side == SIDE.Right && rightWallDetected && !m_motorbikeActive && !m_wallOnCooldown) {
                 m_lastSide = m_side;
                 m_side = SIDE.RightWall;
-                isOnWall = true;
+                m_isOnWall = true;
+                StartCoroutine(JumpOffWall(SIDE.Right));
                 //PlayAnimation("jumpUpWallRight");
             } else if (m_side == SIDE.LeftWall) {
                 m_lastSide = m_side;
                 m_side = SIDE.Left;
-                isOnWall = false;
+                m_isOnWall = false;
+                StartCoroutine(WallWalkCooldown());
                 //PlayAnimation("jumpOffWallLeft");
             } else if (m_side != m_lastSide) {
                 m_lastSide = m_side;
@@ -168,7 +179,7 @@ public class PlayerController : MonoBehaviour {
 
         transitionXPos = Mathf.Lerp(transitionXPos, (int)m_side, dodgeSpeed * Time.deltaTime);
         Vector3 moveVector;
-        if (isOnWall) {
+        if (m_isOnWall) {
             moveVector = new Vector3(transitionXPos - transform.position.x, 6f - transform.position.y, forwardSpeed * Time.deltaTime);
         } else {
             moveVector = new Vector3(transitionXPos - transform.position.x, transitionYPos * Time.deltaTime, forwardSpeed * Time.deltaTime);
@@ -205,7 +216,7 @@ public class PlayerController : MonoBehaviour {
             } else {
                 transitionYPos = 10.0f;
             }
-        } else if (!isOnWall) {
+        } else if (!m_isOnWall) {
             Jump();
             Slide();
         }
@@ -295,6 +306,26 @@ public class PlayerController : MonoBehaviour {
             isSliding = true;
             isJumping = false;
         }
+    }
+
+    //This corroutine controls the time the player can be walking on a wall without going down
+    public IEnumerator JumpOffWall(SIDE destinySide)
+    {
+        yield return new WaitForSeconds(m_maxTimeOnWall);
+        if(m_isOnWall)
+        { 
+            m_isOnWall = false;
+            m_side = destinySide;
+            StartCoroutine(WallWalkCooldown());
+        }
+    }
+
+    //This corroutine controls the cooldown the player has to be able to get up to a wall again
+    public IEnumerator WallWalkCooldown()
+    {
+        m_wallOnCooldown = true;
+        yield return new WaitForSeconds(m_wallWalkCooldown);
+        m_wallOnCooldown = false;
     }
 
     public void OnPlayerColliderHit(Collider col) {
@@ -414,4 +445,8 @@ public class PlayerController : MonoBehaviour {
     public void SetInvulneravility(bool invulnerability) { m_invulnerability = invulnerability; }
     public bool GetInvulneravility() { return m_invulnerability; }
     public void SetIsOnHyperspeed(bool isOnHS) { m_isOnHyperspeed = isOnHS; }
+    public void SetOnWall(bool isOnWall) { m_isOnWall = isOnWall; }
+    public bool getIsOnWall() { return m_isOnWall; }
+    public void setSide(SIDE side) { m_side = side; }
+    public SIDE getSide() { return m_side; }
 }

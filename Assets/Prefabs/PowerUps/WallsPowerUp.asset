@@ -15,3 +15,6 @@ MonoBehaviour:
   m_duration: 10
   m_wallLeft: {fileID: 0}
   m_wallRight: {fileID: 0}
+  m_walls:
+  - {fileID: 0}
+  - {fileID: 0}

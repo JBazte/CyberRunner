@@ -11,6 +11,7 @@ public class WallPowerUp : PowerUpEffect {
     private GameObject m_wallRight;
     [SerializeField]
     private GameObject[] m_walls;
+    private PlayerController m_playerController;
     public override void ExecuteAction(GameObject player) {
         m_player = player;
         m_walls = GameObject.FindGameObjectsWithTag("Wall");
@@ -29,6 +30,12 @@ public class WallPowerUp : PowerUpEffect {
         m_wallLeft.GetComponent<MeshRenderer>().enabled = false;
         m_wallRight.GetComponent<Collider>().enabled = false;
         m_wallLeft.GetComponent<Collider>().enabled = false;
+        m_playerController = m_player.GetComponent<PlayerController>();
+        if (m_playerController.getIsOnWall())
+        {
+            if      (m_playerController.getSide() == SIDE.LeftWall)  m_playerController.setSide(SIDE.Left);
+            else if (m_playerController.getSide() == SIDE.RightWall) m_playerController.setSide(SIDE.Right);
+        }
         //m_wallRight.SetActive(false);
         //m_wallLeft .SetActive(false);
     }
