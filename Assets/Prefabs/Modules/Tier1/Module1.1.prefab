@@ -238,10 +238,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8848960978332406222}
     m_Modifications:
+    - target: {fileID: 22003619116901082, guid: 62138517e15ecc64d9056d5d86d73669, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3427200219188656449, guid: 62138517e15ecc64d9056d5d86d73669, type: 3}
       propertyPath: m_Name
       value: Fence
       objectReference: {fileID: 0}
+    - target: {fileID: 4158729495513776362, guid: 62138517e15ecc64d9056d5d86d73669, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 6622164827220703997, guid: 62138517e15ecc64d9056d5d86d73669, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3
@@ -282,6 +290,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8955237996262927354, guid: 62138517e15ecc64d9056d5d86d73669, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -424,6 +436,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8848960978332406222}
     m_Modifications:
+    - target: {fileID: 768193266878341284, guid: da0bdd1ae63e56447a589d88a24c1098, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 2862855220138561498, guid: da0bdd1ae63e56447a589d88a24c1098, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
@@ -490,6 +506,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleShop (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 6093833004338473510, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 6653283122047315052, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -552,10 +572,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8848960978332406222}
     m_Modifications:
+    - target: {fileID: 22003619116901082, guid: 62138517e15ecc64d9056d5d86d73669, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3427200219188656449, guid: 62138517e15ecc64d9056d5d86d73669, type: 3}
       propertyPath: m_Name
       value: Fence (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4158729495513776362, guid: 62138517e15ecc64d9056d5d86d73669, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 6622164827220703997, guid: 62138517e15ecc64d9056d5d86d73669, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
@@ -596,6 +624,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8955237996262927354, guid: 62138517e15ecc64d9056d5d86d73669, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -720,6 +752,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallShop
       objectReference: {fileID: 0}
+    - target: {fileID: 8291987400007493556, guid: 1fb015d6f106db54d80dc42c0db7dd76, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -742,6 +778,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleShop (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 6093833004338473510, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 6653283122047315052, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1428,6 +1468,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleShop (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6093833004338473510, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 6653283122047315052, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1596,6 +1640,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7395464339886552100, guid: 3f8938f4234a9db42a076b2f4aa165d9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 8483497259242179080, guid: 3f8938f4234a9db42a076b2f4aa165d9, type: 3}
       propertyPath: m_Name
       value: Ramp
@@ -1746,6 +1794,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleShop (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 6093833004338473510, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 6653283122047315052, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1976,6 +2028,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpObstacle
       objectReference: {fileID: 0}
+    - target: {fileID: 6719283811773977505, guid: 48462463b664ad44b96183c7a0bd72e1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2224,6 +2280,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpObstacle (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6719283811773977505, guid: 48462463b664ad44b96183c7a0bd72e1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2370,6 +2430,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleShop (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 6093833004338473510, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 6653283122047315052, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -2498,6 +2562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleShop (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 6093833004338473510, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 6653283122047315052, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
