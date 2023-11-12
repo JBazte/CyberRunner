@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class GameManager : TemporalSingleton<GameManager>
-{
+public class GameManager : TemporalSingleton<GameManager> {
     [SerializeField]
-    private bool m_runActive = true;
+    private bool m_runActive;
     private float m_timer;
     private float m_auxRunSpeed;
     [SerializeField]
@@ -15,12 +14,12 @@ public class GameManager : TemporalSingleton<GameManager>
     private float m_score;
     private float m_accumulatedCombo;
     private uint m_coinsObtained;
+    [SerializeField]
+    private PlayFabManager playFabManager;
 
 
     // Start is called before the first frame update
-    void Start()
-    {
-        m_runActive = true;
+    void Start() {
         m_metersTraveled = 0.0f;
         m_timer = 0.0f;
         m_auxRunSpeed = 0.0f;
@@ -30,12 +29,11 @@ public class GameManager : TemporalSingleton<GameManager>
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         //e = v * t
         m_metersTraveled += (m_timer + Time.deltaTime) * SpeedManager.Instance.GetRunSpeed();
 
-        m_score += m_metersTraveled * TranslateCombo();
+        m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo();
     }
 
     public void AddComboPoint() { m_accumulatedCombo++; }
@@ -48,16 +46,15 @@ public class GameManager : TemporalSingleton<GameManager>
         return 1 + m_accumulatedCombo / 10;
     }
 
-    public void Resume()
-    {
+    public void Resume() {
         SpeedManager.Instance.SetRunSpeed(m_auxRunSpeed);
         m_runActive = true;
     }
-    public void GameOver()
-    {
+    public void GameOver() {
         m_auxRunSpeed = SpeedManager.Instance.GetRunSpeed();
         SpeedManager.Instance.SetRunSpeed(0.0f);
         m_runActive = false;
+        playFabManager.SetLeaderboardEntry((int)m_score);
     }
 
     public bool GetRunActive() { return m_runActive; }
