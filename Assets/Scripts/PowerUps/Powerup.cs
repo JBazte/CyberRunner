@@ -12,7 +12,13 @@ public class PowerUp : MonoBehaviour
         {
             m_powerUpEffect.ExecuteAction(other.gameObject);
             StartCoroutine(m_powerUpEffect.StartCountDown());
-            GetComponent<MeshRenderer>().enabled = false;
+            gameObject.SetActive(false);
+            Debug.Log("COGIDO : " + m_powerUpEffect);
         }
+    }
+
+    public void SetPowerUpEffect(PowerUpEffect powerUpEffect)
+    {
+        m_powerUpEffect = powerUpEffect;
     }
 }

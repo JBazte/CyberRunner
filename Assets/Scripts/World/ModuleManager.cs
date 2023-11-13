@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorldGenerator : TemporalSingleton<WorldGenerator> 
+public class ModuleManager : TemporalSingleton<ModuleManager> 
 {
     public GameObject StartTile;
     private GameObject[] Tiles;
@@ -14,6 +14,7 @@ public class WorldGenerator : TemporalSingleton<WorldGenerator>
         StartPlane1.transform.position = new Vector3(0, 0, 41);
         Tiles = GameObject.FindGameObjectsWithTag("Module");
         foreach (GameObject tile in Tiles){
+            tile.GetComponent<ModuleBehaviour>().InitializeModule();
             tile.SetActive(false);
         }
     }
@@ -42,11 +43,15 @@ public class WorldGenerator : TemporalSingleton<WorldGenerator>
             if (Tiles[RandomInt1].activeSelf && Tiles[RandomInt1].transform.position.z <= -60)
             {
                 Tiles[RandomInt1].transform.position = new Vector3(0, 0, 139);
+
+                Tiles[RandomInt1].GetComponent<ModuleBehaviour>().RandomizeModule();
             }
             else if (!Tiles[RandomInt1].activeSelf)
             {
                 Tiles[RandomInt1].SetActive(true);
                 Tiles[RandomInt1].transform.position = new Vector3(0, 0, 139);
+
+                Tiles[RandomInt1].GetComponent<ModuleBehaviour>().RandomizeModule();
             }
             else
             {
@@ -61,7 +66,7 @@ public class WorldGenerator : TemporalSingleton<WorldGenerator>
                     Tiles[RandomInt1].SetActive(true);
                     Tiles[RandomInt1].transform.position = new Vector3(0, 0, 138);
                 }
-
+                Tiles[RandomInt1].GetComponent<ModuleBehaviour>().RandomizeModule();
             }      
             
             index = index - 100.0f;
