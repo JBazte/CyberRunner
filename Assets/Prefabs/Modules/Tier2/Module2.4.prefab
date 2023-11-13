@@ -194,11 +194,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f9566d01441a54ba3242ab8f1fa2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_folders:
-  - {fileID: 395245183605133298}
-  - {fileID: 8339556259369939595}
-  - {fileID: 5555256103807244397}
-  - {fileID: 1360209023423260299}
+  m_obstaclesContainer: {fileID: 0}
+  m_enemiesContainer: {fileID: 0}
+  m_coinsContainer: {fileID: 0}
+  m_powerUpsContainer: {fileID: 0}
 --- !u!1 &8339556259369939595
 GameObject:
   m_ObjectHideFlags: 0
@@ -2486,6 +2485,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallShop (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8632877523464956983, guid: 1fb015d6f106db54d80dc42c0db7dd76, type: 3}
+      propertyPath: m_Size.z
+      value: 0.9192276
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632877523464956983, guid: 1fb015d6f106db54d80dc42c0db7dd76, type: 3}
+      propertyPath: m_Center.z
+      value: 0.0403862
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3144,6 +3151,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1421902369349031471}
     m_Modifications:
+    - target: {fileID: 471418987385703531, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
+      propertyPath: m_Size.z
+      value: 0.9593978
+      objectReference: {fileID: 0}
+    - target: {fileID: 471418987385703531, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
+      propertyPath: m_Center.z
+      value: 0.020301104
+      objectReference: {fileID: 0}
     - target: {fileID: 5958876354127931057, guid: d4caabfb04b3cae448a9310b04b15351, type: 3}
       propertyPath: m_Name
       value: MediumShop (2)
@@ -3563,6 +3578,14 @@ PrefabInstance:
     - target: {fileID: 5938730097708204578, guid: 1fb015d6f106db54d80dc42c0db7dd76, type: 3}
       propertyPath: m_Name
       value: SmallShop (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632877523464956983, guid: 1fb015d6f106db54d80dc42c0db7dd76, type: 3}
+      propertyPath: m_Size.z
+      value: 0.91475487
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632877523464956983, guid: 1fb015d6f106db54d80dc42c0db7dd76, type: 3}
+      propertyPath: m_Center.z
+      value: 0.042622566
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
