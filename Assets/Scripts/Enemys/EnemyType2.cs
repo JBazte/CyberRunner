@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyType1 : Enemy
+public  class EnemyType2 : Enemy
 {
     private GameObject Weapon;
     private float TargetTime = 4.0f;
-    private float AuxRad;
     
     private bool isAttaking = false;
     public bool EnemyActive = true;
