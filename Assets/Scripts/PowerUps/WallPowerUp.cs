@@ -12,6 +12,31 @@ public class WallPowerUp : PowerUpEffect {
     [SerializeField]
     private GameObject[] m_walls;
     private PlayerController m_playerController;
+
+    public override void SetTier(PowerUpTiers tier)
+    {
+        if (tier == PowerUpTiers.TIER1)
+        {
+            m_duration = 7;
+        }
+        else if (tier == PowerUpTiers.TIER2)
+        {
+            m_duration = 7.5f;
+        }
+        else if (tier == PowerUpTiers.TIER3)
+        {
+            m_duration = 8f;
+        }
+        else if (tier == PowerUpTiers.TIER4)
+        {
+            m_duration = 8.5f;
+        }
+        else if (tier == PowerUpTiers.TIER5)
+        {
+            m_duration = 9.5f;
+        }
+    }
+
     public override void ExecuteAction(GameObject player) {
         m_player = player;
         m_walls = GameObject.FindGameObjectsWithTag("Wall");

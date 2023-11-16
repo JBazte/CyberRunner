@@ -15,7 +15,12 @@ public class MotorbikeObject : MonoBehaviour {
         m_player = player;
         m_playerScript = m_player.GetComponent<PlayerController>();
         m_motoModel = motoModel;
-        m_duration = 5.0f;
+        m_duration = 0.0f;
+    }
+
+    public void SetDuration(float duration)
+    {
+        m_duration = duration;
     }
 
     public void ActivateMotorbike() {
@@ -34,7 +39,7 @@ public class MotorbikeObject : MonoBehaviour {
     public void DestroyObstacles(Vector3 center, float radius) {
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
         foreach (var hitCollider in hitColliders) {
-            if (hitCollider.gameObject.name != ("ModuleFloor") && hitCollider.gameObject.name != ("Player") && hitCollider.gameObject.name != ("LeftLane") && hitCollider.gameObject.name != ("MiddleLane") && hitCollider.gameObject.name != ("RightLane")) {
+            if (hitCollider.gameObject.CompareTag("Obstacle")) {
                 hitCollider.gameObject.SetActive(false);
             }
         }

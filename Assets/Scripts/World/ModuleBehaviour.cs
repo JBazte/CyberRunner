@@ -95,20 +95,20 @@ public class ModuleBehaviour : MonoBehaviour
 
     private void RandomizePowerUps()
     {
-        if(GameManager.Instance.GetPowerUpAppears())
+        if(PowerUpManager.Instance.GetPowerUpAppears())
         {
             int randomPowerUpPos = Random.Range(0, m_powerUpsCount - 1);
-            int randomPowerUp    = Random.Range(0, (int)GameManager.Instance.GetTotalNumOfPowerUps() - 1);
+            int randomPowerUp    = Random.Range(0, 99);
 
             // If the latest powerUp activated was not picked up and it was active it is deactivated
             if (m_lastPowerUp >= 0 && m_powerUps[m_lastPowerUp].activeSelf) m_powerUps[m_lastPowerUp].SetActive(false); 
 
             m_powerUps[randomPowerUpPos].SetActive(true); //If the powerUp is inactive it activates it
                                                            //It asks the GameManager for the instance of the random powerUp effect
-            m_powerUps[randomPowerUpPos].GetComponent<PowerUp>().SetPowerUpEffect(GameManager.Instance.GetPowerUpEffect(randomPowerUp));
+            m_powerUps[randomPowerUpPos].GetComponent<PowerUp>().SetPowerUpEffect(PowerUpManager.Instance.GetPowerUpEffect(randomPowerUp));
             m_lastPowerUp = randomPowerUpPos;
 
-            GameManager.Instance.SetPowerUpAppears(false);
+            PowerUpManager.Instance.SetPowerUpAppears(false);
         }
     }
 

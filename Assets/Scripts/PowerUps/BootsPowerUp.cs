@@ -7,6 +7,35 @@ public class BootsPowerUp : PowerUpEffect {
     [SerializeField]
     private float m_jumpIncrease;
 
+    public override void SetTier(PowerUpTiers tier)
+    {
+        if(tier == PowerUpTiers.TIER1)
+        {
+            m_jumpIncrease = 13;
+            m_duration     = 5;
+        }
+        else if(tier == PowerUpTiers.TIER2)
+        {
+            m_jumpIncrease = 14;
+            m_duration = 6;
+        }
+        else if (tier == PowerUpTiers.TIER3)
+        {
+            m_jumpIncrease = 15;
+            m_duration = 7;
+        }
+        else if (tier == PowerUpTiers.TIER4)
+        {
+            m_jumpIncrease = 16;
+            m_duration = 8;
+        }
+        else if (tier == PowerUpTiers.TIER5)
+        {
+            m_jumpIncrease = 19;
+            m_duration = 10;
+        }
+    }
+
     public override void ExecuteAction(GameObject player) {
         m_player = player;
         m_player.GetComponent<PlayerController>().JumpForce += m_jumpIncrease;

@@ -8,6 +8,36 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "PowerUps/HyperspeedPowerUp")]
 public class HyperspeedPowerUp : PowerUpEffect
 {
+    private float m_hyperspeedMetersDuration;
+
+    public override void SetTier(PowerUpTiers tier)
+    {
+        m_duration = 1;
+
+        if (tier == PowerUpTiers.TIER1)
+        {
+            m_hyperspeedMetersDuration = 90;
+        }
+        else if (tier == PowerUpTiers.TIER2)
+        {
+            m_hyperspeedMetersDuration = 100;
+        }
+        else if (tier == PowerUpTiers.TIER3)
+        {
+            m_hyperspeedMetersDuration = 110;
+        }
+        else if (tier == PowerUpTiers.TIER4)
+        {
+            m_hyperspeedMetersDuration = 130;
+        }
+        else if (tier == PowerUpTiers.TIER5)
+        {
+            m_hyperspeedMetersDuration = 150;
+        }
+    }
+
+    public float GetHyperspeedMetersDuration() { return m_hyperspeedMetersDuration; }
+
     public override void ExecuteAction(GameObject player)
     {
         Debug.Log("INITIAL CHARGES: " + PlayerPrefs.GetInt("HyperspeedCharges"));

@@ -9,8 +9,7 @@ public class Coin : MonoBehaviour
         if (other.GetComponent<PlayerController>() != null) 
         {
             GameManager.Instance.AddCoin();
-            gameObject.GetComponent<Collider>()    .enabled = false;
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.SetActive(false);
         }
     }
 }

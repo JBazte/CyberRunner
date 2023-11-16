@@ -14,6 +14,11 @@ public class HyperspeedAbility : MonoBehaviour
     {
         m_player = player;
     }
+
+    public void setMetersDuration(float metersDuration)
+    {
+        m_metersDuration = metersDuration;
+    }
     
     public void ActivateHyperspeed()
     {
