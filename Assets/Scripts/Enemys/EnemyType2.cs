@@ -6,6 +6,10 @@ public  class EnemyType2 : Enemy
 {
     private GameObject Weapon;
     private float TargetTime = 4.0f;
+    private float CollPosz;
+    private float CollPosx;
+    private float CollPosy;
+
     
     private bool isAttaking = false;
     public bool EnemyActive = true;
@@ -19,6 +23,11 @@ public  class EnemyType2 : Enemy
     void Update()
     {
         TargetTime -= Time.deltaTime;
+        CollPosz = gameObject.transform.position.z;
+        CollPosx = gameObject.transform.position.x;
+        CollPosy = gameObject.transform.position.y;
+        Weapon.transform.position += new Vector3(0,0 , (-SpeedManager.Instance.GetRunSpeed()-1) * Time.deltaTime);
+        
         if (TargetTime <= 0)
         {
             Attack();
@@ -30,8 +39,9 @@ public  class EnemyType2 : Enemy
         if (!isAttaking)
         {
             Weapon.SetActive(true);
+            Weapon.transform.position = new Vector3(CollPosx,CollPosy ,CollPosz);
             isAttaking = true;
-            TargetTime = 1.0f;
+            TargetTime = 3.0f;
         }
         else if (isAttaking)
         {
