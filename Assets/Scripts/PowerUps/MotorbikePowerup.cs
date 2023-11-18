@@ -9,6 +9,14 @@ using UnityEngine;
 public class MotorbikePowerup : PowerUpEffect
 {
     private float m_motorbikeDuration;
+
+    public static PowerUpEffect CreateInstance(PowerUpTiers tier)
+    {
+        MotorbikePowerup instance = new MotorbikePowerup();
+        instance.SetTier(tier);
+        return instance;
+    }
+
     public override void SetTier(PowerUpTiers tier)
     {
         m_duration = 1;

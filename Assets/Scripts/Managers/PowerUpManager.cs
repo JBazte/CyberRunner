@@ -45,17 +45,23 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
 
     private void CreateAllPowerUps()
     {
-        m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = ScriptableObject.CreateInstance<BootsPowerUp>();//.SetTier(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.DRON]       = ScriptableObject.CreateInstance<DronPowerUp>();
-        m_allPowerUps[(int)PowerUpsEnum.WALLS]      = ScriptableObject.CreateInstance<WallPowerUp>();
-        m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = ScriptableObject.CreateInstance<HyperspeedPowerUp>();
-        m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE]  = ScriptableObject.CreateInstance<MotorbikePowerup>();
+        //m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = ScriptableObject.CreateInstance<BootsPowerUp>();//.SetTier(PowerUpTiers.TIER1);
+        //m_allPowerUps[(int)PowerUpsEnum.DRON]       = ScriptableObject.CreateInstance<DronPowerUp>();
+        //m_allPowerUps[(int)PowerUpsEnum.WALLS]      = ScriptableObject.CreateInstance<WallPowerUp>();
+        //m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = ScriptableObject.CreateInstance<HyperspeedPowerUp>();
+        //m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE]  = ScriptableObject.CreateInstance<MotorbikePowerup>();
 
-        m_allPowerUps[(int)PowerUpsEnum.BOOTS]     .SetTier(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.DRON]      .SetTier(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.WALLS]     .SetTier(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED].SetTier(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE] .SetTier(PowerUpTiers.TIER1);
+        //m_allPowerUps[(int)PowerUpsEnum.BOOTS]     .SetTier(PowerUpTiers.TIER1);
+        //m_allPowerUps[(int)PowerUpsEnum.DRON]      .SetTier(PowerUpTiers.TIER1);
+        //m_allPowerUps[(int)PowerUpsEnum.WALLS]     .SetTier(PowerUpTiers.TIER1);
+        //m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED].SetTier(PowerUpTiers.TIER1);
+        //m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE] .SetTier(PowerUpTiers.TIER1);
+
+        m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = BootsPowerUp.CreateInstance(PowerUpTiers.TIER1);
+        m_allPowerUps[(int)PowerUpsEnum.DRON]       = DronPowerUp.CreateInstance(PowerUpTiers.TIER1);
+        m_allPowerUps[(int)PowerUpsEnum.WALLS]      = WallPowerUp.CreateInstance(PowerUpTiers.TIER1);
+        m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = HyperspeedPowerUp.CreateInstance(PowerUpTiers.TIER1);
+        m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE]  = MotorbikePowerup.CreateInstance(PowerUpTiers.TIER1);
     }
 
     public void SetPowerUpAppears(bool powerUpAppears) { m_powerUpAppears = powerUpAppears; }

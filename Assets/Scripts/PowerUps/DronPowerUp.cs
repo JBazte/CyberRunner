@@ -7,6 +7,13 @@ public class DronPowerUp : PowerUpEffect
 {
     private DronObject m_dron;
 
+    public static PowerUpEffect CreateInstance(PowerUpTiers tier)
+    {
+        DronPowerUp instance = new DronPowerUp();
+        instance.SetTier(tier);
+        return instance;
+    }
+
     public override void SetTier(PowerUpTiers tier)
     {
         if (tier == PowerUpTiers.TIER1)

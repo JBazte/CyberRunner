@@ -9,6 +9,8 @@ public abstract class PowerUpEffect : ScriptableObject
     protected float      m_duration;
     protected GameObject m_player;
 
+    //public abstract PowerUpEffect CreateInstance(PowerUpTiers tier);
+
     public abstract void SetTier(PowerUpTiers tier);
 
     public abstract void ExecuteAction(GameObject player);

@@ -13,6 +13,13 @@ public class WallPowerUp : PowerUpEffect {
     private GameObject[] m_walls;
     private PlayerController m_playerController;
 
+    public static PowerUpEffect CreateInstance(PowerUpTiers tier)
+    {
+        WallPowerUp instance = new WallPowerUp();
+        instance.SetTier(tier);
+        return instance;
+    }
+
     public override void SetTier(PowerUpTiers tier)
     {
         if (tier == PowerUpTiers.TIER1)

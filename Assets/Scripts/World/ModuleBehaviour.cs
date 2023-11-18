@@ -80,7 +80,6 @@ public class ModuleBehaviour : MonoBehaviour
     {
         foreach (GameObject enemy in m_enemies)
         {
-            Debug.Log(enemy);
             if(enemy.GetComponent<EnemyAbstract>() != null)
             {
                 if (enemy.GetComponent<EnemyAbstract>().GetIsSpawn())

@@ -7,6 +7,13 @@ public class BootsPowerUp : PowerUpEffect {
     [SerializeField]
     private float m_jumpIncrease;
 
+    public static PowerUpEffect CreateInstance(PowerUpTiers tier)
+    {
+        BootsPowerUp instance = new BootsPowerUp();
+        instance.SetTier(tier);
+        return instance;
+    }
+
     public override void SetTier(PowerUpTiers tier)
     {
         if(tier == PowerUpTiers.TIER1)

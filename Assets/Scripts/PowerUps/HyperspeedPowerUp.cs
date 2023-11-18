@@ -10,6 +10,13 @@ public class HyperspeedPowerUp : PowerUpEffect
 {
     private float m_hyperspeedMetersDuration;
 
+    public static PowerUpEffect CreateInstance(PowerUpTiers tier)
+    {
+        HyperspeedPowerUp instance = new HyperspeedPowerUp();
+        instance.SetTier(tier);
+        return instance;
+    }
+
     public override void SetTier(PowerUpTiers tier)
     {
         m_duration = 1;
