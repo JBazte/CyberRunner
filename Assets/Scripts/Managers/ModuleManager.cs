@@ -5,8 +5,16 @@ using UnityEngine;
 public class ModuleManager : TemporalSingleton<ModuleManager> 
 {
     public GameObject   m_startTile;
-    public GameObject[] m_modules;
+    private GameObject[] m_modules;
     private float index = 0;
+
+
+    [SerializeField]
+    private ShieldEnemy     m_shieldEnemy;
+    [SerializeField]
+    private SlashEnemy      m_slashEnemy;
+    [SerializeField]
+    private GroundWaveEnemy m_groundWaveEnemy;
 
     private void Start()
     {
@@ -17,8 +25,11 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             tile.GetComponent<ModuleBehaviour>().InitializeModule();
             tile.SetActive(false);
         }
+        m_shieldEnemy.SetIsSpawn(true);
+        m_slashEnemy.SetIsSpawn(true);
+        m_groundWaveEnemy.SetIsSpawn(true);
     }
-    
+    // Render.OnBecameOInvisible()
     private void Update() 
     {
         for (int i = 0; i < m_modules.Length; i++)
@@ -37,20 +48,18 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
 
         if (transform.position.z <= index) 
         {
-            int RandomInt1 = Random.Range(0, m_modules.Length-1);
+            int RandomInt1 = Random.Range(0, m_modules.Length);
 
             if (m_modules[RandomInt1].activeSelf && m_modules[RandomInt1].transform.position.z <= -60)
             {
-                m_modules[RandomInt1].transform.position = new Vector3(0, 0, 139);
-
-                m_modules[RandomInt1].GetComponent<ModuleBehaviour>().RandomizeModule();
+                m_modules[RandomInt1].transform.position = new Vector3(0, 0, 138);
+                m_modules[RandomInt1].GetComponent<ModuleBehaviour>().ResetModule();
             }
             else if (!m_modules[RandomInt1].activeSelf)
             {
                 m_modules[RandomInt1].SetActive(true);
-                m_modules[RandomInt1].transform.position = new Vector3(0, 0, 139);
-
-                m_modules[RandomInt1].GetComponent<ModuleBehaviour>().RandomizeModule();
+                m_modules[RandomInt1].transform.position = new Vector3(0, 0, 138);
+                m_modules[RandomInt1].GetComponent<ModuleBehaviour>().ResetModule();
             }
             else
             {
@@ -59,13 +68,13 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
                 if (m_modules[RandomInt1].activeSelf && m_modules[RandomInt1].transform.position.z <= -60)
                 {
                     m_modules[RandomInt1].transform.position = new Vector3(0, 0, 138);
-                    m_modules[RandomInt1].GetComponent<ModuleBehaviour>().RandomizeModule();
+                    m_modules[RandomInt1].GetComponent<ModuleBehaviour>().ResetModule();
                 }
                 else if (!m_modules[RandomInt1].activeSelf)
                 {
                     m_modules[RandomInt1].SetActive(true);
                     m_modules[RandomInt1].transform.position = new Vector3(0, 0, 138);
-                    m_modules[RandomInt1].GetComponent<ModuleBehaviour>().RandomizeModule();
+                    m_modules[RandomInt1].GetComponent<ModuleBehaviour>().ResetModule();
                 }
                 
             }      
@@ -74,4 +83,8 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
         }
 
     }
+
+    public ShieldEnemy GetShieldEnemy()         { return m_shieldEnemy; }
+    public SlashEnemy GetSlashEnemy()           { return m_slashEnemy; }
+    public GroundWaveEnemy GetGroundWaveEnemy() { return m_groundWaveEnemy; }
 }

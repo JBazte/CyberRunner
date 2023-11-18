@@ -14,7 +14,7 @@ public class ModuleBehaviour : MonoBehaviour
 
     [SerializeField]
     private GameObject   m_enemiesContainer;
-    private GameObject[] m_enemies;
+    public GameObject[] m_enemies;
     private int          m_enemiesCount;
 
     [SerializeField]
@@ -46,7 +46,7 @@ public class ModuleBehaviour : MonoBehaviour
                                           .Select(child => child.gameObject)
                                           .ToArray();
         m_enemies = m_enemiesContainer.GetComponentsInChildren<Transform>(true)
-                                          .Where(child => child != m_enemiesContainer.transform)
+                                          .Where(child => child != m_enemiesContainer.transform && child.parent == m_enemiesContainer.transform)
                                           .Select(child => child.gameObject)
                                           .ToArray();
         m_coins = m_coinsContainer.GetComponentsInChildren<Transform>(true)
@@ -60,7 +60,7 @@ public class ModuleBehaviour : MonoBehaviour
         DeactivateAllPowerUps();
     }
 
-    public void RandomizeModule()
+    public void ResetModule()
     {
         ResetObstacles();
         RandomizeEnemies();
@@ -80,8 +80,23 @@ public class ModuleBehaviour : MonoBehaviour
     {
         foreach (GameObject enemy in m_enemies)
         {
-            //if (!enemy.activeSelf) enemy.SetActive(true);
-            //PENDIENTE DEL CODIGO DE GUILLE PARA HACER QUE SE ALEATORICEZ SI SON RANDOM
+            Debug.Log(enemy);
+            if(enemy.GetComponent<EnemyAbstract>() != null)
+            {
+                if (enemy.GetComponent<EnemyAbstract>().GetIsSpawn())
+                {
+                    Destroy(enemy);
+                }
+                else
+                {
+                    enemy.GetComponent<EnemyAbstract>().SetHasAttacked(false);
+                    if (!enemy.activeSelf) enemy.SetActive(true);
+                }
+            }
+            else if(enemy.GetComponent<SpawnPoint>() != null)
+            {
+                enemy.GetComponent<SpawnPoint>().SpawnRandomEnemy();
+            }
         }
     }
 
@@ -97,7 +112,7 @@ public class ModuleBehaviour : MonoBehaviour
     {
         if(PowerUpManager.Instance.GetPowerUpAppears())
         {
-            int randomPowerUpPos = Random.Range(0, m_powerUpsCount - 1);
+            int randomPowerUpPos = Random.Range(0, m_powerUpsCount);
             int randomPowerUp    = Random.Range(0, 99);
 
             // If the latest powerUp activated was not picked up and it was active it is deactivated

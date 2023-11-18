@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 913064086120389014}
   m_Layer: 0
   m_Name: PowerUp
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,4 +118,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b247f3ba2cc2b547ba75f304c6d7cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_powerUpEffect: {fileID: 0}

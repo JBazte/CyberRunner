@@ -49,7 +49,6 @@ public class MotorbikeObject : MonoBehaviour {
     {
         yield return new WaitForSeconds(m_duration);
         if(m_playerScript.GetMotoActive())
-            Debug.Log("LLEGA");
             DeactivateMotorbike();
     }
 }
