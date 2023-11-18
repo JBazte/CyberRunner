@@ -17,15 +17,18 @@ public class SpawnPoint : MonoBehaviour
 
         if (randomEnemyType == (int)ENEMY_TYPES.SHIELD_ENEMY)
         {
-            Instantiate(ModuleManager.Instance.GetShieldEnemy(), transform.position, newRotation);
+            m_enemy = Instantiate(ModuleManager.Instance.GetShieldEnemy(), transform.position, newRotation, transform);
+            m_enemy.SetIsSpawn(true);
         }
         else if (randomEnemyType == (int)ENEMY_TYPES.SLASH_ENEMY)
         {
-            Instantiate(ModuleManager.Instance.GetSlashEnemy(), transform.position, newRotation);
+            m_enemy = Instantiate(ModuleManager.Instance.GetSlashEnemy(), transform.position, newRotation, transform);
+            m_enemy.SetIsSpawn(true);
         }
         else if (randomEnemyType == (int)ENEMY_TYPES.GROUNDWAVE_ENEMY)
         {
-            Instantiate(ModuleManager.Instance.GetGroundWaveEnemy(), transform.position, newRotation);
+            m_enemy = Instantiate(ModuleManager.Instance.GetGroundWaveEnemy(), transform.position, newRotation, transform);
+            m_enemy.SetIsSpawn(true);
         }
         else
         {

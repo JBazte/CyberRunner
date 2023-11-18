@@ -13,7 +13,6 @@ public  class GroundWaveEnemy : EnemyAbstract
 
     
     private bool isAttaking = false;
-    public bool EnemyActive = true;
 
     void Start()
     {

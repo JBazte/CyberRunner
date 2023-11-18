@@ -8,7 +8,6 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     private GameObject[] m_modules;
     private float index = 0;
 
-
     [SerializeField]
     private ShieldEnemy     m_shieldEnemy;
     [SerializeField]
