@@ -5,32 +5,30 @@ using UnityEngine;
 public  class GroundWaveEnemy : EnemyAbstract
 
 {
-    private GameObject Weapon;
-    private float TargetTime = 4.0f;
+    private GameObject m_waeapon;
     private float CollPosz;
     private float CollPosx;
     private float CollPosy;
-
-    
     private bool isAttaking = false;
-    public bool EnemyActive = true;
-
     void Start()
     {
-        Weapon = gameObject.transform.GetChild(0).gameObject;
+        m_waeapon = gameObject.transform.GetChild(0).gameObject;
     }
     
     void Update()
     {
-        TargetTime -= Time.deltaTime;
         CollPosz = gameObject.transform.position.z;
         CollPosx = gameObject.transform.position.x;
         CollPosy = gameObject.transform.position.y;
-        Weapon.transform.position += new Vector3(0,0 , (-SpeedManager.Instance.GetRunSpeed()-1) * Time.deltaTime);
+        m_waeapon.transform.position += new Vector3(0,0 , (-SpeedManager.Instance.GetRunSpeed()-1) * Time.deltaTime);
         
-        if (TargetTime <= 0)
+        if(gameObject.transform.position.z <= 13.0f)
         {
             Attack();
+        }
+        if (m_waeapon.transform.position.z <= -3.0f)
+        {
+            m_waeapon.SetActive(false);
         }
     }
 
@@ -38,19 +36,11 @@ public  class GroundWaveEnemy : EnemyAbstract
     {
         if(!m_hasAttacked)
         {
-            if (!isAttaking)
-            {
-                Weapon.SetActive(true);
-                Weapon.transform.position = new Vector3(CollPosx,CollPosy ,CollPosz);
-                isAttaking = true;
-                TargetTime = 3.0f;
-            }
-            else if (isAttaking)
-            {
-                Weapon.SetActive(false);
-                isAttaking = false;
-                TargetTime = 3.0f;
-            }
+            
+            m_waeapon.SetActive(true);
+            m_waeapon.transform.position = new Vector3(CollPosx,CollPosy ,CollPosz);
+            isAttaking = true;
+           
         }
 
         m_hasAttacked = true;

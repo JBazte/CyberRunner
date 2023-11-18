@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class SlashEnemy : EnemyAbstract
 {
+    public GameObject m_player;
     private GameObject m_waeapon;
-    private float      m_targetTime = 4.0f;
     private bool       m_isAttaking = false;
-
+    
+    
     void Start()
     {
         m_waeapon = gameObject.transform.GetChild(0).gameObject;
@@ -15,15 +16,13 @@ public class SlashEnemy : EnemyAbstract
     
     void Update()
     {
-        m_targetTime -= Time.deltaTime;
-        if (m_targetTime <= 0)
+        if(gameObject.transform.position.z <= 3.5)
         {
             Attack();
         }
-
-        if(!m_hasAttacked )
+        if (m_waeapon.transform.position.z <= -4.0f)
         {
-            // Que compruebe distancia con el jugador para ver cuando realiza el ataque
+            m_waeapon.SetActive(false);
         }
     }
 
@@ -31,18 +30,8 @@ public class SlashEnemy : EnemyAbstract
     {
         if(!m_hasAttacked)
         { 
-            if (!m_isAttaking)
-            {
-                m_waeapon.SetActive(true);
-                m_isAttaking = true;
-                m_targetTime = 1.0f;
-            }
-            else if (m_isAttaking)
-            {
-                m_waeapon.SetActive(false);
-                m_isAttaking = false;
-                m_targetTime = 3.0f;
-            }
+            m_waeapon.SetActive(true);
+            m_isAttaking = true;
         }
 
         m_hasAttacked = true;
