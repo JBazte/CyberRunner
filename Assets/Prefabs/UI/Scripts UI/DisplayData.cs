@@ -13,7 +13,6 @@ public class DisplayData : MonoBehaviour
 
     private void OnEnable()
     {
-        gameManager = GetComponent<GameManager>();
         thisDoc = GetComponent<UIDocument>();
 
         scoreLabel = thisDoc.rootVisualElement.Q("ScoreLab") as Label;
@@ -29,14 +28,7 @@ public class DisplayData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreLabel.text = ((int)gameManager.m_score).ToString();
-        
-        if(coinsLabel != null )
-        {
-            coinsLabel.text = gameManager.CoinsObtained.ToString();
-        }
-
-        Debug.Log("Score="+scoreLabel.text);
-        Debug.Log("Coins="+coinsLabel.text);
+        scoreLabel.text = ((int)gameManager.Score).ToString();    
+        coinsLabel.text = gameManager.CoinsObtained.ToString();
     }
 }

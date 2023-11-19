@@ -10,16 +10,16 @@ public class ShopButton : MonoBehaviour
 
     UIDocument m_thisDoc;
 
-    Button UIbutton;
+    Button shopButton;
 
     private void OnEnable()
     {
         m_thisDoc = GetComponent<UIDocument>();
 
-        UIbutton = m_thisDoc.rootVisualElement.Q("ShopButton") as Button;
+        shopButton = m_thisDoc.rootVisualElement.Q("ShopButton") as Button;
        
 
-        UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
+        shopButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt)
@@ -36,9 +36,7 @@ public class ShopButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UIbutton = shopDoc.rootVisualElement.Q("ShopButton") as Button;
-
-        UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
+        shopButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 }
 

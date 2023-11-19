@@ -10,15 +10,15 @@ public class PauseButton : MonoBehaviour
 
     UIDocument m_thisDoc;
 
-    Button UIbutton;
+    Button pauseButton;
 
     private void OnEnable()
     {
         m_thisDoc = GetComponent<UIDocument>();
 
-        UIbutton = m_thisDoc.rootVisualElement.Q("PuaseButton") as Button;
+        pauseButton = m_thisDoc.rootVisualElement.Q("PuaseButton") as Button;
 
-        UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
+        pauseButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt)
@@ -35,7 +35,7 @@ public class PauseButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UIbutton = m_thisDoc.rootVisualElement.Q("PuaseButton") as Button;
-        UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
+        pauseButton = m_thisDoc.rootVisualElement.Q("PuaseButton") as Button;
+        pauseButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 }

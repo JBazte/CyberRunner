@@ -29,6 +29,11 @@ public class GameManager : TemporalSingleton<GameManager>
         CoinsObtained = 0;
     }
 
+    public void test(float s)
+    {
+        s = Score;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -36,6 +41,7 @@ public class GameManager : TemporalSingleton<GameManager>
         m_metersTraveled += (m_timer + Time.deltaTime) * SpeedManager.Instance.GetRunSpeed();
 
         Score += m_metersTraveled * TranslateCombo();
+
     }
 
     public void AddComboPoint() { AccumulatedCombo++; }

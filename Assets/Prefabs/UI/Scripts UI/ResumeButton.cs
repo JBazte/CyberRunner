@@ -10,15 +10,15 @@ public class ResumeButton : MonoBehaviour
     
     UIDocument m_thisDoc;
 
-    Button UIbutton;
+    Button resumeButton;
 
     private void OnEnable()
     {
         m_thisDoc = GetComponent<UIDocument>();
 
-        UIbutton = m_thisDoc.rootVisualElement.Q("ResumeButton") as Button;
+        resumeButton = m_thisDoc.rootVisualElement.Q("ResumeButton") as Button;
 
-        UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
+        resumeButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt)
@@ -35,9 +35,9 @@ public class ResumeButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UIbutton = m_thisDoc.rootVisualElement.Q("ResumeButton") as Button;
+        resumeButton = m_thisDoc.rootVisualElement.Q("ResumeButton") as Button;
 
-        UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
+        resumeButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 }
 

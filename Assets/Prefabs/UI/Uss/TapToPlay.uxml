@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Backgorund" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:Label tabindex="-1" text="Tap tp play!" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TapLab" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Art/Fonts/Dimitri/DIMITRI_.TTF?fileID=12800000&amp;guid=5e34799af4245a24fa664895c5dc5889&amp;type=3#DIMITRI_&apos;); font-size: 170px; -unity-text-align: upper-center; position: relative; top: 1000px; left: 0;" />
+    </ui:VisualElement>
+</ui:UXML>
