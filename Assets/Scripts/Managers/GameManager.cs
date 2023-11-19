@@ -18,6 +18,16 @@ public class GameManager : TemporalSingleton<GameManager>
     private uint  m_coinsObtained;
     private float m_initialRunSpeed = 12.0f;
     private float m_initialAcceleration = 0.01f;
+    private PlayerController m_player;
+
+    [SerializeField]
+    private UIDocument m_UIGameOver;
+    [SerializeField]
+    private UIDocument m_UIOnPause;
+    [SerializeField]
+    private UIDocument m_UIInGame;
+    [SerializeField]
+    private UIDocument m_UIOnShop;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +39,7 @@ public class GameManager : TemporalSingleton<GameManager>
         m_accumulatedCombo = 0;
         m_score            = 0.0f;
         m_coinsObtained    = 0;
+        m_player = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
@@ -55,18 +66,46 @@ public class GameManager : TemporalSingleton<GameManager>
         m_runActive = true; 
         SpeedManager.Instance.SetRunSpeed(m_initialRunSpeed);
         SpeedManager.Instance.SetAcceleration(m_initialAcceleration);
+        m_player.SetIsInputEnabled(true);
+    }
+
+    public void PauseRun()
+    {
+        m_auxRunSpeed = SpeedManager.Instance.GetRunSpeed();
+        SpeedManager.Instance.SetRunSpeed(0.0f);
+        m_runActive = false;
+        m_UIInGame.enabled = false;
+        m_UIOnPause.enabled = true;
+        m_player.SetIsInputEnabled(false);
     }
 
     public void Resume()
     {
         SpeedManager.Instance.SetRunSpeed(m_auxRunSpeed);
         m_runActive = true;
+        m_UIOnPause.enabled = false;
+        m_UIInGame.enabled = true;
+        m_player.SetIsInputEnabled(true);
     }
     public void GameOver()
     {
         m_auxRunSpeed = SpeedManager.Instance.GetRunSpeed();
         SpeedManager.Instance.SetRunSpeed(0.0f);
+        m_UIInGame.enabled = false;
         m_runActive = false;
+        m_UIGameOver.enabled = true;
+    }
+
+    public void OnShop()
+    {
+        m_UIOnShop.enabled = true;
+        //m_UIGameOver.enabled = false;
+    }
+
+    public void OutShop()
+    {
+        m_UIOnShop.enabled = false;
+        //m_UIGameOver.enabled = true;
     }
 
     public bool GetRunActive()              { return m_runActive; }
@@ -75,5 +114,5 @@ public class GameManager : TemporalSingleton<GameManager>
 
     public float Score { get => m_score; set => m_score = value; }
     public uint CoinsObtained { get => m_coinsObtained; set => m_coinsObtained = value; }
-    public float AccumulatedCombo { get => m_accumulatedCombo; set => m_accumulatedCombo = value; }
+    public float AccumulatedCombo { get => m_accumulatedCombo; set => m_accumulatedCombo = (int)value; }
 }
