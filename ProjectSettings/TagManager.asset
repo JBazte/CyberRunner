@@ -10,6 +10,10 @@ TagManager:
   - Enemy
   - Wall
   - Walls
+  - Obstacle
+  - Coin
+  - PowerUp
+  - Spawn
   layers:
   - Default
   - TransparentFX

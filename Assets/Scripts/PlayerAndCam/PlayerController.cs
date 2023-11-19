@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SIDE { LeftWall = -5, Left = -3, Middle = 0, Right = 3, RightWall = 5 }
+public enum SIDE    { LeftWall = -5, Left = -3, Middle = 0, Right = 3, RightWall = 5 }
 public enum HitBoxX { Left, Middle, Right, None }
 public enum HitBoxY { Up, Middle, LowMiddle, Down, None }
 public enum HitBoxZ { Forward, Middle, Backward, None }
@@ -52,8 +52,8 @@ public class PlayerController : MonoBehaviour {
     private Mesh       m_playerModel;
     [SerializeField]
     private Mesh       m_motorbikeModel;
-
     private MotorbikeObject   m_motorbike;
+
     private HyperspeedAbility m_hyperspeedAbility;
     private bool              m_isOnHyperspeed;
     private float             m_hyperspeedPointEnd;
@@ -65,6 +65,12 @@ public class PlayerController : MonoBehaviour {
         set {
             jumpForce = value;
         }
+    }
+
+    private void OnEnable()
+    {
+        m_motorbike = new MotorbikeObject(gameObject, m_motorbikeModel);
+        m_hyperspeedAbility = new HyperspeedAbility(gameObject);
     }
 
     void Start() {
@@ -83,9 +89,6 @@ public class PlayerController : MonoBehaviour {
         m_invulnerability  = false;
         m_maxTimeOnWall    = 2.0f;
         m_wallWalkCooldown = 1.0f;
-
-        m_motorbike        = new MotorbikeObject(gameObject, m_motorbikeModel);
-        m_hyperspeedAbility = new HyperspeedAbility(gameObject);
         m_isOnHyperspeed   = false;
     }
 
@@ -189,6 +192,8 @@ public class PlayerController : MonoBehaviour {
         {
             if (Time.time - m_lastClickTime < m_doubleTapTime)// HERE WE CHECK IF ITS A DOUBLE TAP
             {
+                ActivateMotorbike();
+                StartCoroutine(m_motorbike.StartCountDown());
                 if (PlayerPrefs.GetInt("MotorbikeCharges") <= 0)//HERE WE CHECK IF MOTORBIKE IS AVAILABLE TO USE IT
                 {
                     if(PlayerPrefs.GetInt("MotorbikeCharges") < 0) PlayerPrefs.SetInt("MotorbikeCharges", 0);
@@ -222,6 +227,8 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    
+
     public IEnumerator DeathPlayer(string anim) {
         stopAllAnim = true;
         cameraController.ShakeCamera(0.5f, 0.2f);
@@ -249,6 +256,12 @@ public class PlayerController : MonoBehaviour {
 
         StumbleTime -= 6f;
         ResetCollision();
+    }
+
+    public void InitializePowerUpObjects()
+    {
+        m_hyperspeedAbility.setMetersDuration(PowerUpManager.Instance.GetHyperspeedPowerUp().GetHyperspeedMetersDuration());
+        m_motorbike.SetDuration(PowerUpManager.Instance.GetMotorbikePowerUp().GetMotorbikeDuration());
     }
 
     private void ActivateMotorbike() {
@@ -332,6 +345,8 @@ public class PlayerController : MonoBehaviour {
         m_hitBoxX = GetHitBoxX(col);
         m_hitBoxY = GetHitBoxY(col);
         m_hitBoxZ = GetHitBoxZ(col);
+
+        GameManager.Instance.ResetCombo();
 
         if (m_hitBoxZ == HitBoxZ.Forward && m_hitBoxX == HitBoxX.Middle) {
             if (m_hitBoxY == HitBoxY.LowMiddle) {
@@ -434,12 +449,11 @@ public class PlayerController : MonoBehaviour {
         }
         return hitZ;
     }
+    
+    
     public bool GetMotoActive() { return m_motorbikeActive; }
     public void SetMotoActive(bool Activate) { m_motorbikeActive = Activate; }
-    public MotorbikeObject  GetMotorbike()
-    {
-        return m_motorbike;
-    }
+    public MotorbikeObject  GetMotorbike(){ return m_motorbike; }
     public void SetMesh(Mesh mesh) { m_currentPlayerModel.mesh = mesh; }
     public Mesh GetPlayerMesh() { return m_playerModel; }
     public void SetInvulneravility(bool invulnerability) { m_invulnerability = invulnerability; }
