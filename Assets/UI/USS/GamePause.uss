@@ -1,9 +1,9 @@
-.pause-menu-buttons {
+.puase-menu-buttons {
     width: 550px;
     height: 175px;
 }
 
-.pause-menu-buttons:hover {
+.puase-menu-buttons:hover {
     rotate: -10deg;
     transition-duration: 0.3s;
 }

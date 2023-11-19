@@ -23,7 +23,6 @@ public class TapToPlay : MonoBehaviour
     {
         thisDoc.enabled = false;
         inGameUI.enabled = true;
-        GameManager.Instance.StartRun();
     }
 
     // Start is called before the first frame update
