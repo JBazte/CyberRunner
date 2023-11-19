@@ -1,0 +1,9 @@
+.puase-menu-buttons {
+    width: 550px;
+    height: 175px;
+}
+
+.puase-menu-buttons:hover {
+    rotate: -10deg;
+    transition-duration: 0.3s;
+}

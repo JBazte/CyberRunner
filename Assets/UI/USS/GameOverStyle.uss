@@ -1,0 +1,33 @@
+.retry {
+}
+
+.retry-button {
+    font-size: 20px;
+    -unity-font: url('project://database/Assets/Art/Fonts/Dimitri/DIMITRI_.TTF?fileID=12800000&guid=5e34799af4245a24fa664895c5dc5889&type=3#DIMITRI_');
+}
+
+.retry-button:hover {
+    font-size: 70px;
+    color: rgb(255, 255, 255);
+    rotate: -10deg;
+    scale: 1.5 1.5;
+    transition-duration: 0.3s;
+}
+
+.game-over-text {
+    font-size: 200px;
+    color: rgb(255, 0, 0);
+    -unity-font: url('project://database/Assets/Prefabs/UI/Fonts/GlitchGoblin-2O87v.ttf?fileID=12800000&guid=5c53f7ccd633bf54dbaf7802211a6450&type=3#GlitchGoblin-2O87v');
+    -unity-font-definition: initial;
+    -unity-text-align: upper-center;
+    white-space: normal;
+    -unity-text-outline-width: 10px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+}
+
+.small-label-ingame {
+    position: absolute;
+    font-size: 50px;
+    -unity-font: url('project://database/Assets/Prefabs/UI/Fonts/GlitchGoblin-2O87v.ttf?fileID=12800000&guid=5c53f7ccd633bf54dbaf7802211a6450&type=3#GlitchGoblin-2O87v');
+    -unity-font-definition: initial;
+}
