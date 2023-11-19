@@ -5,9 +5,9 @@ using UnityEngine.UIElements;
 
 public class ResumeButton : MonoBehaviour
 {
-    [SerializeField]
-    UIDocument inGameDoc;
-    
+    //[SerializeField]
+    //UIDocument inGameDoc;
+
     UIDocument m_thisDoc;
 
     Button resumeButton;
@@ -24,6 +24,7 @@ public class ResumeButton : MonoBehaviour
     public void OnButtonclick(ClickEvent evt)
     {
         m_thisDoc.enabled = false;
+        GameManager.Instance.Resume();
     }
 
     // Start is called before the first frame update
