@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Background" style="flex-grow: 1; background-color: rgb(255, 255, 255);">
+        <ui:VisualElement name="ItemDisplay" style="flex-grow: 1; width: 1080px; height: 400px;">
+            <ui:VisualElement name="MotoIcon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Prefabs/UI/Images/moto.png?fileID=2800000&amp;guid=ee9fb8f4446b388459007af4c85173d9&amp;type=3#moto&apos;); width: 370px; height: 370px; position: absolute; top: 236px; left: 36px;" />
+            <ui:Label tabindex="-1" text="Moto" parse-escape-sequences="true" display-tooltip-when-elided="true" name="MotoLabel" class="object-text" style="font-size: 60px; position: absolute; top: 308px; left: 460px; -unity-font: url(&apos;project://database/Assets/Art/Fonts/Dimitri/DIMITRI_.TTF?fileID=12800000&amp;guid=5e34799af4245a24fa664895c5dc5889&amp;type=3#DIMITRI_&apos;); -unity-font-definition: initial;" />
+            <ui:ProgressBar value="22" title="Tier Moto" name="MotoBar" style="position: absolute; height: 48px; width: 539px; top: 460px; left: 452px; font-size: 30px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="ItemDisplay" style="flex-grow: 1; width: 1080px; height: 400px;">
+            <ui:VisualElement name="BotasIcon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Prefabs/UI/Images/botas.png?fileID=2800000&amp;guid=2fcd7753cc7a80048b822ff74d138999&amp;type=3#botas&apos;); width: 370px; height: 370px; position: absolute; top: 236px; left: 36px;" />
+            <ui:Label tabindex="-1" text="Botas&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BotasLabel" class="object-text" style="font-size: 60px; position: absolute; top: 308px; left: 460px; -unity-font: url(&apos;project://database/Assets/Art/Fonts/Dimitri/DIMITRI_.TTF?fileID=12800000&amp;guid=5e34799af4245a24fa664895c5dc5889&amp;type=3#DIMITRI_&apos;); -unity-font-definition: initial;" />
+            <ui:ProgressBar value="22" title="Tier Botas" name="BotasBar" style="position: absolute; height: 48px; width: 539px; top: 460px; left: 452px; font-size: 30px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -3,6 +3,7 @@
 
 .retry-button {
     font-size: 20px;
+    -unity-font: url('project://database/Assets/Art/Fonts/Dimitri/DIMITRI_.TTF?fileID=12800000&guid=5e34799af4245a24fa664895c5dc5889&type=3#DIMITRI_');
 }
 
 .retry-button:hover {
