@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CloseButton : MonoBehaviour
+public class TapToPlay : MonoBehaviour
 {
     UIDocument thisDoc;
-
-    Button closeButton;
+    Button tapButton;
 
     private void OnEnable()
     {
         thisDoc = GetComponent<UIDocument>();
+        tapButton = thisDoc.rootVisualElement.Q("TapButton") as Button;
 
-        closeButton = thisDoc.rootVisualElement.Q("CloseButton") as Button;
-
-        closeButton.RegisterCallback<ClickEvent>(OnButtonclick);
+        tapButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt)
@@ -32,7 +30,6 @@ public class CloseButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        closeButton = thisDoc.rootVisualElement.Q("CloseButton") as Button;
-        closeButton.RegisterCallback<ClickEvent>(OnButtonclick);
+        
     }
 }
