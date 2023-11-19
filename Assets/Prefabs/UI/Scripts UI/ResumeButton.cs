@@ -5,25 +5,26 @@ using UnityEngine.UIElements;
 
 public class ResumeButton : MonoBehaviour
 {
-    [SerializeField]
-    UIDocument inGameDoc;
-    
-    UIDocument m_thisDoc;
+    //[SerializeField]
+    //UIDocument inGameDoc;
 
-    Button resumeButton;
+    private UIDocument m_thisDoc;
+
+    private Button     m_resumeButton;
 
     private void OnEnable()
     {
         m_thisDoc = GetComponent<UIDocument>();
 
-        resumeButton = m_thisDoc.rootVisualElement.Q("ResumeButton") as Button;
+        m_resumeButton = m_thisDoc.rootVisualElement.Q("ResumeButton") as Button;
 
-        resumeButton.RegisterCallback<ClickEvent>(OnButtonclick);
+        m_resumeButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt)
     {
         m_thisDoc.enabled = false;
+        GameManager.Instance.Resume();
     }
 
     // Start is called before the first frame update
@@ -35,9 +36,8 @@ public class ResumeButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        resumeButton = m_thisDoc.rootVisualElement.Q("ResumeButton") as Button;
-
-        resumeButton.RegisterCallback<ClickEvent>(OnButtonclick);
+        m_resumeButton = m_thisDoc.rootVisualElement.Q("ResumeButton") as Button;
+        m_resumeButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 }
 

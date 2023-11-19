@@ -5,9 +5,6 @@ using UnityEngine.UIElements;
 
 public class DisplayData : MonoBehaviour
 {
-    [SerializeField]
-    GameManager gameManager;
-
     UIDocument thisDoc;
     Label scoreLabel, coinsLabel;
 
@@ -28,10 +25,10 @@ public class DisplayData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreLabel.text = ((int)gameManager.Score).ToString();    
+        scoreLabel.text = ((int)GameManager.Instance.Score).ToString();    
         if(coinsLabel != null)
         {
-            coinsLabel.text = gameManager.CoinsObtained.ToString();
+            coinsLabel.text = GameManager.Instance.CoinsObtained.ToString();
         }
     }
 }
