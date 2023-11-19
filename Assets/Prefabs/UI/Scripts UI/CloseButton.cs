@@ -20,8 +20,7 @@ public class CloseButton : MonoBehaviour
 
     public void OnButtonclick(ClickEvent evt)
     {
-        //thisDoc.enabled = false;
-        GameManager.Instance.OutShop();
+        thisDoc.enabled = false;
     }
 
     // Start is called before the first frame update

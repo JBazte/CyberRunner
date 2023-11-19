@@ -5,8 +5,8 @@ using UnityEngine.UIElements;
 
 public class PauseButton : MonoBehaviour
 {
-    //[SerializeField]
-    //UIDocument m_pauseDoc;
+    [SerializeField]
+    UIDocument puaseDoc;
 
     UIDocument m_thisDoc;
 
@@ -16,15 +16,14 @@ public class PauseButton : MonoBehaviour
     {
         m_thisDoc = GetComponent<UIDocument>();
 
-        pauseButton = m_thisDoc.rootVisualElement.Q("PauseButton") as Button;
+        pauseButton = m_thisDoc.rootVisualElement.Q("PuaseButton") as Button;
 
         pauseButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt)
     {
-        //m_pauseDoc.enabled = true;
-        GameManager.Instance.PauseRun();
+        puaseDoc.enabled = true;
     }
 
     // Start is called before the first frame update
@@ -36,7 +35,7 @@ public class PauseButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        pauseButton = m_thisDoc.rootVisualElement.Q("PauseButton") as Button;
+        pauseButton = m_thisDoc.rootVisualElement.Q("PuaseButton") as Button;
         pauseButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 }
