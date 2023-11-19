@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    private PowerUpEffect m_powerUpEffect;
+    public PowerUpEffect m_powerUpEffect;
 
     public void SetPowerUpEffect(PowerUpEffect powerUpEffect)
     {

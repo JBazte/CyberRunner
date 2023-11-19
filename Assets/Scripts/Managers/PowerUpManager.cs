@@ -45,7 +45,7 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
 
     private void CreateAllPowerUps()
     {
-        m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = ScriptableObject.CreateInstance<BootsPowerUp>();
+        m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = ScriptableObject.CreateInstance<BootsPowerUp>();//.SetTier(PowerUpTiers.TIER1);
         m_allPowerUps[(int)PowerUpsEnum.DRON]       = ScriptableObject.CreateInstance<DronPowerUp>();
         m_allPowerUps[(int)PowerUpsEnum.WALLS]      = ScriptableObject.CreateInstance<WallPowerUp>();
         m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = ScriptableObject.CreateInstance<HyperspeedPowerUp>();

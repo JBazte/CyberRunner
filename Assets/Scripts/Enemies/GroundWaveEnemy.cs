@@ -10,6 +10,7 @@ public  class GroundWaveEnemy : EnemyAbstract
     private float CollPosx;
     private float CollPosy;
     private bool isAttaking = false;
+
     void Start()
     {
         m_waeapon = gameObject.transform.GetChild(0).gameObject;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class EnemyAbstract : MonoBehaviour
 {
-    protected bool m_isSpawn = false;
+    public bool m_isSpawn     = false;
     protected bool m_hasAttacked = false;
 
     public abstract void Attack();
