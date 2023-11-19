@@ -5,8 +5,8 @@ using UnityEngine.UIElements;
 
 public class ShopButton : MonoBehaviour
 {
-    [SerializeField]
-    UIDocument shopDoc;
+    //[SerializeField]
+    //UIDocument shopDoc;
 
     UIDocument m_thisDoc;
 
@@ -24,7 +24,8 @@ public class ShopButton : MonoBehaviour
 
     public void OnButtonclick(ClickEvent evt)
     {
-        shopDoc.enabled = true;
+        //shopDoc.enabled = true;
+        GameManager.Instance.OnShop();
     }
 
     // Start is called before the first frame update
