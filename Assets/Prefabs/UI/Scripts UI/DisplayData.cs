@@ -29,6 +29,9 @@ public class DisplayData : MonoBehaviour
     void Update()
     {
         scoreLabel.text = ((int)gameManager.Score).ToString();    
-        coinsLabel.text = gameManager.CoinsObtained.ToString();
+        if(coinsLabel != null)
+        {
+            coinsLabel.text = gameManager.CoinsObtained.ToString();
+        }
     }
 }

@@ -5,6 +5,9 @@ using UnityEngine.UIElements;
 
 public class TapToPlay : MonoBehaviour
 {
+    [SerializeField]
+    UIDocument inGameUI;
+
     UIDocument thisDoc;
     Button tapButton;
 
@@ -19,6 +22,7 @@ public class TapToPlay : MonoBehaviour
     public void OnButtonclick(ClickEvent evt)
     {
         thisDoc.enabled = false;
+        inGameUI.enabled = true;
     }
 
     // Start is called before the first frame update
