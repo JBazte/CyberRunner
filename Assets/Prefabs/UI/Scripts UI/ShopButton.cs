@@ -6,21 +6,27 @@ using UnityEngine.UIElements;
 public class ShopButton : MonoBehaviour
 {
     [SerializeField]
-    UIDocument shopDoc;
+    UIDocument shopDoc, gameOverDoc;
 
-    Button UIbutton;
+    Button UIbutton, closeButton;
 
     private void OnEnable()
     {
-        shopDoc = GetComponent<UIDocument>();
+        gameOverDoc = GetComponent<UIDocument>();
 
-        UIbutton = shopDoc.rootVisualElement.Q("ResumeButton") as Button;
+        UIbutton = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
+       
+        /*if (UIbutton != null)
+        {
+            Debug.Log("Button shop found");
+        }*/
 
         UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt)
     {
+        gameOverDoc.enabled = false;
         shopDoc.enabled = true;
     }
 
@@ -33,7 +39,9 @@ public class ShopButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UIbutton = shopDoc.rootVisualElement.Q("ShopButton") as Button;
 
+        UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 }
 

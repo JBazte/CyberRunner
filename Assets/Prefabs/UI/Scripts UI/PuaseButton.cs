@@ -49,6 +49,7 @@ public class PauseButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UIbutton = inGameDoc.rootVisualElement.Q("PuaseButton") as Button;
+        UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 }

@@ -35,7 +35,9 @@ public class ResumeButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UIbutton = puaseDoc.rootVisualElement.Q("ResumeButton") as Button;
 
+        UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 }
 
