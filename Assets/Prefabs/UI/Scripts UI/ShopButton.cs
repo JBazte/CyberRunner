@@ -5,8 +5,8 @@ using UnityEngine.UIElements;
 
 public class ShopButton : MonoBehaviour
 {
-    //[SerializeField]
-    //UIDocument shopDoc;
+    [SerializeField]
+    UIDocument shopDoc;
 
     UIDocument m_thisDoc;
 
@@ -18,13 +18,13 @@ public class ShopButton : MonoBehaviour
 
         shopButton = m_thisDoc.rootVisualElement.Q("ShopButton") as Button;
        
+
         shopButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt)
     {
-        //shopDoc.enabled = true;
-        GameManager.Instance.OnShop();
+        shopDoc.enabled = true;
     }
 
     // Start is called before the first frame update
