@@ -9,14 +9,20 @@ public enum PowerUpTiers { TIER1, TIER2, TIER3, TIER4, TIER5 }
 
 public class PowerUpManager : TemporalSingleton<PowerUpManager>
 {
-    private static uint m_totalNumofPowerUps = 5;
-    public bool m_powerUpAppears;
+    private static uint      m_totalNumofPowerUps = 5;
+    public bool              m_powerUpAppears;
     [SerializeField]
-    private PowerUpEffect[] m_allPowerUps = new PowerUpEffect[m_totalNumofPowerUps];
-    private float m_powerUpTimer;
+    private PowerUpEffect[]  m_allPowerUps = new PowerUpEffect[m_totalNumofPowerUps];
+    private float            m_powerUpTimer;
     [SerializeField]
-    private float m_powerUpSpawnTime;
+    private float            m_powerUpSpawnTime;
     private PlayerController m_player;
+
+    //private string           m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt("BootsTier");
+    private string           m_dronTierPlayerPrefs       = "DronTier";
+    private string           m_wallsTierPlayerPrefs      = "WallsTier";
+    private string           m_motorbikeTierPlayerPrefs  = "MotorbikeTier";
+    private string           m_hyperspeedTierPlayerPrefs = "HyperspeedTier";
 
     private void OnEnable()
     {
@@ -58,6 +64,7 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
         //m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE] .SetTier(PowerUpTiers.TIER1);
 
         m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = BootsPowerUp.CreateInstance(PowerUpTiers.TIER1);
+        //m_allPowerUps[(int)PowerUpsEnum.BOOTS] = BootsPowerUp.CreateInstance(PowerUpTiers.);
         m_allPowerUps[(int)PowerUpsEnum.DRON]       = DronPowerUp.CreateInstance(PowerUpTiers.TIER1);
         m_allPowerUps[(int)PowerUpsEnum.WALLS]      = WallPowerUp.CreateInstance(PowerUpTiers.TIER1);
         m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = HyperspeedPowerUp.CreateInstance(PowerUpTiers.TIER1);

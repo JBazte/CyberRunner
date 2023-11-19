@@ -8,13 +8,19 @@ public abstract class PowerUpEffect : ScriptableObject
     [SerializeField]
     protected float      m_duration;
     protected GameObject m_player;
-
-    //public abstract PowerUpEffect CreateInstance(PowerUpTiers tier);
+    protected bool       m_isAlreadyActive = false;
 
     public abstract void SetTier(PowerUpTiers tier);
 
     public abstract void ExecuteAction(GameObject player);
     public abstract void FinishAction();
+    //public abstract void ResetCountDown();
 
-    public abstract IEnumerator StartCountDown();
+    public IEnumerator StartCountDown()
+    {
+        yield return new WaitForSeconds(m_duration);
+        FinishAction();
+    }
+
+    public bool GetIsAlreadyActive() {  return m_isAlreadyActive; }
 }

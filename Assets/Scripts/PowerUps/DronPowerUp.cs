@@ -41,19 +41,16 @@ public class DronPowerUp : PowerUpEffect
     public override void ExecuteAction(GameObject player)
     {
         m_dron = FindObjectOfType<DronObject>();
+        m_isAlreadyActive = true;
         m_dron.ActivateDron();
     }
 
     public override void FinishAction()
     {
         m_dron.DeactivateDron();
+        m_isAlreadyActive = false;
     }
 
-    public override IEnumerator StartCountDown()
-    {
-        yield return new WaitForSeconds(m_duration);
-        FinishAction();
-    }
 }
 
 

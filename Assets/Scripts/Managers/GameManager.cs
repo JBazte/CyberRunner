@@ -8,23 +8,25 @@ using UnityEngine.UIElements;
 public class GameManager : TemporalSingleton<GameManager>
 {
     [SerializeField]
-    private bool m_runActive = true;
+    private bool  m_runActive;
     private float m_timer;
     private float m_auxRunSpeed;
     [SerializeField]
     private float m_metersTraveled;
     private float m_score;
-    private float m_accumulatedCombo;
+    private int   m_accumulatedCombo;
     private uint  m_coinsObtained;
+    private float m_initialRunSpeed = 12.0f;
+    private float m_initialAcceleration = 0.01f;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_runActive        = true;
+        m_runActive        = false;
         m_metersTraveled   = 0.0f;
         m_timer            = 0.0f;
         m_auxRunSpeed      = 0.0f;
-        m_accumulatedCombo = 0.0f;
+        m_accumulatedCombo = 0;
         m_score            = 0.0f;
         m_coinsObtained    = 0;
     }
@@ -36,7 +38,7 @@ public class GameManager : TemporalSingleton<GameManager>
         m_metersTraveled += (m_timer + Time.deltaTime) * SpeedManager.Instance.GetRunSpeed();
 
         // (s * m/s = m in one frame) * combo player has in that frame = score acumulated in the frame
-        m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo();
+        if(m_runActive) m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo();
     }
 
     public void AddComboPoint() { m_accumulatedCombo++; }
@@ -47,6 +49,12 @@ public class GameManager : TemporalSingleton<GameManager>
     public float TranslateCombo() //This function will control the combo traduction to score multiplicator
     {
         return 1 + m_accumulatedCombo / 10;
+    }
+
+    public void StartRun() { 
+        m_runActive = true; 
+        SpeedManager.Instance.SetRunSpeed(m_initialRunSpeed);
+        SpeedManager.Instance.SetAcceleration(m_initialAcceleration);
     }
 
     public void Resume()

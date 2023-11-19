@@ -45,15 +45,12 @@ public class BootsPowerUp : PowerUpEffect {
 
     public override void ExecuteAction(GameObject player) {
         m_player = player;
+        m_isAlreadyActive = true;
         m_player.GetComponent<PlayerController>().JumpForce += m_jumpIncrease;
     }
 
     public override void FinishAction() {
+        m_isAlreadyActive = false;
         m_player.GetComponent<PlayerController>().JumpForce -= m_jumpIncrease;
-    }
-
-    public override IEnumerator StartCountDown() {
-        yield return new WaitForSeconds(m_duration);
-        FinishAction();
     }
 }

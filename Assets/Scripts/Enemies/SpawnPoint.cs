@@ -13,21 +13,20 @@ public class SpawnPoint : MonoBehaviour
     public void SpawnRandomEnemy()
     {
         int randomEnemyType = Random.Range(0, m_enemyTypesNum);
-        Quaternion newRotation = transform.rotation * Quaternion.Euler(0, 180, 0);
 
         if (randomEnemyType == (int)ENEMY_TYPES.SHIELD_ENEMY)
         {
-            m_enemy = Instantiate(ModuleManager.Instance.GetShieldEnemy(), transform.position, newRotation, transform);
+            m_enemy = Instantiate(ModuleManager.Instance.GetShieldEnemy(), transform.position, transform.rotation, transform);
             m_enemy.SetIsSpawn(true);
         }
         else if (randomEnemyType == (int)ENEMY_TYPES.SLASH_ENEMY)
         {
-            m_enemy = Instantiate(ModuleManager.Instance.GetSlashEnemy(), transform.position, newRotation, transform);
+            m_enemy = Instantiate(ModuleManager.Instance.GetSlashEnemy(), transform.position, transform.rotation, transform);
             m_enemy.SetIsSpawn(true);
         }
         else if (randomEnemyType == (int)ENEMY_TYPES.GROUNDWAVE_ENEMY)
         {
-            m_enemy = Instantiate(ModuleManager.Instance.GetGroundWaveEnemy(), transform.position, newRotation, transform);
+            m_enemy = Instantiate(ModuleManager.Instance.GetGroundWaveEnemy(), transform.position, transform.rotation, transform);
             m_enemy.SetIsSpawn(true);
         }
         else

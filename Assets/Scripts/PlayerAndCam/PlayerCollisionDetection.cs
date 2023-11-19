@@ -38,8 +38,16 @@ public class PlayerCollisionDetection : MonoBehaviour {
         else if (other.gameObject.CompareTag("PowerUp"))
         {
             PowerUpEffect powerUp = other.gameObject.GetComponent<PowerUp>().GetPowerUpEffect();
-            powerUp.ExecuteAction(playerController.gameObject);
-            StartCoroutine(powerUp.StartCountDown());
+            if(!powerUp.GetIsAlreadyActive())
+            {
+                powerUp.ExecuteAction(playerController.gameObject);
+                StartCoroutine(powerUp.StartCountDown());
+            }
+            else
+            {
+                StopCoroutine(powerUp.StartCountDown());
+                StartCoroutine(powerUp.StartCountDown());
+            }
             other.gameObject.SetActive(false);
             Debug.Log("COGIDO : " + powerUp);
             return;

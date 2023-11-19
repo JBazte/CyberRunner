@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SIDE { LeftWall = -5, Left = -3, Middle = 0, Right = 3, RightWall = 5 }
+public enum SIDE    { LeftWall = -5, Left = -3, Middle = 0, Right = 3, RightWall = 5 }
 public enum HitBoxX { Left, Middle, Right, None }
 public enum HitBoxY { Up, Middle, LowMiddle, Down, None }
 public enum HitBoxZ { Forward, Middle, Backward, None }
@@ -345,6 +345,8 @@ public class PlayerController : MonoBehaviour {
         m_hitBoxX = GetHitBoxX(col);
         m_hitBoxY = GetHitBoxY(col);
         m_hitBoxZ = GetHitBoxZ(col);
+
+        GameManager.Instance.ResetCombo();
 
         if (m_hitBoxZ == HitBoxZ.Forward && m_hitBoxX == HitBoxX.Middle) {
             if (m_hitBoxY == HitBoxY.LowMiddle) {

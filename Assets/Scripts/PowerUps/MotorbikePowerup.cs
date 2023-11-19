@@ -55,9 +55,4 @@ public class MotorbikePowerup : PowerUpEffect
 
     public float GetMotorbikeDuration() { return m_motorbikeDuration; }
 
-    public override IEnumerator StartCountDown()
-    {
-        yield return new WaitForSeconds(m_duration);
-        FinishAction();
-    }
 }

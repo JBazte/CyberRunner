@@ -55,10 +55,4 @@ public class HyperspeedPowerUp : PowerUpEffect
     {
         Debug.Log("FINAL CHARGES: " + PlayerPrefs.GetInt("HyperspeedCharges"));
     }
-
-    public override IEnumerator StartCountDown()
-    {
-        yield return new WaitForSeconds(m_duration);
-        FinishAction();
-    }
 }

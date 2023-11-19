@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class ShieldEnemy : EnemyAbstract
 { 
-    public GameObject m_player;
-    private GameObject m_waeapon;
     private bool       m_isAttaking = false;
     
     
     void Start()
     {
-        m_waeapon = gameObject.transform.GetChild(0).gameObject;
+        //m_weapon = gameObject.transform.GetChild(0).gameObject;
     }
     
     void Update()
@@ -20,9 +18,9 @@ public class ShieldEnemy : EnemyAbstract
         {
             Attack();
         }
-        if (m_waeapon.transform.position.z <= -5.0f)
+        if (m_weapon.transform.position.z <= -5.0f)
         {
-            m_waeapon.SetActive(false);
+            m_weapon.SetActive(false);
         }
     }
 
@@ -30,7 +28,7 @@ public class ShieldEnemy : EnemyAbstract
     {
         if(!m_hasAttacked)
         { 
-            m_waeapon.SetActive(true);
+            m_weapon.SetActive(true);
             m_isAttaking = true;
         }
 

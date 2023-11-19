@@ -46,6 +46,7 @@ public class WallPowerUp : PowerUpEffect {
 
     public override void ExecuteAction(GameObject player) {
         m_player = player;
+        m_isAlreadyActive = true;
         m_walls = GameObject.FindGameObjectsWithTag("Wall");
         m_wallLeft = m_walls[0];
         m_wallRight = m_walls[1];
@@ -59,6 +60,7 @@ public class WallPowerUp : PowerUpEffect {
 
     public override void FinishAction() {
         m_wallRight.GetComponent<MeshRenderer>().enabled = false;
+        m_isAlreadyActive = false;
         m_wallLeft.GetComponent<MeshRenderer>().enabled = false;
         m_wallRight.GetComponent<Collider>().enabled = false;
         m_wallLeft.GetComponent<Collider>().enabled = false;
@@ -70,10 +72,5 @@ public class WallPowerUp : PowerUpEffect {
         }
         //m_wallRight.SetActive(false);
         //m_wallLeft .SetActive(false);
-    }
-
-    public override IEnumerator StartCountDown() {
-        yield return new WaitForSeconds(m_duration);
-        FinishAction();
     }
 }

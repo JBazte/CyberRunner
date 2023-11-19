@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1164b570498cfcc448def6533940fbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isSpawn: 0
   m_player: {fileID: 0}
 --- !u!1 &3890530953711488725
 GameObject:
@@ -178,13 +179,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3890530953711488725}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.040846, y: 0.505, z: -1.487}
-  m_LocalScale: {x: 1.6389923, y: 0.5832703, z: 0.4940391}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 1.1, z: -1.3}
+  m_LocalScale: {x: 1.64, y: 1.5, z: 0.45}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 122431109980700882}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!65 &2234684959851336498
 BoxCollider:
   m_ObjectHideFlags: 0

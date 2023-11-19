@@ -82,14 +82,17 @@ public class ModuleBehaviour : MonoBehaviour
         {
             if(enemy.GetComponent<EnemyAbstract>() != null)
             {
-                if (enemy.GetComponent<EnemyAbstract>().GetIsSpawn())
+                EnemyAbstract enemyAux = enemy.GetComponent<EnemyAbstract>();
+                if (enemyAux.GetIsSpawn())
                 {
                     Destroy(enemy);
                 }
                 else
                 {
-                    enemy.GetComponent<EnemyAbstract>().SetHasAttacked(false);
+                    enemyAux.SetHasAttacked(false);
                     if (!enemy.activeSelf) enemy.SetActive(true);
+                    Debug.Log(enemy + "          " + enemyAux);
+                    enemyAux.DeactivateWeapon();
                 }
             }
             else if(enemy.GetComponent<SpawnPoint>() != null)
