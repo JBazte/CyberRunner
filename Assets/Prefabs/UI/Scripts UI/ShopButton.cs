@@ -6,27 +6,24 @@ using UnityEngine.UIElements;
 public class ShopButton : MonoBehaviour
 {
     [SerializeField]
-    UIDocument shopDoc, gameOverDoc;
+    UIDocument shopDoc;
 
-    Button UIbutton, closeButton;
+    UIDocument m_thisDoc;
+
+    Button UIbutton;
 
     private void OnEnable()
     {
-        gameOverDoc = GetComponent<UIDocument>();
+        m_thisDoc = GetComponent<UIDocument>();
 
-        UIbutton = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
+        UIbutton = m_thisDoc.rootVisualElement.Q("ShopButton") as Button;
        
-        /*if (UIbutton != null)
-        {
-            Debug.Log("Button shop found");
-        }*/
 
         UIbutton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt)
     {
-        gameOverDoc.enabled = false;
         shopDoc.enabled = true;
     }
 

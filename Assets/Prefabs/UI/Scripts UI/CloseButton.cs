@@ -15,17 +15,13 @@ public class CloseButton : MonoBehaviour
 
         closeButton = thisDoc.rootVisualElement.Q("CloseButton") as Button;
 
-        /*if (UIbutton != null)
-        {
-            Debug.Log("Button shop found");
-        }*/
-
         closeButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt)
     {
         thisDoc.enabled = false;
+        Debug.Log("cliked");
     }
 
     // Start is called before the first frame update

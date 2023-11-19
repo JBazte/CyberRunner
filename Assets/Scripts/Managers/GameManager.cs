@@ -24,9 +24,9 @@ public class GameManager : TemporalSingleton<GameManager>
         m_metersTraveled = 0.0f;
         m_timer = 0.0f;
         m_auxRunSpeed = 0.0f;
-        m_accumulatedCombo = 0.0f;
-        m_score = 0.0f;
-        m_coinsObtained = 0;
+        AccumulatedCombo = 0.0f;
+        Score = 0.0f;
+        CoinsObtained = 0;
     }
 
     // Update is called once per frame
@@ -35,17 +35,17 @@ public class GameManager : TemporalSingleton<GameManager>
         //e = v * t
         m_metersTraveled += (m_timer + Time.deltaTime) * SpeedManager.Instance.GetRunSpeed();
 
-        m_score += m_metersTraveled * TranslateCombo();
+        Score += m_metersTraveled * TranslateCombo();
     }
 
-    public void AddComboPoint() { m_accumulatedCombo++; }
-    public void ResetCombo() { m_accumulatedCombo = 0; }
+    public void AddComboPoint() { AccumulatedCombo++; }
+    public void ResetCombo() { AccumulatedCombo = 0; }
 
-    public void AddCoin() { m_coinsObtained++; }
+    public void AddCoin() { CoinsObtained++; }
 
     public float TranslateCombo() //This function will control the combo traduction to score multiplicator
     {
-        return 1 + m_accumulatedCombo / 10;
+        return 1 + AccumulatedCombo / 10;
     }
 
     public void Resume()
@@ -63,5 +63,9 @@ public class GameManager : TemporalSingleton<GameManager>
     public bool GetRunActive() { return m_runActive; }
     public void SetRunActive(bool runSpeed) { m_runActive = runSpeed; }
     public float GetTraveledMeters() { return m_metersTraveled; }
+
+    public float Score { get => m_score; set => m_score = value; }
+    public uint CoinsObtained { get => m_coinsObtained; set => m_coinsObtained = value; }
+    public float AccumulatedCombo { get => m_accumulatedCombo; set => m_accumulatedCombo = value; }
 
 }
