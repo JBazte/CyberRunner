@@ -11,52 +11,52 @@ public enum HitBoxZ { Forward, Middle, Backward, None }
 public class PlayerController : MonoBehaviour {
     private CharacterController m_player;
     [SerializeField]
-    private SIDE   m_side = SIDE.Middle;
+    private SIDE m_side = SIDE.Middle;
     public HitBoxX m_hitBoxX = HitBoxX.None;
     public HitBoxY m_hitBoxY = HitBoxY.None;
     public HitBoxZ m_hitBoxZ = HitBoxZ.None;
-    private bool   moveLeft, moveRight, moveUp, moveDown, isJumping, isSliding, Tap, DoubleTap;
-    private float  m_doubleTapTime = 0.2f;
-    private float  m_lastClickTime;
+    public bool moveLeft, moveRight, moveUp, moveDown, isJumping, isSliding, Tap, DoubleTap;
+    private float m_doubleTapTime = 0.2f;
+    private float m_lastClickTime;
 
     [SerializeField]
-    private float    forwardSpeed;
+    private float forwardSpeed;
     [SerializeField]
-    private float    dodgeSpeed;
-    private float    transitionXPos, transitionYPos;
-    private SIDE     m_lastSide;
-    private Animator m_anim;
+    private float dodgeSpeed;
+    private float transitionXPos, transitionYPos;
+    private SIDE m_lastSide;
+    public Animator m_anim;
     [SerializeField]
-    private float   jumpForce;
-    private float   m_initHeight, m_colCenterY;
+    private float jumpForce;
+    private float m_initHeight, m_colCenterY;
     public CameraController cameraController;
-    private bool    stopAllAnim = false;
-    private float   stumbleTolerance = 10f;
-    private float   StumbleTime;
-    private bool    isInputEnabled = true;
+    private bool stopAllAnim = false;
+    private float stumbleTolerance = 10f;
+    private float stumbleTime;
+    private bool isInputEnabled = true;
     [SerializeField]
     private Collider CollisionCol;
-    private bool    m_invulnerability;
-    public bool     leftWallDetected, rightWallDetected, m_isOnWall = false;
+    private bool m_invulnerability;
+    public bool leftWallDetected, rightWallDetected, m_isOnWall = false;
     [SerializeField]
-    private float   m_maxTimeOnWall;
+    private float m_maxTimeOnWall;
     [SerializeField]
-    private float   m_wallWalkCooldown;
-    private bool    m_wallOnCooldown = false;
+    private float m_wallWalkCooldown;
+    private bool m_wallOnCooldown = false;
     private RaycastHit m_hitLeft, m_hitRight;
-    private bool    m_motorbikeActive = false;
+    private bool m_motorbikeActive = false;
 
     [SerializeField]
     private MeshFilter m_currentPlayerModel;
     [SerializeField]
-    private Mesh       m_playerModel;
+    private Mesh m_playerModel;
     [SerializeField]
-    private Mesh       m_motorbikeModel;
+    private Mesh m_motorbikeModel;
 
-    private MotorbikeObject   m_motorbike;
+    private MotorbikeObject m_motorbike;
     private HyperspeedAbility m_hyperspeedAbility;
-    private bool              m_isOnHyperspeed;
-    private float             m_hyperspeedPointEnd;
+    private bool m_isOnHyperspeed;
+    private float m_hyperspeedPointEnd;
 
     public float JumpForce {
         get {
@@ -71,22 +71,22 @@ public class PlayerController : MonoBehaviour {
         m_playerModel = gameObject.GetComponent<MeshFilter>().mesh;
         m_currentPlayerModel = gameObject.GetComponent<MeshFilter>();
         m_player = GetComponent<CharacterController>();
-        m_anim = GetComponent<Animator>();
+        m_anim = GetComponentInChildren<Animator>();
         cameraController = FindObjectOfType<CameraController>();
 
-        StumbleTime        = stumbleTolerance;
-        m_side             = SIDE.Middle;
-        m_initHeight       = m_player.height;
-        m_colCenterY       = m_player.center.y;
-        isJumping          = false;
+        stumbleTime = stumbleTolerance;
+        m_side = SIDE.Middle;
+        m_initHeight = m_player.height;
+        m_colCenterY = m_player.center.y;
+        isJumping = false;
         transform.position = Vector3.up;
-        m_invulnerability  = false;
-        m_maxTimeOnWall    = 2.0f;
+        m_invulnerability = false;
+        m_maxTimeOnWall = 2.0f;
         m_wallWalkCooldown = 1.0f;
 
-        m_motorbike        = new MotorbikeObject(gameObject, m_motorbikeModel);
+        m_motorbike = new MotorbikeObject(gameObject, m_motorbikeModel);
         m_hyperspeedAbility = new HyperspeedAbility(gameObject);
-        m_isOnHyperspeed   = false;
+        m_isOnHyperspeed = false;
     }
 
     void Update() {
@@ -122,60 +122,62 @@ public class PlayerController : MonoBehaviour {
             if (m_side == SIDE.Middle) {
                 m_lastSide = m_side;
                 m_side = SIDE.Left;
-                //PlayAnimation("moveLeft");
+                PlayAnimation("moveLeft");
             } else if (m_side == SIDE.Right) {
                 m_lastSide = m_side;
                 m_side = SIDE.Middle;
-                //PlayAnimation("moveLeft");
+                PlayAnimation("moveLeft");
             } else if (m_side == SIDE.Left && leftWallDetected && !m_motorbikeActive && !m_wallOnCooldown) {
                 m_lastSide = m_side;
                 m_side = SIDE.LeftWall;
                 m_isOnWall = true;
                 StartCoroutine(JumpOffWall(SIDE.Left));
-                //PlayAnimation("jumpUpWallLeft");
+                PlayAnimation("wallRunLeftStart");
             } else if (m_side == SIDE.RightWall) {
                 m_lastSide = m_side;
                 m_side = SIDE.Right;
                 m_isOnWall = false;
                 StartCoroutine(WallWalkCooldown());
-                //PlayAnimation("jumpOffWallRight");
+                PlayAnimation("wallRunRightEnd");
             } else if (m_side != m_lastSide) {
                 m_lastSide = m_side;
                 //PlayAnimation("stumbleOffLeft");
+                PlayAnimation("stumble");
             }
         } else if (moveRight) {
             if (m_side == SIDE.Middle) {
                 m_lastSide = m_side;
                 m_side = SIDE.Right;
-                //PlayAnimation("moveRight");
+                PlayAnimation("moveRight");
             } else if (m_side == SIDE.Left) {
                 m_lastSide = m_side;
                 m_side = SIDE.Middle;
-                //PlayAnimation("moveRight");
+                PlayAnimation("moveRight");
             } else if (m_side == SIDE.Right && rightWallDetected && !m_motorbikeActive && !m_wallOnCooldown) {
                 m_lastSide = m_side;
                 m_side = SIDE.RightWall;
                 m_isOnWall = true;
                 StartCoroutine(JumpOffWall(SIDE.Right));
-                //PlayAnimation("jumpUpWallRight");
+                PlayAnimation("wallRunRightStart");
             } else if (m_side == SIDE.LeftWall) {
                 m_lastSide = m_side;
                 m_side = SIDE.Left;
                 m_isOnWall = false;
+                PlayAnimation("wallRunLeftEnd");
                 StartCoroutine(WallWalkCooldown());
-                //PlayAnimation("jumpOffWallLeft");
             } else if (m_side != m_lastSide) {
                 m_lastSide = m_side;
                 //PlayAnimation("stumbleOffRight");
+                PlayAnimation("stumble");
             }
         }
 
-        /*if (m_anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) {
-            m_anim.SetLayerWeight(1, 0);
+        if (m_anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) {
+            //m_anim.SetLayerWeight(1, 0);
             stopAllAnim = false;
-        }*/
+        }
 
-        StumbleTime = Mathf.MoveTowards(StumbleTime, stumbleTolerance, Time.deltaTime);
+        stumbleTime = Mathf.MoveTowards(stumbleTime, stumbleTolerance, Time.deltaTime);
 
         transitionXPos = Mathf.Lerp(transitionXPos, (int)m_side, dodgeSpeed * Time.deltaTime);
         Vector3 moveVector;
@@ -191,7 +193,7 @@ public class PlayerController : MonoBehaviour {
             {
                 if (PlayerPrefs.GetInt("MotorbikeCharges") <= 0)//HERE WE CHECK IF MOTORBIKE IS AVAILABLE TO USE IT
                 {
-                    if(PlayerPrefs.GetInt("MotorbikeCharges") < 0) PlayerPrefs.SetInt("MotorbikeCharges", 0);
+                    if (PlayerPrefs.GetInt("MotorbikeCharges") < 0) PlayerPrefs.SetInt("MotorbikeCharges", 0);
                     Debug.Log("NO MOTORBIKE CHARGES");
                 } else if (m_motorbikeActive) {
                     Debug.Log("MOTORBIKE ALREADY ACTIVE");
@@ -204,21 +206,22 @@ public class PlayerController : MonoBehaviour {
         }
 
         //HERE WE ACTIVATE HYPERSPEED
-        if (!m_isOnHyperspeed && Input.GetKeyDown(KeyCode.H) && GameManager.Instance.GetTraveledMeters() < 100.0f && PlayerPrefs.GetInt("HyperspeedCharges") > 0)
-        {
+        if (!m_isOnHyperspeed && Input.GetKeyDown(KeyCode.H) && GameManager.Instance.GetTraveledMeters() < 100.0f && PlayerPrefs.GetInt("HyperspeedCharges") > 0) {
             m_hyperspeedPointEnd = GameManager.Instance.GetTraveledMeters() + m_hyperspeedAbility.GetMetersDuration();
             ActivateHyperspeed();
+            PlayAnimation("flying");
         }
 
         if (m_isOnHyperspeed) {
             if (GameManager.Instance.GetTraveledMeters() >= m_hyperspeedPointEnd) {
                 ExitHyperspeed();
+                PlayAnimation("falling");
             } else {
                 transitionYPos = 10.0f;
             }
         } else if (!m_isOnWall) {
-            Jump();
             Slide();
+            Jump();
         }
     }
 
@@ -227,27 +230,28 @@ public class PlayerController : MonoBehaviour {
         cameraController.ShakeCamera(0.5f, 0.2f);
         GameManager.Instance.GameOver();
         //m_anim.SetLayerWeight(1, 0);
-        //m_anim.Play(anim);
+        m_anim.Play(anim);
         yield return new WaitForSeconds(0.2f);
         isInputEnabled = false;
     }
 
     public void PlayAnimation(string anim) {
         if (stopAllAnim) return;
-        //m_anim.Play(anim);
+        Debug.Log(anim);
+        m_anim.Play(anim);
     }
 
     public void Stumble(string anim) {
-        //m_anim.ForceStateNormalizedTime(0.0f);
         stopAllAnim = true;
         cameraController.ShakeCamera(0.5f, 0.2f);
-        //m_anim.Play(anim);
-        if (StumbleTime < stumbleTolerance / 2f) {
-            StartCoroutine(DeathPlayer("stumbleLow"));
+        m_anim.Play(anim, 0, 0.0f);
+        if (stumbleTime < stumbleTolerance / 2f) {
+            //StartCoroutine(DeathPlayer("stumbleLow"));
+            StartCoroutine(DeathPlayer("deathUpper"));
             return;
         }
 
-        StumbleTime -= 6f;
+        stumbleTime -= 6f;
         ResetCollision();
     }
 
@@ -269,20 +273,20 @@ public class PlayerController : MonoBehaviour {
 
     private void Jump() {
         if (m_player.isGrounded) {
-            // if (m_anim.GetCurrentAnimatorStateInfo(0).IsName("isFalling"))
-            // {
-            // PlayAnimation("isLanding");
-            // isJumping = false;
-            // }
+            if (m_anim.GetCurrentAnimatorStateInfo(0).IsName("falling")) {
+                PlayAnimation("landing");
+                isJumping = false;
+            }
             if (moveUp) {
                 transitionYPos = jumpForce;
-                //m_anim.CrossFadeInFixedTime("isJumping", 0.1f);
+                m_anim.CrossFadeInFixedTime("jump", 0.1f);
                 isJumping = true;
             }
         } else {
             transitionYPos -= jumpForce * 2f * Time.deltaTime;
-            if (m_player.velocity.y < -0.1f) {
-                //PlayAnimation("isFalling");
+            if (m_player.velocity.y < -0.1f && isJumping) {
+                Debug.Log("LOL" + m_player.velocity.y);
+                PlayAnimation("falling");
             }
         }
     }
@@ -302,18 +306,16 @@ public class PlayerController : MonoBehaviour {
             transitionYPos -= 10f;
             m_player.center = new Vector3(0, m_colCenterY / 2, 0);
             m_player.height = m_initHeight / 2f;
-            //m_anim.CrossFadeInFixedTime("isSliding", 0.1f);
+            m_anim.CrossFadeInFixedTime("sliding", 0.1f);
             isSliding = true;
             isJumping = false;
         }
     }
 
     //This corroutine controls the time the player can be walking on a wall without going down
-    public IEnumerator JumpOffWall(SIDE destinySide)
-    {
+    public IEnumerator JumpOffWall(SIDE destinySide) {
         yield return new WaitForSeconds(m_maxTimeOnWall);
-        if(m_isOnWall)
-        { 
+        if (m_isOnWall) {
             m_isOnWall = false;
             m_side = destinySide;
             StartCoroutine(WallWalkCooldown());
@@ -321,8 +323,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     //This corroutine controls the cooldown the player has to be able to get up to a wall again
-    public IEnumerator WallWalkCooldown()
-    {
+    public IEnumerator WallWalkCooldown() {
         m_wallOnCooldown = true;
         yield return new WaitForSeconds(m_wallWalkCooldown);
         m_wallOnCooldown = false;
@@ -335,13 +336,16 @@ public class PlayerController : MonoBehaviour {
 
         if (m_hitBoxZ == HitBoxZ.Forward && m_hitBoxX == HitBoxX.Middle) {
             if (m_hitBoxY == HitBoxY.LowMiddle) {
-                Stumble("stumbleLow");
+                //Stumble("stumbleLow");
+                Stumble("stumble");
             } else if (m_hitBoxY == HitBoxY.Down) {
-                StartCoroutine(DeathPlayer("deathLow"));
+                //StartCoroutine(DeathPlayer("deathLow"));
+                StartCoroutine(DeathPlayer("deathUpper"));
                 ResetCollision();
             } else if (m_hitBoxY == HitBoxY.Middle) {
                 if (col.CompareTag("DynamicObstacle")) {
-                    StartCoroutine(DeathPlayer("deathDynamicObstacle"));
+                    //StartCoroutine(DeathPlayer("deathDynamicObstacle"));
+                    StartCoroutine(DeathPlayer("deathBounce"));
                     ResetCollision();
                 } else if (!col.CompareTag("Ramp")) {
                     StartCoroutine(DeathPlayer("deathBounce"));
@@ -354,18 +358,22 @@ public class PlayerController : MonoBehaviour {
         } else if (m_hitBoxZ == HitBoxZ.Middle && m_hitBoxY != HitBoxY.LowMiddle) {
             if (m_hitBoxX == HitBoxX.Right) {
                 m_side = m_lastSide;
-                Stumble("stumbleSideRight");
+                Stumble("stumble");
+                //Stumble("stumbleSideRight");
             } else if (m_hitBoxX == HitBoxX.Left) {
                 m_side = m_lastSide;
-                Stumble("stumbleSideLeft");
+                Stumble("stumble");
+                //Stumble("stumbleSideLeft");
             }
         } else if (m_hitBoxY != HitBoxY.LowMiddle) {
             if (m_hitBoxX == HitBoxX.Right) {
                 //m_anim.SetLayerWeight(1, 1);
-                Stumble("stumbleRightCorner");
+                Stumble("stumble");
+                //Stumble("stumbleRightCorner");
             } else if (m_hitBoxX == HitBoxX.Left) {
                 //m_anim.SetLayerWeight(1, 1);
-                Stumble("stumbleLeftCorner");
+                Stumble("stumble");
+                //Stumble("stumbleLeftCorner");
             }
         }
     }
@@ -436,8 +444,7 @@ public class PlayerController : MonoBehaviour {
     }
     public bool GetMotoActive() { return m_motorbikeActive; }
     public void SetMotoActive(bool Activate) { m_motorbikeActive = Activate; }
-    public MotorbikeObject  GetMotorbike()
-    {
+    public MotorbikeObject GetMotorbike() {
         return m_motorbike;
     }
     public void SetMesh(Mesh mesh) { m_currentPlayerModel.mesh = mesh; }
