@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 
-public class ShopButton : MonoBehaviour
+public class RetryButton : MonoBehaviour
 {
     //[SerializeField]
     //UIDocument shopDoc;
@@ -17,7 +18,7 @@ public class ShopButton : MonoBehaviour
     {
         m_thisDoc = GetComponent<UIDocument>();
 
-        shopButton = m_thisDoc.rootVisualElement.Q("ShopButton") as Button;
+        shopButton = m_thisDoc.rootVisualElement.Q("RetryButton") as Button;
        
 
         shopButton.RegisterCallback<ClickEvent>(OnButtonclick);
@@ -25,7 +26,8 @@ public class ShopButton : MonoBehaviour
 
     public void OnButtonclick(ClickEvent evt)
     {
-        GameManager.Instance.OnShop();
+        //shopDoc.enabled = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // Start is called before the first frame update
@@ -40,5 +42,3 @@ public class ShopButton : MonoBehaviour
         shopButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 }
-
-
