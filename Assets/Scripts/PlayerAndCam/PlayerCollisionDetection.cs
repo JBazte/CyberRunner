@@ -22,4 +22,51 @@ public class PlayerCollisionDetection : MonoBehaviour {
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            return;
+        }
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            GameManager.Instance.AddCoin();
+            other.gameObject.SetActive(false);
+            return;
+        }
+        else if (other.gameObject.CompareTag("PowerUp"))
+        {
+            PowerUpEffect powerUp = other.gameObject.GetComponent<PowerUp>().GetPowerUpEffect();
+            if(!powerUp.GetIsAlreadyActive())
+            {
+                powerUp.ExecuteAction(playerController.gameObject);
+                StartCoroutine(powerUp.StartCountDown());
+            }
+            else
+            {
+                StopCoroutine(powerUp.StartCountDown());
+                StartCoroutine(powerUp.StartCountDown());
+            }
+            other.gameObject.SetActive(false);
+            Debug.Log("COGIDO : " + powerUp);
+            return;
+        }
+        else if(other.gameObject.CompareTag("Enemy"))
+        {
+            other.gameObject.GetComponent<EnemyAbstract>().Die();
+        }
+        else if (!playerController.GetInvulneravility())
+        {
+            Debug.Log(other.gameObject.name);
+            if (playerController.GetMotoActive())
+            {
+                playerController.MotorbikeCrashed();
+            }
+            else
+            {
+                playerController.OnPlayerColliderHit(other.GetComponent<Collider>());
+            }
+        }
+    }
 }
