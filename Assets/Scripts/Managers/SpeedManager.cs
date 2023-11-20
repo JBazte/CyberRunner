@@ -14,9 +14,9 @@ public class SpeedManager : TemporalSingleton<SpeedManager>
     // Start is called before the first frame update
     void Start()
     {
-        m_runSpeed     = 12.0f;
+        m_runSpeed     = 0.0f; //12.0f
         m_maxSpeed     = 30.0f;
-        m_acceleration = 0.1f;
+        m_acceleration = 0.01f; //0.1f;
         m_hyperspeedVelocity = 50.0f;
         m_auxSpeed     = 0.0f;
     }
@@ -32,6 +32,8 @@ public class SpeedManager : TemporalSingleton<SpeedManager>
 
     public float GetRunSpeed() { return m_runSpeed; }
     public void SetRunSpeed(float runSpeed) { m_runSpeed = runSpeed; }
+
+    public void SetAcceleration(float acceleration) { m_acceleration = acceleration; }
 
     public void Hyperspeed()
     {

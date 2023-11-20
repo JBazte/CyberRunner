@@ -6,13 +6,10 @@ public class PowerUp : MonoBehaviour
 {
     public PowerUpEffect m_powerUpEffect;
 
-    private void OnTriggerEnter(Collider other)
+    public void SetPowerUpEffect(PowerUpEffect powerUpEffect)
     {
-        if(other.GetComponent<PlayerController>() != null)
-        {
-            m_powerUpEffect.ExecuteAction(other.gameObject);
-            StartCoroutine(m_powerUpEffect.StartCountDown());
-            GetComponent<MeshRenderer>().enabled = false;
-        }
+        m_powerUpEffect = powerUpEffect;
     }
+
+    public PowerUpEffect GetPowerUpEffect() { return m_powerUpEffect; }
 }

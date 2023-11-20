@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class DronObject : MonoBehaviour
 {
-    [SerializeField]
     private float            m_killingDistance;
     private MeshRenderer     m_renderer;
     private Collider         m_collider;
@@ -90,4 +89,6 @@ public class DronObject : MonoBehaviour
         m_renderer.enabled = false;
         m_collider.enabled = false;
     }
+
+    public void SetKillingDistance(float killingDistance) { m_killingDistance = killingDistance; }
 }
