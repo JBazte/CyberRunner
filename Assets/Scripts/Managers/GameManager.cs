@@ -8,14 +8,16 @@ using UnityEngine.UIElements;
 public class GameManager : TemporalSingleton<GameManager>
 {
     [SerializeField]
-    private bool  m_runActive;
+    private bool m_runActive;
     private float m_timer;
     private float m_auxRunSpeed;
     [SerializeField]
     private float m_metersTraveled;
     private float m_score;
-    private int   m_accumulatedCombo;
-    private uint  m_coinsObtained;
+    private int m_accumulatedCombo;
+    private uint m_coinsObtained;
+    [SerializeField]
+    private PlayFabManager playFabManager;
     private float m_initialRunSpeed = 12.0f;
     private float m_initialAcceleration = 0.01f;
     private PlayerController m_player;
@@ -32,13 +34,13 @@ public class GameManager : TemporalSingleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        m_runActive        = false;
-        m_metersTraveled   = 0.0f;
-        m_timer            = 0.0f;
-        m_auxRunSpeed      = 0.0f;
+        m_runActive = false;
+        m_metersTraveled = 0.0f;
+        m_timer = 0.0f;
+        m_auxRunSpeed = 0.0f;
         m_accumulatedCombo = 0;
-        m_score            = 0.0f;
-        m_coinsObtained    = 0;
+        m_score = 0.0f;
+        m_coinsObtained = 0;
         m_player = FindObjectOfType<PlayerController>();
     }
 
@@ -49,7 +51,7 @@ public class GameManager : TemporalSingleton<GameManager>
         m_metersTraveled += (m_timer + Time.deltaTime) * SpeedManager.Instance.GetRunSpeed();
 
         // (s * m/s = m in one frame) * combo player has in that frame = score acumulated in the frame
-        if(m_runActive) m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo();
+        if (m_runActive) m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo();
     }
 
     public void AddComboPoint() { AccumulatedCombo++; }
@@ -62,11 +64,13 @@ public class GameManager : TemporalSingleton<GameManager>
         return 1 + AccumulatedCombo / 10;
     }
 
-    public void StartRun() { 
-        m_runActive = true; 
+    public void StartRun()
+    {
+        m_runActive = true;
         SpeedManager.Instance.SetRunSpeed(m_initialRunSpeed);
         SpeedManager.Instance.SetAcceleration(m_initialAcceleration);
         m_player.SetIsInputEnabled(true);
+        m_player.PlayAnimation("run");
     }
 
     public void PauseRun()
@@ -94,6 +98,7 @@ public class GameManager : TemporalSingleton<GameManager>
         m_UIInGame.enabled = false;
         m_runActive = false;
         m_UIGameOver.enabled = true;
+        playFabManager.SetLeaderboardEntry((int)m_score);
     }
 
     public void OnShop()
@@ -108,7 +113,7 @@ public class GameManager : TemporalSingleton<GameManager>
         //m_UIGameOver.enabled = true;
     }
 
-    public bool GetRunActive()              { return m_runActive; }
+    public bool GetRunActive() { return m_runActive; }
     public void SetRunActive(bool runSpeed) { m_runActive = runSpeed; }
     public float GetTraveledMeters() { return m_metersTraveled; }
 
