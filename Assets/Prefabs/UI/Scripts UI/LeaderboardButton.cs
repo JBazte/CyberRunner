@@ -4,25 +4,25 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 
-public class ShopButton : MonoBehaviour {
+public class LeaderboardButton : MonoBehaviour {
     //[SerializeField]
     //UIDocument shopDoc;
 
     UIDocument m_thisDoc;
 
-    Button shopButton;
+    Button leaderboardButton;
 
     private void OnEnable() {
         m_thisDoc = GetComponent<UIDocument>();
 
-        shopButton = m_thisDoc.rootVisualElement.Q("ShopButton") as Button;
+        leaderboardButton = m_thisDoc.rootVisualElement.Q("LeaderboardButton") as Button;
 
 
-        shopButton.RegisterCallback<ClickEvent>(OnButtonclick);
+        leaderboardButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 
     public void OnButtonclick(ClickEvent evt) {
-        GameManager.Instance.OnShop();
+        GameManager.Instance.OpenLeaderboard();
     }
 
     // Start is called before the first frame update
@@ -32,7 +32,7 @@ public class ShopButton : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        shopButton.RegisterCallback<ClickEvent>(OnButtonclick);
+        leaderboardButton.RegisterCallback<ClickEvent>(OnButtonclick);
     }
 }
 

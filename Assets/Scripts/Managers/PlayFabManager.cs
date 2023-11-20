@@ -4,6 +4,7 @@ using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
 using TMPro;
+using UnityEngine.UIElements;
 
 public class PlayFabManager : TemporalSingleton<GameManager> {
     [SerializeField]
@@ -16,12 +17,12 @@ public class PlayFabManager : TemporalSingleton<GameManager> {
     private GameObject listingPrefab;
     [SerializeField]
     private Transform listingContainer;
+    [SerializeField]
+    private UIDocument uiObject;
     private string userPlayFabId;
 
     void Start() {
         LoginPlayFab();
-        GameManager.Instance.SetRunActive(false);
-        SpeedManager.Instance.SetRunSpeed(0f);
     }
 
     private void LoginPlayFab() {
@@ -126,8 +127,7 @@ public class PlayFabManager : TemporalSingleton<GameManager> {
         if (username == null) {
             usernameWindow.SetActive(true);
         } else {
-            GameManager.Instance.SetRunActive(true);
-            SpeedManager.Instance.SetRunSpeed(12.0f);
+            uiObject.enabled = true;
         }
 
         GetPlayerData();
@@ -166,7 +166,7 @@ public class PlayFabManager : TemporalSingleton<GameManager> {
 
     void OnLeaderboardUpdateSuccess(UpdatePlayerStatisticsResult result) {
         Debug.Log("Succesful Leaderboard Update!");
-        GetLeaderboardEntriesAroundPlayer();
+        //GetLeaderboardEntriesAroundPlayer();
     }
 
     void OnPlayerDataGetSuccess(GetUserDataResult result) {
@@ -186,8 +186,7 @@ public class PlayFabManager : TemporalSingleton<GameManager> {
     void OnUserTitleDisplayNameSetSuccess(UpdateUserTitleDisplayNameResult result) {
         Debug.Log("Succesful Username Update!");
         usernameWindow.SetActive(false);
-        GameManager.Instance.SetRunActive(true);
-        SpeedManager.Instance.SetRunSpeed(12.0f);
+        uiObject.enabled = true;
     }
 
     void OnError(PlayFabError error) {

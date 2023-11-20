@@ -44,3 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbc1286c664cf45468fda23a1d55e759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  usernameWindow: {fileID: 0}
+  inputUsername: {fileID: 0}
+  leaderboardPanel: {fileID: 0}
+  listingPrefab: {fileID: 1718527618765467156, guid: 3b660ef0f44579042897084510c40298, type: 3}
+  listingContainer: {fileID: 0}
