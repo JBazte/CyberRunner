@@ -6,7 +6,7 @@ using PlayFab.ClientModels;
 using TMPro;
 using UnityEngine.UIElements;
 
-public class PlayFabManager : TemporalSingleton<GameManager> {
+public class PlayFabManager : TemporalSingleton<PlayFabManager> {
     [SerializeField]
     private GameObject usernameWindow;
     [SerializeField]
