@@ -91,7 +91,6 @@ public class ModuleBehaviour : MonoBehaviour
                 {
                     enemyAux.SetHasAttacked(false);
                     if (!enemy.activeSelf) enemy.SetActive(true);
-                    Debug.Log(enemy + "          " + enemyAux);
                     enemyAux.DeactivateWeapon();
                 }
             }

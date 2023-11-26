@@ -10,7 +10,7 @@ public abstract class PowerUpEffect : ScriptableObject
     protected GameObject m_player;
     protected bool       m_isAlreadyActive = false;
 
-    public abstract void SetTier(PowerUpTiers tier);
+    public abstract void SetTier(int tier);
 
     public abstract void ExecuteAction(GameObject player);
     public abstract void FinishAction();

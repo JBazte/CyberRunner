@@ -7,34 +7,35 @@ public class DronPowerUp : PowerUpEffect
 {
     private DronObject m_dron;
 
-    public static PowerUpEffect CreateInstance(PowerUpTiers tier)
+    public static PowerUpEffect CreateInstance(int tier)
     {
         DronPowerUp instance = new DronPowerUp();
         instance.SetTier(tier);
         return instance;
     }
 
-    public override void SetTier(PowerUpTiers tier)
+    public override void SetTier(int tier)
     {
-        if (tier == PowerUpTiers.TIER1)
+        switch (tier)
         {
-            m_duration = 5;
-        }
-        else if (tier == PowerUpTiers.TIER2)
-        {
-            m_duration = 5.5f;
-        }
-        else if (tier == PowerUpTiers.TIER3)
-        {
-            m_duration = 6f;
-        }
-        else if (tier == PowerUpTiers.TIER4)
-        {
-            m_duration = 7f;
-        }
-        else if (tier == PowerUpTiers.TIER5)
-        {
-            m_duration = 8.5f;
+            case 1:
+                m_duration = 5;
+                break;
+            case 2:
+                m_duration = 5.5f;
+                break;
+            case 3:
+                m_duration = 6f;
+                break;
+            case 4:
+                m_duration = 7f;
+                break;
+            case 5:
+                m_duration = 8.5f;
+                break;
+            default:
+                Debug.Log("PowerUp TIER for " + this + " is not valid!!");
+                break;
         }
     }
 

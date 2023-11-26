@@ -28,7 +28,6 @@ public abstract class EnemyAbstract : MonoBehaviour
     public void SetHasAttacked(bool hasAttacked) { m_hasAttacked = hasAttacked; }
     public void DeactivateWeapon()
     {
-        Debug.Log(m_weapon);
         if (m_weapon.activeSelf)
         {
             m_weapon.SetActive(false);

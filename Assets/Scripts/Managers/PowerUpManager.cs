@@ -5,8 +5,6 @@ using UnityEngine;
 public enum PowerUpsEnum { BOOTS = 0, DRON = 1, WALLS = 2, HYPERSPEED = 3, MOTORBIKE = 4 }
 //                          35%         20%       20%         15%              10%
 
-public enum PowerUpTiers { TIER1, TIER2, TIER3, TIER4, TIER5 }
-
 public class PowerUpManager : TemporalSingleton<PowerUpManager>
 {
     private static uint      m_totalNumofPowerUps = 5;
@@ -18,19 +16,15 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
     private float            m_powerUpSpawnTime;
     private PlayerController m_player;
 
-    //private string           m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt("BootsTier");
-    private string           m_dronTierPlayerPrefs       = "DronTier";
-    private string           m_wallsTierPlayerPrefs      = "WallsTier";
-    private string           m_motorbikeTierPlayerPrefs  = "MotorbikeTier";
-    private string           m_hyperspeedTierPlayerPrefs = "HyperspeedTier";
-
-    private void OnEnable()
-    {
-        m_player = FindObjectOfType<PlayerController>();
-    }
+    private int              m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt("BootsTier");
+    private int              m_dronTierPlayerPrefs       = PlayerPrefs.GetInt("DronTier");
+    private int              m_wallsTierPlayerPrefs      = PlayerPrefs.GetInt("WallsTier");
+    private int              m_motorbikeTierPlayerPrefs  = PlayerPrefs.GetInt("MotorbikeTier");
+    private int              m_hyperspeedTierPlayerPrefs = PlayerPrefs.GetInt("HyperspeedTier");
 
     private void Start()
     {
+        m_player = FindObjectOfType<PlayerController>();
         m_powerUpAppears = false;
         m_powerUpTimer = 0.0f;
         m_powerUpSpawnTime = 5.0f;
@@ -51,24 +45,11 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
 
     private void CreateAllPowerUps()
     {
-        //m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = ScriptableObject.CreateInstance<BootsPowerUp>();//.SetTier(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.DRON]       = ScriptableObject.CreateInstance<DronPowerUp>();
-        //m_allPowerUps[(int)PowerUpsEnum.WALLS]      = ScriptableObject.CreateInstance<WallPowerUp>();
-        //m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = ScriptableObject.CreateInstance<HyperspeedPowerUp>();
-        //m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE]  = ScriptableObject.CreateInstance<MotorbikePowerup>();
-
-        //m_allPowerUps[(int)PowerUpsEnum.BOOTS]     .SetTier(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.DRON]      .SetTier(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.WALLS]     .SetTier(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED].SetTier(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE] .SetTier(PowerUpTiers.TIER1);
-
-        m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = BootsPowerUp.CreateInstance(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.BOOTS] = BootsPowerUp.CreateInstance(PowerUpTiers.);
-        m_allPowerUps[(int)PowerUpsEnum.DRON]       = DronPowerUp.CreateInstance(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.WALLS]      = WallPowerUp.CreateInstance(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = HyperspeedPowerUp.CreateInstance(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE]  = MotorbikePowerup.CreateInstance(PowerUpTiers.TIER1);
+        m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = BootsPowerUp.CreateInstance(m_bootsTierPlayerPrefs);
+        m_allPowerUps[(int)PowerUpsEnum.DRON]       = DronPowerUp.CreateInstance(m_dronTierPlayerPrefs);
+        m_allPowerUps[(int)PowerUpsEnum.WALLS]      = WallPowerUp.CreateInstance(m_wallsTierPlayerPrefs);
+        m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = HyperspeedPowerUp.CreateInstance(m_hyperspeedTierPlayerPrefs);
+        m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE]  = MotorbikePowerup.CreateInstance(m_motorbikeTierPlayerPrefs);
     }
 
     public void SetPowerUpAppears(bool powerUpAppears) { m_powerUpAppears = powerUpAppears; }

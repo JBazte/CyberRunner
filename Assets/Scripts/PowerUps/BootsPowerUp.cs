@@ -7,39 +7,40 @@ public class BootsPowerUp : PowerUpEffect {
     [SerializeField]
     private float m_jumpIncrease;
 
-    public static PowerUpEffect CreateInstance(PowerUpTiers tier)
+    public static PowerUpEffect CreateInstance(int tier)
     {
         BootsPowerUp instance = new BootsPowerUp();
         instance.SetTier(tier);
         return instance;
     }
 
-    public override void SetTier(PowerUpTiers tier)
+    public override void SetTier(int tier)
     {
-        if(tier == PowerUpTiers.TIER1)
+        switch(tier)
         {
-            m_jumpIncrease = 13;
-            m_duration     = 5;
-        }
-        else if(tier == PowerUpTiers.TIER2)
-        {
-            m_jumpIncrease = 14;
-            m_duration = 6;
-        }
-        else if (tier == PowerUpTiers.TIER3)
-        {
-            m_jumpIncrease = 15;
-            m_duration = 7;
-        }
-        else if (tier == PowerUpTiers.TIER4)
-        {
-            m_jumpIncrease = 16;
-            m_duration = 8;
-        }
-        else if (tier == PowerUpTiers.TIER5)
-        {
-            m_jumpIncrease = 19;
-            m_duration = 10;
+            case 1:
+                m_jumpIncrease = 13;
+                m_duration = 5;
+                break;
+            case 2:
+                m_jumpIncrease = 14;
+                m_duration = 6;
+                break;
+            case 3:
+                m_jumpIncrease = 15;
+                m_duration = 7;
+                break;
+            case 4:
+                m_jumpIncrease = 16;
+                m_duration = 8;
+                break;
+            case 5:
+                m_jumpIncrease = 19;
+                m_duration = 10;
+                break;
+            default:
+                Debug.Log("PowerUp TIER for " + this + " is not valid!!");
+                break;
         }
     }
 
