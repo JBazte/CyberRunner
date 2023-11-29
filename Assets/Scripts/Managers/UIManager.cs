@@ -7,6 +7,9 @@ using UnityEngine.UIElements;
 public class UIManager : TemporalSingleton<UIManager>
 {
     [SerializeField]
+    private PlayFabManager playFabManager;
+
+    [SerializeField]
     UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc;
 
     Button btn_home, btn_shop, btn_resume, btn_pause, btn_close, btn_tap, btn_leaderBoard;
@@ -126,7 +129,14 @@ public class UIManager : TemporalSingleton<UIManager>
     public void ToLeaderboard(ClickEvent evt)
     {
         gameOverDoc.enabled = false;
-        GameManager.Instance.OpenLeaderboard();
+        //GameManager.Instance.OpenLeaderboard();
+        playFabManager.GetLeaderboardEntriesAroundPlayer();
+    }
+
+    public void OutLeaderboard()
+    {
+        playFabManager.CloseLeaderboardPanel();
+        ToGameOver();
     }
 
     void RestartUI(int caso)
@@ -169,11 +179,6 @@ public class UIManager : TemporalSingleton<UIManager>
 
                 finalScoreLabel.text = scoreLabel.text;
                 break;
-            
-            /*case 6:
-                btn_leaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
-                btn_leaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
-                break;*/
         }
     }
 

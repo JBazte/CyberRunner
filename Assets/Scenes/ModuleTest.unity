@@ -1052,17 +1052,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &928851850 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3777224103608399216, guid: 7a4d962e0b845b94b858c9f3bf606153, type: 3}
-  m_PrefabInstance: {fileID: 618942935249977562}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 166116d2418f63a4480b7985308d3e35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &972128346 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3575697712502801829, guid: 680978978a9b6854b95b9a498d49aeee, type: 3}
@@ -1959,9 +1948,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 928851850}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: CloseLeaderboard
+      - m_Target: {fileID: 5232625238446313820}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: OutLeaderboard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4172,6 +4161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ae2c6e11811dd499612bf5f44d54ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playFabManager: {fileID: 2007789269}
   tapDoc: {fileID: 440688110}
   inGameDoc: {fileID: 1855669370}
   pauseDoc: {fileID: 1365170702}
