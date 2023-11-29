@@ -9,7 +9,7 @@ public class UIManager : TemporalSingleton<UIManager>
     [SerializeField]
     UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc;
 
-    Button btn_home, btn_shop, btn_resume, btn_pause, btn_close, btn_tap;
+    Button btn_home, btn_shop, btn_resume, btn_pause, btn_close, btn_tap, btn_leaderBoard;
 
     Label scoreLabel, finalScoreLabel, coinsLabel;
 
@@ -32,6 +32,9 @@ public class UIManager : TemporalSingleton<UIManager>
 
         btn_close = shopDoc.rootVisualElement.Q("CloseButton") as Button;
         btn_close.RegisterCallback<ClickEvent>(OnClose);
+
+        btn_leaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+        btn_leaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
 
         scoreLabel = inGameDoc.rootVisualElement.Q("ScoreLab") as Label;
 
@@ -92,7 +95,6 @@ public class UIManager : TemporalSingleton<UIManager>
         GameManager.Instance.PauseRun();
         inGameDoc.enabled = false;
         pauseDoc.enabled = true;
-
         /*btn_resume = pauseDoc.rootVisualElement.Q("ResumeButton") as Button;
         btn_resume.RegisterCallback<ClickEvent>(ToResume);*/
         RestartUI(4);
@@ -105,6 +107,7 @@ public class UIManager : TemporalSingleton<UIManager>
 
     public void ToGameOver()
     {
+        //GameManager.Instance.GameOver();
         inGameDoc.enabled = false;
         gameOverDoc.enabled = true;
 
@@ -118,6 +121,12 @@ public class UIManager : TemporalSingleton<UIManager>
 
         finalScoreLabel.text = scoreLabel.text;*/
         RestartUI(5);
+    }
+
+    public void ToLeaderboard(ClickEvent evt)
+    {
+        gameOverDoc.enabled = false;
+        GameManager.Instance.OpenLeaderboard();
     }
 
     void RestartUI(int caso)
@@ -153,10 +162,18 @@ public class UIManager : TemporalSingleton<UIManager>
                 btn_shop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
                 btn_shop.RegisterCallback<ClickEvent>(ToShop);
 
+                btn_leaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+                btn_leaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
+
                 finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
 
                 finalScoreLabel.text = scoreLabel.text;
                 break;
+            
+            /*case 6:
+                btn_leaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+                btn_leaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
+                break;*/
         }
     }
 
