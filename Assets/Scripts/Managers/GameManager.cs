@@ -108,14 +108,14 @@ public class GameManager : TemporalSingleton<GameManager> {
     public void OpenLeaderboard() {
         //m_UIGameOver.enabled = false;
         //m_UIGameOver.gameObject.SetActive(false);
-        playFabManager.GetLeaderboardEntriesAroundPlayer();
+        //playFabManager.GetLeaderboardEntriesAroundPlayer();
     }
 
     public void CloseLeaderboard() {
         //m_UIGameOver.enabled = true;
         //m_UIGameOver.gameObject.SetActive(true);
-        playFabManager.CloseLeaderboardPanel();
-        UIManager.Instance.ToGameOver();
+        //playFabManager.CloseLeaderboardPanel();
+        //UIManager.Instance.ToGameOver();
     }
 
     public bool GetRunActive() { return m_runActive; }
