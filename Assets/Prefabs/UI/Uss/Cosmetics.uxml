@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Backgound" style="flex-grow: 1; background-color: rgb(255, 255, 255);">
+        <ui:Button text="Tech Items" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ItemsButton" style="width: 50%; height: 120px; -unity-font: url(&apos;project://database/Assets/Art/Fonts/Dimitri/DIMITRI_.TTF?fileID=12800000&amp;guid=5e34799af4245a24fa664895c5dc5889&amp;type=3#DIMITRI_&apos;); font-size: 100px; -unity-font-definition: initial; white-space: nowrap; -unity-text-align: middle-center;" />
+        <ui:Label tabindex="-1" text="Cosmetics" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Labelcosmetics" style="height: 120px; width: 50%; font-size: 100px; -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Art/Fonts/Dimitri/DIMITRI_.TTF?fileID=12800000&amp;guid=5e34799af4245a24fa664895c5dc5889&amp;type=3#DIMITRI_&apos;); -unity-text-align: middle-center; white-space: nowrap; position: absolute; left: 50%;" />
+        <ui:VisualElement name="Current_skin" style="flex-grow: 1; height: 287px; font-size: 0; width: 1080px; background-image: url(&apos;project://database/Assets/Prefabs/UI/Images/descarga.jpg?fileID=2800000&amp;guid=14381db5db963bd47b599e9b2c992cc4&amp;type=3#descarga&apos;);" />
+        <ui:VisualElement name="OtherSkinks" style="flex-grow: 1; background-color: rgb(255, 255, 255);">
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Skin_button" style="width: 300px; height: 300px; position: absolute; top: 76px; left: 60px; background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/Prefabs/UI/Images/descarga2.jpg?fileID=2800000&amp;guid=e5e7a0f234e05a940a0cf1e94bcb0cd6&amp;type=3#descarga2&apos;);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
