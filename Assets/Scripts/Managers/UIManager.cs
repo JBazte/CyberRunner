@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,11 +11,11 @@ public class UIManager : TemporalSingleton<UIManager>
     private PlayFabManager playFabManager;
 
     [SerializeField]
-    UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc;
+    UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc, cosmeticsDoc;
 
-    Button btn_home, btn_shop, btn_resume, btn_pause, btn_close, btn_tap, btn_leaderBoard;
+    Button btn_home, btn_shop, btn_resume, btn_pause, btn_close, btn_tap, btn_leaderBoard, btn_items, btn_cosmetics;
 
-    Label scoreLabel, finalScoreLabel, coinsLabel;
+    Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel;
 
     private void OnEnable()
     {
@@ -36,14 +37,23 @@ public class UIManager : TemporalSingleton<UIManager>
         btn_close = shopDoc.rootVisualElement.Q("CloseButton") as Button;
         btn_close.RegisterCallback<ClickEvent>(OnClose);
 
+        btn_cosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
+        btn_cosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
+
         btn_leaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
         btn_leaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
+
+        btn_items = cosmeticsDoc.rootVisualElement.Q("ItemsButton") as Button;
+        btn_items.RegisterCallback<ClickEvent>(ToShop);
+
 
         scoreLabel = inGameDoc.rootVisualElement.Q("ScoreLab") as Label;
 
         coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
 
         finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
+
+        comboLabel = inGameDoc.rootVisualElement.Q("ComboLab") as Label;
     }
 
     public void ToGame(ClickEvent evt)
@@ -139,6 +149,13 @@ public class UIManager : TemporalSingleton<UIManager>
         ToGameOver();
     }
 
+    public void ToCosmetics(ClickEvent evt)
+    {
+        shopDoc.enabled = false;
+        cosmeticsDoc.enabled = true;
+        RestartUI(6);
+    }
+
     void RestartUI(int caso)
     {
         switch (caso)
@@ -147,6 +164,7 @@ public class UIManager : TemporalSingleton<UIManager>
                 btn_pause = inGameDoc.rootVisualElement.Q("PauseButton") as Button;
                 btn_pause.RegisterCallback<ClickEvent>(OnPause);
                 scoreLabel = inGameDoc.rootVisualElement.Q("ScoreLab") as Label;
+                coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
                 coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
                 break;
 
@@ -158,6 +176,9 @@ public class UIManager : TemporalSingleton<UIManager>
             case 3:
                 btn_close = shopDoc.rootVisualElement.Q("CloseButton") as Button;
                 btn_close.RegisterCallback<ClickEvent>(OnClose);
+
+                btn_cosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
+                btn_cosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
                 break;
 
             case 4:
@@ -179,6 +200,11 @@ public class UIManager : TemporalSingleton<UIManager>
 
                 finalScoreLabel.text = scoreLabel.text;
                 break;
+
+            case 6:
+                btn_items = cosmeticsDoc.rootVisualElement.Q("ItemsButton") as Button;
+                btn_items.RegisterCallback<ClickEvent>(ToShop);
+                break;
         }
     }
 
@@ -193,5 +219,6 @@ public class UIManager : TemporalSingleton<UIManager>
     {
         scoreLabel.text = ((int)GameManager.Instance.Score).ToString();
         coinsLabel.text = GameManager.Instance.CoinsObtained.ToString();
+        comboLabel.text = "\nx"+GameManager.Instance.AccumulatedCombo.ToString();
     }
 }
