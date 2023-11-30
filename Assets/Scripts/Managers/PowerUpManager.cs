@@ -16,14 +16,20 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
     private float            m_powerUpSpawnTime;
     private PlayerController m_player;
 
-    private int              m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt("BootsTier");
-    private int              m_dronTierPlayerPrefs       = PlayerPrefs.GetInt("DronTier");
-    private int              m_wallsTierPlayerPrefs      = PlayerPrefs.GetInt("WallsTier");
-    private int              m_motorbikeTierPlayerPrefs  = PlayerPrefs.GetInt("MotorbikeTier");
-    private int              m_hyperspeedTierPlayerPrefs = PlayerPrefs.GetInt("HyperspeedTier");
+    private int m_bootsTierPlayerPrefs;
+    private int m_dronTierPlayerPrefs;
+    private int m_wallsTierPlayerPrefs;
+    private int m_motorbikeTierPlayerPrefs;
+    private int m_hyperspeedTierPlayerPrefs;
 
     private void Start()
     {
+        m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt("BootsTier");
+        m_dronTierPlayerPrefs       = PlayerPrefs.GetInt("DronTier");
+        m_wallsTierPlayerPrefs      = PlayerPrefs.GetInt("WallsTier");
+        m_motorbikeTierPlayerPrefs  = PlayerPrefs.GetInt("MotorbikeTier");
+        m_hyperspeedTierPlayerPrefs = PlayerPrefs.GetInt("HyperspeedTier");
+
         m_player = FindObjectOfType<PlayerController>();
         m_powerUpAppears = false;
         m_powerUpTimer = 0.0f;

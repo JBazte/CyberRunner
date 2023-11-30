@@ -15,20 +15,20 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     //private float index = 0;
 
     [SerializeField]
-    private ShieldEnemy     m_shieldEnemy;
+    private GameObject     m_shieldEnemy;
     [SerializeField]
-    private SlashEnemy      m_slashEnemy;
+    private GameObject m_slashEnemy;
     [SerializeField]
-    private GroundWaveEnemy m_groundWaveEnemy;
+    private GameObject m_groundWaveEnemy;
 
     private void Start()
     {
         GameObject StartPlane1 = Instantiate(m_module0, transform);
         StartPlane1.transform.position = new Vector3(0, 0, 41);
         m_modules = GameObject.FindGameObjectsWithTag("Module");
-        foreach (GameObject tile in m_modules){
-            tile.GetComponent<ModuleBehaviour>().InitializeModule();
-            tile.SetActive(false);
+        foreach (GameObject module in m_modules){
+            module.GetComponent<ModuleBehaviour>().InitializeModule();
+            module.SetActive(false);
         }
 
         m_modulesOnMap = new Queue<GameObject>();
@@ -41,9 +41,9 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
         //StartPlane1.SetActive(true);
         EnqueueModule();
 
-        m_shieldEnemy.SetIsSpawn(true);
-        m_slashEnemy.SetIsSpawn(true);
-        m_groundWaveEnemy.SetIsSpawn(true);
+        //m_shieldEnemy.GetComponent<EnemyAbstract>().SetIsSpawn(true);
+        //m_slashEnemy.GetComponent<EnemyAbstract>().SetIsSpawn(true);
+        //m_groundWaveEnemy.GetComponent<EnemyAbstract>().SetIsSpawn(true);
     }
     // Render.OnBecameOInvisible()
     private void Update() 
@@ -85,7 +85,7 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
         m_modulesOnMap.Dequeue().gameObject.SetActive(false);
     }
 
-    public ShieldEnemy GetShieldEnemy()         { return m_shieldEnemy; }
-    public SlashEnemy GetSlashEnemy()           { return m_slashEnemy; }
-    public GroundWaveEnemy GetGroundWaveEnemy() { return m_groundWaveEnemy; }
+    public GameObject GetShieldEnemy()     { return m_shieldEnemy; }
+    public GameObject GetSlashEnemy()      { return m_slashEnemy; }
+    public GameObject GetGroundWaveEnemy() { return m_groundWaveEnemy; }
 }
