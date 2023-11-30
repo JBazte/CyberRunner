@@ -25,10 +25,19 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
     private void Start()
     {
         m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt("BootsTier");
+        if(m_bootsTierPlayerPrefs == 0) PlayerPrefs.SetInt("BootsTier", 1);
+
         m_dronTierPlayerPrefs       = PlayerPrefs.GetInt("DronTier");
+        if (m_dronTierPlayerPrefs == 0) PlayerPrefs.SetInt("DronTier", 1);
+
         m_wallsTierPlayerPrefs      = PlayerPrefs.GetInt("WallsTier");
+        if (m_wallsTierPlayerPrefs == 0) PlayerPrefs.SetInt("WallsTier", 1);
+
         m_motorbikeTierPlayerPrefs  = PlayerPrefs.GetInt("MotorbikeTier");
+        if (m_motorbikeTierPlayerPrefs == 0) PlayerPrefs.SetInt("MotorbikeTier", 1);
+
         m_hyperspeedTierPlayerPrefs = PlayerPrefs.GetInt("HyperspeedTier");
+        if (m_hyperspeedTierPlayerPrefs == 0) PlayerPrefs.SetInt("HyperspeedTier", 1);
 
         m_player = FindObjectOfType<PlayerController>();
         m_powerUpAppears = false;
