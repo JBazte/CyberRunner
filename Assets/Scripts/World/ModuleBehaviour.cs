@@ -15,7 +15,7 @@ public class ModuleBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject   m_enemiesContainer;
     public GameObject[] m_enemies;
-    private int          m_enemiesCount;
+    public int          m_enemiesCount;
 
     [SerializeField]
     private GameObject   m_coinsContainer;
@@ -80,26 +80,41 @@ public class ModuleBehaviour : MonoBehaviour
     {
         foreach (GameObject enemy in m_enemies)
         {
-            if(enemy.GetComponent<EnemyAbstract>() != null)
+            if(enemy.GetComponent<SpawnPoint>() != null)
+            {
+                enemy.GetComponent<SpawnPoint>().SpawnRandomEnemy(); 
+            }
+            else if(enemy.GetComponent<EnemyAbstract>() != null)
             {
                 EnemyAbstract enemyAux = enemy.GetComponent<EnemyAbstract>();
-                if (enemyAux.GetIsSpawn())
-                {
-                    Destroy(enemy);
-                }
-                else
-                {
-                    enemyAux.SetHasAttacked(false);
-                    if (!enemy.activeSelf) enemy.SetActive(true);
-                    Debug.Log(enemy + "          " + enemyAux);
-                    enemyAux.DeactivateWeapon();
-                }
-            }
-            else if(enemy.GetComponent<SpawnPoint>() != null)
-            {
-                enemy.GetComponent<SpawnPoint>().SpawnRandomEnemy();
+                enemyAux.SetHasAttacked(false);
+                if (!enemy.activeSelf) enemy.SetActive(true);
+                enemyAux.DeactivateWeapon();
             }
         }
+
+        //for(int i = 0; i < m_enemiesCount; i++)
+        //{
+        //    if (m_enemies[i].GetComponent<SpawnPoint>() != null)
+        //    {
+        //        m_enemies[i].GetComponent<SpawnPoint>().SpawnRandomEnemy();
+        //    }
+        //    else if(m_enemies[i].GetComponent<EnemyAbstract>() != null)
+        //    {
+        //        EnemyAbstract enemyAux = m_enemies[i].GetComponent<EnemyAbstract>();
+        //        if (enemyAux.GetIsSpawn())
+        //        {
+        //            Debug.Log("ELIMINADO ENEMIGO " + m_enemies[i].GetComponent<EnemyAbstract>().GetIsSpawn());
+        //            Destroy(m_enemies[i]);
+        //        }
+        //        else
+        //        {
+        //            enemyAux.SetHasAttacked(false);
+        //            if (!enemy.activeSelf) enemy.SetActive(true);
+        //            enemyAux.DeactivateWeapon();
+        //        }
+        //    }
+        //}
     }
 
     private void ResetCoins()

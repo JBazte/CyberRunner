@@ -6,7 +6,6 @@ public class SlashEnemy : EnemyAbstract
 {
     private bool       m_isAttaking = false;
 
-
     void Start()
     {
         //m_weapon = gameObject.transform.GetChild(0).gameObject;

@@ -64,10 +64,14 @@ public class PlayerController : MonoBehaviour {
             jumpForce = value;
         }
     }
-    private void OnEnable() {
+
+    private void Awake()
+    {
+        m_motorbikeModel = Resources.Load<Mesh>(AppPaths.MOTORBIKE_MODEL_1);
         m_motorbike = new MotorbikeObject(gameObject, m_motorbikeModel);
         m_hyperspeedAbility = new HyperspeedAbility(gameObject);
     }
+
     void Start() {
         m_playerModel = gameObject.GetComponent<MeshFilter>().mesh;
         m_currentPlayerModel = gameObject.GetComponent<MeshFilter>();
