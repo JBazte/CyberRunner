@@ -13,19 +13,21 @@ public class SlashEnemy : EnemyAbstract
     }
     void Update()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 17);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 11);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.CompareTag("Player")&& !m_hasAttacked)
             {
                 anim();
-                Invoke("Attack", 1.0f);
+                Invoke("Attack", 0.4f);
             }
         }
         
-        if (m_weapon.transform.position.z <= -3.0f)
+        if (m_weapon.transform.position.z <= -2.0f)
         {
             m_weapon.SetActive(false);
+            Slash.Play("Idle");    
+
         }
     }
     public override void Attack()
@@ -36,12 +38,11 @@ public class SlashEnemy : EnemyAbstract
             m_isAttaking = true;
         }
         m_hasAttacked = true;
-        Slash.SetTrigger("DontAttack");
-        Slash.ResetTrigger("Attack");
+
+        
 
     }
     public void anim()
     {
-        Slash.SetTrigger("Attack");
-    }
+        Slash.Play("Attack");    }
 }

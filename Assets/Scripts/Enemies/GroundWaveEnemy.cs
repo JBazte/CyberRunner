@@ -20,16 +20,16 @@ public  class GroundWaveEnemy : EnemyAbstract
         CollPosy = gameObject.transform.position.y;
         m_weapon.transform.position += new Vector3(0,0 , (-SpeedManager.Instance.GetRunSpeed()-1) * Time.deltaTime);
         
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 40);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 32);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.CompareTag("Player")&& !m_hasAttacked)
             {
                 anim();
-                Invoke("Attack", 1.6f);
+                Invoke("Attack", 1.1f);
             }
         }
-        if (m_weapon.transform.position.z <= -3.0f)
+        if (gameObject.transform.position.z <= -3.0f)
         {
             m_weapon.SetActive(false);
         }
@@ -43,12 +43,11 @@ public  class GroundWaveEnemy : EnemyAbstract
         }
 
         m_hasAttacked = true;
-        Wave.SetTrigger("DontAttack");
-        Wave.ResetTrigger("Attack");
+
 
     }
     public void anim()
     {
-        Wave.SetTrigger("Attack");
+        Wave.Play("Attack");
     }
 }

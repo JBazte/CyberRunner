@@ -9,6 +9,7 @@ public class SpawnPoint : MonoBehaviour
 {
     public GameObject m_enemy;
     private int       m_enemyTypesNum = 3;
+    private Animator anim;
 
     public void SpawnRandomEnemy()
     {

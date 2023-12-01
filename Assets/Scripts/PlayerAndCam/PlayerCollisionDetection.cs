@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCollisionDetection : MonoBehaviour {
     private PlayerController playerController;
+    private Animator Enemy;
 
     void Start() {
         playerController = GetComponent<PlayerController>();
@@ -54,7 +55,9 @@ public class PlayerCollisionDetection : MonoBehaviour {
         }
         else if(other.gameObject.CompareTag("Enemy"))
         {
-            other.gameObject.GetComponent<EnemyAbstract>().Die();
+            Enemy = other.gameObject.GetComponentInChildren<Animator>();
+            Enemy.Play("Die");
+            other.gameObject.GetComponent<EnemyAbstract>().Invoke("Die",2f);
         }
         else if (!playerController.GetInvulneravility())
         {

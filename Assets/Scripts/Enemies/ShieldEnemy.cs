@@ -19,16 +19,13 @@ public class ShieldEnemy : EnemyAbstract
             if (hitCollider.gameObject.CompareTag("Player"))
             {
                 anim();
-                Invoke("Attack", 1.3f);
+                Invoke("Attack", 0.8f);
             }
         }
 
-        if (m_weapon.transform.position.z <= -3.0f)
+        if (m_weapon.transform.position.z <= -1.0f)
         {
             m_weapon.SetActive(false);
-            Shield.SetTrigger("DontAttack");
-            
-
         }
     }
     public override void Attack()
@@ -43,7 +40,7 @@ public class ShieldEnemy : EnemyAbstract
     }
     public void anim()
     {
-        Shield.SetTrigger("Attack");
+        Shield.Play("Attack");
 
     }
 }
