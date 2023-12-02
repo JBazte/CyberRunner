@@ -13,7 +13,7 @@ public class UIManager : TemporalSingleton<UIManager>
     [SerializeField]
     UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc, cosmeticsDoc;
 
-    Button btn_home, btn_shop, btn_resume, btn_pause, btn_close, btn_tap, btn_leaderBoard, btn_items, btn_cosmetics;
+    Button btn_home, btn_shop, btn_resume, btn_pause, btn_close_s, btn_close_c, btn_tap, btn_leaderBoard, btn_items, btn_cosmetics;
 
     Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel;
 
@@ -34,8 +34,11 @@ public class UIManager : TemporalSingleton<UIManager>
         btn_pause = inGameDoc.rootVisualElement.Q("PauseButton") as Button;
         btn_pause.RegisterCallback<ClickEvent>(OnPause);
 
-        btn_close = shopDoc.rootVisualElement.Q("CloseButton") as Button;
-        btn_close.RegisterCallback<ClickEvent>(OnClose);
+        btn_close_s = shopDoc.rootVisualElement.Q("CloseButton") as Button;
+        btn_close_s.RegisterCallback<ClickEvent>(OnClose);
+
+        btn_close_c = cosmeticsDoc.rootVisualElement.Q("CloseButton") as Button;
+        btn_close_c.RegisterCallback<ClickEvent>(OnClose);
 
         btn_cosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
         btn_cosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
@@ -115,7 +118,12 @@ public class UIManager : TemporalSingleton<UIManager>
     
     public void OnClose(ClickEvent evt)
     {
-        shopDoc.enabled = false;
+        if(shopDoc.enabled == true)
+        {
+            shopDoc.enabled = false;
+        }else if(cosmeticsDoc.enabled == true){
+            cosmeticsDoc.enabled = false;
+        }
     }
 
     public void ToGameOver()
@@ -174,8 +182,11 @@ public class UIManager : TemporalSingleton<UIManager>
                 break;
 
             case 3:
-                btn_close = shopDoc.rootVisualElement.Q("CloseButton") as Button;
-                btn_close.RegisterCallback<ClickEvent>(OnClose);
+                btn_close_s = shopDoc.rootVisualElement.Q("CloseButton") as Button;
+                btn_close_s.RegisterCallback<ClickEvent>(OnClose);
+
+                btn_close_c = cosmeticsDoc.rootVisualElement.Q("CloseButton") as Button;
+                btn_close_c.RegisterCallback<ClickEvent>(OnClose);
 
                 btn_cosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
                 btn_cosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
