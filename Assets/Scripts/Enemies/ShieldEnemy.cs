@@ -23,7 +23,7 @@ public class ShieldEnemy : EnemyAbstract
             }
         }
 
-        if (m_weapon.transform.position.z <= -1.0f)
+        if (m_weapon.transform.position.z <= -2.0f)
         {
             m_weapon.SetActive(false);
         }

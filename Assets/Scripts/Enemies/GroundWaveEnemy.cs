@@ -29,7 +29,7 @@ public  class GroundWaveEnemy : EnemyAbstract
                 Invoke("Attack", 1.1f);
             }
         }
-        if (gameObject.transform.position.z <= -3.0f)
+        if (m_weapon.transform.position.z <= -2.0f)
         {
             m_weapon.SetActive(false);
         }
@@ -43,6 +43,7 @@ public  class GroundWaveEnemy : EnemyAbstract
         }
 
         m_hasAttacked = true;
+        Wave.Play("Idle");
 
 
     }
