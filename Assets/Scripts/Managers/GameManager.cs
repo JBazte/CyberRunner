@@ -65,6 +65,11 @@ public class GameManager : TemporalSingleton<GameManager> {
         m_runActive = true;
         SpeedManager.Instance.SetRunSpeed(m_initialRunSpeed);
         SpeedManager.Instance.SetAcceleration(m_initialAcceleration);
+        m_coinsObtained = 0;
+        m_score = 0;
+        m_metersTraveled = 0;
+        //UIManager.Instance.ToGame();
+        //ModuleManager.Instance.SetInitialScenario();
         m_player.SetIsInputEnabled(true);
         m_player.PlayAnimation("run");
     }
@@ -73,52 +78,56 @@ public class GameManager : TemporalSingleton<GameManager> {
         m_auxRunSpeed = SpeedManager.Instance.GetRunSpeed();
         SpeedManager.Instance.SetRunSpeed(0.0f);
         m_runActive = false;
-        m_UIInGame.enabled = false;
-        m_UIOnPause.enabled = true;
+        //m_UIInGame.enabled = false;
+        //m_UIOnPause.enabled = true;
         m_player.SetIsInputEnabled(false);
     }
 
     public void Resume() {
         SpeedManager.Instance.SetRunSpeed(m_auxRunSpeed);
         m_runActive = true;
-        m_UIOnPause.enabled = false;
-        m_UIInGame.enabled = true;
+        //m_UIOnPause.enabled = false;
+        //m_UIInGame.enabled = true;
         m_player.SetIsInputEnabled(true);
     }
     public void GameOver() {
         m_auxRunSpeed = SpeedManager.Instance.GetRunSpeed();
         SpeedManager.Instance.SetRunSpeed(0.0f);
-        m_UIInGame.enabled = false;
+        //m_UIInGame.enabled = false;
         m_runActive = false;
-        m_UIGameOver.enabled = true;
+        //m_UIGameOver.enabled = true;
         playFabManager.SetLeaderboardEntry((int)m_score);
+        UIManager.Instance.ToGameOver();
     }
 
-    public void OnShop() {
-        m_UIOnShop.enabled = true;
+    /*public void OnShop() {
+        //m_UIOnShop.enabled = true;
         //m_UIGameOver.enabled = false;
     }
 
     public void OutShop() {
-        m_UIOnShop.enabled = false;
+        //m_UIOnShop.enabled = false;
         //m_UIGameOver.enabled = true;
-    }
+    }*/
 
     public void OpenLeaderboard() {
-        m_UIGameOver.enabled = false;
-        m_UIGameOver.gameObject.SetActive(false);
-        playFabManager.GetLeaderboardEntriesAroundPlayer();
+        //m_UIGameOver.enabled = false;
+        //m_UIGameOver.gameObject.SetActive(false);
+        //playFabManager.GetLeaderboardEntriesAroundPlayer();
     }
 
     public void CloseLeaderboard() {
-        m_UIGameOver.enabled = true;
-        m_UIGameOver.gameObject.SetActive(true);
-        playFabManager.CloseLeaderboardPanel();
+        //m_UIGameOver.enabled = true;
+        //m_UIGameOver.gameObject.SetActive(true);
+        //playFabManager.CloseLeaderboardPanel();
+        //UIManager.Instance.ToGameOver();
     }
 
     public bool GetRunActive() { return m_runActive; }
     public void SetRunActive(bool runSpeed) { m_runActive = runSpeed; }
     public float GetTraveledMeters() { return m_metersTraveled; }
+    public PlayerController GetPlayer() { return m_player; }   
+    public int GetPlayerAccountCoins() { return PlayerPrefs.GetInt(AppPlayePrefs.PLAYER_COINS); }
 
     public float Score { get => m_score; set => m_score = value; }
     public uint CoinsObtained { get => m_coinsObtained; set => m_coinsObtained = value; }
