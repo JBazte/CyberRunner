@@ -6,12 +6,17 @@ using UnityEngine;
 public abstract class EnemyAbstract : MonoBehaviour
 {
     public GameObject m_weapon;
-    public bool          m_isSpawn = false;
-    protected bool       m_hasAttacked = false;
+    public bool       m_isSpawn = false;
+    protected bool    m_hasAttacked = false;
 
     private void OnEnable()
     {
         m_weapon = gameObject.transform.GetChild(0).gameObject;
+    }
+
+    private void Start()
+    {
+        //m_isSpawn = false;
     }
 
     public abstract void Attack();
@@ -28,7 +33,6 @@ public abstract class EnemyAbstract : MonoBehaviour
     public void SetHasAttacked(bool hasAttacked) { m_hasAttacked = hasAttacked; }
     public void DeactivateWeapon()
     {
-        Debug.Log(m_weapon);
         if (m_weapon.activeSelf)
         {
             m_weapon.SetActive(false);

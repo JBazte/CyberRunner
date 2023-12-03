@@ -10,36 +10,36 @@ public class HyperspeedPowerUp : PowerUpEffect
 {
     private float m_hyperspeedMetersDuration;
 
-    public static PowerUpEffect CreateInstance(PowerUpTiers tier)
+    public static PowerUpEffect CreateInstance(int tier)
     {
         HyperspeedPowerUp instance = new HyperspeedPowerUp();
         instance.SetTier(tier);
         return instance;
     }
 
-    public override void SetTier(PowerUpTiers tier)
+    public override void SetTier(int tier)
     {
         m_duration = 1;
-
-        if (tier == PowerUpTiers.TIER1)
+        switch (tier)
         {
-            m_hyperspeedMetersDuration = 90;
-        }
-        else if (tier == PowerUpTiers.TIER2)
-        {
-            m_hyperspeedMetersDuration = 100;
-        }
-        else if (tier == PowerUpTiers.TIER3)
-        {
-            m_hyperspeedMetersDuration = 110;
-        }
-        else if (tier == PowerUpTiers.TIER4)
-        {
-            m_hyperspeedMetersDuration = 130;
-        }
-        else if (tier == PowerUpTiers.TIER5)
-        {
-            m_hyperspeedMetersDuration = 150;
+            case 1:
+                m_hyperspeedMetersDuration = 90;
+                break;
+            case 2:
+                m_hyperspeedMetersDuration = 100;
+                break;
+            case 3:
+                m_hyperspeedMetersDuration = 110;
+                break;
+            case 4:
+                m_hyperspeedMetersDuration = 130;
+                break;
+            case 5:
+                m_hyperspeedMetersDuration = 150;
+                break;
+            default:
+                Debug.Log("PowerUp TIER for " + this + " is not valid!!");
+                break;
         }
     }
 

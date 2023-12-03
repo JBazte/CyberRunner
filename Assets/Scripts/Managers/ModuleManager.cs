@@ -1,89 +1,105 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ModuleManager : TemporalSingleton<ModuleManager> 
 {
-    public GameObject   m_startTile;
-    private GameObject[] m_modules;
-    private float index = 0;
+    public GameObject         m_module0Prefab;
+    private GameObject        m_module0Instance;
+    private GameObject[]      m_modules;
+    private Queue<GameObject> m_modulesOnMap;
+    private float             m_minZDistance;
+    private float             m_spawnZDistance;
+    private int               m_maxModulesOnMap;
+    private Vector3           m_spawnVector;
+    //private float index = 0;
 
     [SerializeField]
-    private ShieldEnemy     m_shieldEnemy;
+    private GameObject m_shieldEnemy;
     [SerializeField]
-    private SlashEnemy      m_slashEnemy;
+    private GameObject m_slashEnemy;
     [SerializeField]
-    private GroundWaveEnemy m_groundWaveEnemy;
+    private GameObject m_groundWaveEnemy;
 
     private void Start()
     {
-        GameObject StartPlane1 = Instantiate(m_startTile, transform);
-        StartPlane1.transform.position = new Vector3(0, 0, 41);
+        m_module0Instance = Instantiate(m_module0Prefab, transform);
         m_modules = GameObject.FindGameObjectsWithTag("Module");
-        foreach (GameObject tile in m_modules){
-            tile.GetComponent<ModuleBehaviour>().InitializeModule();
-            tile.SetActive(false);
+        foreach (GameObject module in m_modules){
+            module.GetComponent<ModuleBehaviour>().InitializeModule();
+            module.SetActive(false);
         }
-        m_shieldEnemy.SetIsSpawn(true);
-        m_slashEnemy.SetIsSpawn(true);
-        m_groundWaveEnemy.SetIsSpawn(true);
+
+        m_modulesOnMap = new Queue<GameObject>();
+        m_maxModulesOnMap = 2;
+        m_minZDistance = -60.0f;
+        m_spawnZDistance = 138.0f;
+        m_spawnVector = new Vector3(0, 0, m_spawnZDistance);
+
+        SetInitialScenario();
     }
     // Render.OnBecameOInvisible()
     private void Update() 
     {
-        for (int i = 0; i < m_modules.Length; i++)
+        if(m_modulesOnMap.Count > 0 && GameManager.Instance.GetRunActive())
         {
-            m_modules[i].transform.position += new Vector3(0, 0, -SpeedManager.Instance.GetRunSpeed() * Time.deltaTime);
-        }
-        gameObject.transform.position += new Vector3(0, 0, -SpeedManager.Instance.GetRunSpeed() * Time.deltaTime);
-
-        for (int i = 0; i < m_modules.Length; i++)
-        {
-            if (m_modules[i].activeSelf && m_modules[i].transform.position.z <= -80)
+            foreach(GameObject module in m_modulesOnMap)
             {
-                m_modules[i].SetActive(false);
+                module.transform.position += new Vector3(0, 0, -SpeedManager.Instance.GetRunSpeed() * Time.deltaTime);
+            }
+
+            if (m_modulesOnMap.Peek().transform.position.z <= m_minZDistance)
+            {
+                DequeuModule();
+                EnqueueModule();
             }
         }
-
-        if (transform.position.z <= index) 
-        {
-            int RandomInt1 = Random.Range(0, m_modules.Length);
-
-            if (m_modules[RandomInt1].activeSelf && m_modules[RandomInt1].transform.position.z <= -60)
-            {
-                m_modules[RandomInt1].transform.position = new Vector3(0, 0, 138);
-                m_modules[RandomInt1].GetComponent<ModuleBehaviour>().ResetModule();
-            }
-            else if (!m_modules[RandomInt1].activeSelf)
-            {
-                m_modules[RandomInt1].SetActive(true);
-                m_modules[RandomInt1].transform.position = new Vector3(0, 0, 138);
-                m_modules[RandomInt1].GetComponent<ModuleBehaviour>().ResetModule();
-            }
-            else
-            {
-                RandomInt1 += 1;
-
-                if (m_modules[RandomInt1].activeSelf && m_modules[RandomInt1].transform.position.z <= -60)
-                {
-                    m_modules[RandomInt1].transform.position = new Vector3(0, 0, 138);
-                    m_modules[RandomInt1].GetComponent<ModuleBehaviour>().ResetModule();
-                }
-                else if (!m_modules[RandomInt1].activeSelf)
-                {
-                    m_modules[RandomInt1].SetActive(true);
-                    m_modules[RandomInt1].transform.position = new Vector3(0, 0, 138);
-                    m_modules[RandomInt1].GetComponent<ModuleBehaviour>().ResetModule();
-                }
-                
-            }      
-            
-            index = index - 100.0f;
-        }
-
     }
 
-    public ShieldEnemy GetShieldEnemy()         { return m_shieldEnemy; }
-    public SlashEnemy GetSlashEnemy()           { return m_slashEnemy; }
-    public GroundWaveEnemy GetGroundWaveEnemy() { return m_groundWaveEnemy; }
+    public void SetInitialScenario()
+    {
+        if(m_modulesOnMap.Count > 0)
+        {
+            for(int i = 0; i < m_maxModulesOnMap; i++)
+            {
+                DequeuModule();
+            }
+        }
+        m_module0Instance.transform.position = new Vector3(0, 0, 41);
+        m_module0Instance.SetActive(true);
+        m_modulesOnMap.Enqueue(m_module0Instance);
+        EnqueueModule();
+    }
+
+    private void EnqueueModule()
+    {
+        bool moduleIsValid = false;
+        int randomModule;
+
+        while(!moduleIsValid)
+        {
+            randomModule = Random.Range(0, m_modules.Length);
+
+            if (!m_modules[randomModule].activeSelf)
+            {
+                m_modulesOnMap.Enqueue(m_modules[randomModule]);
+                m_modules[randomModule].SetActive(true);
+                m_modules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
+                m_modules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                moduleIsValid = true;
+            }
+        }
+    }
+
+    private void DequeuModule()
+    {
+        Debug.Log("DEQUEEEE" + m_modulesOnMap.Peek());
+        m_modulesOnMap.Dequeue().gameObject.SetActive(false);
+        
+    }
+
+    public GameObject GetShieldEnemy()     { return m_shieldEnemy; }
+    public GameObject GetSlashEnemy()      { return m_slashEnemy; }
+    public GameObject GetGroundWaveEnemy() { return m_groundWaveEnemy; }
 }

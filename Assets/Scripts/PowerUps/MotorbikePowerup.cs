@@ -10,36 +10,36 @@ public class MotorbikePowerup : PowerUpEffect
 {
     private float m_motorbikeDuration;
 
-    public static PowerUpEffect CreateInstance(PowerUpTiers tier)
+    public static PowerUpEffect CreateInstance(int tier)
     {
         MotorbikePowerup instance = new MotorbikePowerup();
         instance.SetTier(tier);
         return instance;
     }
 
-    public override void SetTier(PowerUpTiers tier)
+    public override void SetTier(int tier)
     {
         m_duration = 1;
-
-        if (tier == PowerUpTiers.TIER1)
+        switch (tier)
         {
-            m_motorbikeDuration = 5;
-        }
-        else if (tier == PowerUpTiers.TIER2)
-        {
-            m_motorbikeDuration = 6;
-        }
-        else if (tier == PowerUpTiers.TIER3)
-        {
-            m_motorbikeDuration = 7;
-        }
-        else if (tier == PowerUpTiers.TIER4)
-        {
-            m_motorbikeDuration = 8;
-        }
-        else if (tier == PowerUpTiers.TIER5)
-        {
-            m_motorbikeDuration = 10;
+            case 1:
+                m_motorbikeDuration = 5;
+                break;
+            case 2:
+                m_motorbikeDuration = 6;
+                break;
+            case 3:
+                m_motorbikeDuration = 7;
+                break;
+            case 4:
+                m_motorbikeDuration = 8;
+                break;
+            case 5:
+                m_motorbikeDuration = 10;
+                break;
+            default:
+                Debug.Log("PowerUp TIER for " + this + " is not valid!!");
+                break;
         }
     }
 

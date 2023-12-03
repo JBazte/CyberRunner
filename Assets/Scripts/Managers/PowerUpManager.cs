@@ -5,7 +5,7 @@ using UnityEngine;
 public enum PowerUpsEnum { BOOTS = 0, DRON = 1, WALLS = 2, HYPERSPEED = 3, MOTORBIKE = 4 }
 //                          35%         20%       20%         15%              10%
 
-public enum PowerUpTiers { TIER1, TIER2, TIER3, TIER4, TIER5 }
+public enum PowerUpsTierUpCosts { TO_LVL_2 = 100, TO_LVL_3 = 200, TO_LVL_4 = 300, TO_LVL_5 = 400 }
 
 public class PowerUpManager : TemporalSingleton<PowerUpManager>
 {
@@ -18,19 +18,30 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
     private float            m_powerUpSpawnTime;
     private PlayerController m_player;
 
-    //private string           m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt("BootsTier");
-    private string           m_dronTierPlayerPrefs       = "DronTier";
-    private string           m_wallsTierPlayerPrefs      = "WallsTier";
-    private string           m_motorbikeTierPlayerPrefs  = "MotorbikeTier";
-    private string           m_hyperspeedTierPlayerPrefs = "HyperspeedTier";
-
-    private void OnEnable()
-    {
-        m_player = FindObjectOfType<PlayerController>();
-    }
+    private int m_bootsTierPlayerPrefs;
+    private int m_dronTierPlayerPrefs;
+    private int m_wallsTierPlayerPrefs;
+    private int m_motorbikeTierPlayerPrefs;
+    private int m_hyperspeedTierPlayerPrefs;
 
     private void Start()
     {
+        m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt(AppPlayePrefs.BOOTS_TIER);
+        if(m_bootsTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 1);
+
+        m_dronTierPlayerPrefs       = PlayerPrefs.GetInt(AppPlayePrefs.DRON_TIER);
+        if (m_dronTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 1);
+
+        m_wallsTierPlayerPrefs      = PlayerPrefs.GetInt(AppPlayePrefs.WALLS_TIER);
+        if (m_wallsTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 1);
+
+        m_motorbikeTierPlayerPrefs  = PlayerPrefs.GetInt(AppPlayePrefs.MOTORBIKE_TIER);
+        if (m_motorbikeTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 1);
+
+        m_hyperspeedTierPlayerPrefs = PlayerPrefs.GetInt(AppPlayePrefs.HYPERSPEED_TIER);
+        if (m_hyperspeedTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.HYPERSPEED_TIER, 1);
+
+        m_player = FindObjectOfType<PlayerController>();
         m_powerUpAppears = false;
         m_powerUpTimer = 0.0f;
         m_powerUpSpawnTime = 5.0f;
@@ -51,24 +62,11 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
 
     private void CreateAllPowerUps()
     {
-        //m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = ScriptableObject.CreateInstance<BootsPowerUp>();//.SetTier(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.DRON]       = ScriptableObject.CreateInstance<DronPowerUp>();
-        //m_allPowerUps[(int)PowerUpsEnum.WALLS]      = ScriptableObject.CreateInstance<WallPowerUp>();
-        //m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = ScriptableObject.CreateInstance<HyperspeedPowerUp>();
-        //m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE]  = ScriptableObject.CreateInstance<MotorbikePowerup>();
-
-        //m_allPowerUps[(int)PowerUpsEnum.BOOTS]     .SetTier(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.DRON]      .SetTier(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.WALLS]     .SetTier(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED].SetTier(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE] .SetTier(PowerUpTiers.TIER1);
-
-        m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = BootsPowerUp.CreateInstance(PowerUpTiers.TIER1);
-        //m_allPowerUps[(int)PowerUpsEnum.BOOTS] = BootsPowerUp.CreateInstance(PowerUpTiers.);
-        m_allPowerUps[(int)PowerUpsEnum.DRON]       = DronPowerUp.CreateInstance(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.WALLS]      = WallPowerUp.CreateInstance(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = HyperspeedPowerUp.CreateInstance(PowerUpTiers.TIER1);
-        m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE]  = MotorbikePowerup.CreateInstance(PowerUpTiers.TIER1);
+        m_allPowerUps[(int)PowerUpsEnum.BOOTS]      = BootsPowerUp.CreateInstance(m_bootsTierPlayerPrefs);
+        m_allPowerUps[(int)PowerUpsEnum.DRON]       = DronPowerUp.CreateInstance(m_dronTierPlayerPrefs);
+        m_allPowerUps[(int)PowerUpsEnum.WALLS]      = WallPowerUp.CreateInstance(m_wallsTierPlayerPrefs);
+        m_allPowerUps[(int)PowerUpsEnum.HYPERSPEED] = HyperspeedPowerUp.CreateInstance(m_hyperspeedTierPlayerPrefs);
+        m_allPowerUps[(int)PowerUpsEnum.MOTORBIKE]  = MotorbikePowerup.CreateInstance(m_motorbikeTierPlayerPrefs);
     }
 
     public void SetPowerUpAppears(bool powerUpAppears) { m_powerUpAppears = powerUpAppears; }
