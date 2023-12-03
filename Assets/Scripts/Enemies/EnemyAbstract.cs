@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,16 +9,21 @@ public abstract class EnemyAbstract : MonoBehaviour
     public GameObject m_weapon;
     public bool       m_isSpawn = false;
     protected bool    m_hasAttacked = false;
-
+    private Animator  m_anim;
+    
     private void OnEnable()
     {
         m_weapon = gameObject.transform.GetChild(0).gameObject;
+        m_anim = gameObject.GetComponentInChildren<Animator>();
+        m_anim.Play("Idle");
     }
 
     private void Start()
     {
-        //m_isSpawn = false;
+        
     }
+
+   
 
     public abstract void Attack();
     public void Die()

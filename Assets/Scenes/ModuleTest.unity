@@ -325,7 +325,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -4352,6 +4352,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1463888669}
     m_Modifications:
+    - target: {fileID: 50008604438489465, guid: f50438227c69aba478a0c24e007927c9, type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50008604438489465, guid: f50438227c69aba478a0c24e007927c9, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 50008604438489465, guid: f50438227c69aba478a0c24e007927c9, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 50008604438489465, guid: f50438227c69aba478a0c24e007927c9, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 789305841262260894, guid: f50438227c69aba478a0c24e007927c9, type: 3}
       propertyPath: m_Name
       value: Module2.2

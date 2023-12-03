@@ -5,25 +5,29 @@ using UnityEngine;
 public class ShieldEnemy : EnemyAbstract
 { 
     private bool       m_isAttaking = false;
-    
+    private Animator Shield;
     
     void Start()
     {
-        //m_weapon = gameObject.transform.GetChild(0).gameObject;
+        Shield = GetComponentInChildren<Animator>();
     }
-    
     void Update()
     {
-        if(gameObject.transform.position.z <= 15)
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 30);
+        foreach (var hitCollider in hitColliders)
         {
-            Attack();
+            if (hitCollider.gameObject.CompareTag("Player"))
+            {
+                anim();
+                Invoke("Attack", 0.8f);
+            }
         }
-        if (m_weapon.transform.position.z <= -5.0f)
+
+        if (m_weapon.transform.position.z <= -2.0f)
         {
             m_weapon.SetActive(false);
         }
     }
-
     public override void Attack()
     {
         if(!m_hasAttacked)
@@ -33,5 +37,10 @@ public class ShieldEnemy : EnemyAbstract
         }
 
         m_hasAttacked = true;
+    }
+    public void anim()
+    {
+        Shield.Play("Attack");
+
     }
 }

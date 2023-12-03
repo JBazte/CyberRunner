@@ -7,13 +7,12 @@ public  class GroundWaveEnemy : EnemyAbstract
     private float CollPosz;
     private float CollPosx;
     private float CollPosy;
-    private bool isAttaking = false;
+    private Animator Wave;
 
     void Start()
     {
-        //m_weapon = gameObject.transform.GetChild(0).gameObject;
+        Wave = GetComponentInChildren<Animator>();
     }
-    
     void Update()
     {
         CollPosz = gameObject.transform.position.z;
@@ -21,27 +20,35 @@ public  class GroundWaveEnemy : EnemyAbstract
         CollPosy = gameObject.transform.position.y;
         m_weapon.transform.position += new Vector3(0,0 , (-SpeedManager.Instance.GetRunSpeed()-1) * Time.deltaTime);
         
-        if(gameObject.transform.position.z <= 13.0f)
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 32);
+        foreach (var hitCollider in hitColliders)
         {
-            Attack();
+            if (hitCollider.gameObject.CompareTag("Player")&& !m_hasAttacked)
+            {
+                anim();
+                Invoke("Attack", 1.1f);
+            }
         }
-        if (m_weapon.transform.position.z <= -3.0f)
+        if (m_weapon.transform.position.z <= -2.0f)
         {
             m_weapon.SetActive(false);
         }
     }
-
     public override void Attack()
     {
         if(!m_hasAttacked)
         {
-            
             m_weapon.SetActive(true);
-            m_weapon.transform.position = new Vector3(CollPosx,CollPosy ,CollPosz);
-            isAttaking = true;
-           
+            m_weapon.transform.position = new Vector3(CollPosx,CollPosy ,CollPosz-2);
         }
 
         m_hasAttacked = true;
+        Wave.Play("Idle");
+
+
+    }
+    public void anim()
+    {
+        Wave.Play("Attack");
     }
 }
