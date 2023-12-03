@@ -32,40 +32,42 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
         }
 
         m_modulesOnMap = new Queue<GameObject>();
-        //m_modulesOnMap.Enqueue(StartPlane1);
         m_maxModulesOnMap = 2;
         m_minZDistance = -60.0f;
         m_spawnZDistance = 138.0f;
         m_spawnVector = new Vector3(0, 0, m_spawnZDistance);
 
         SetInitialScenario();
-
-        //StartPlane1.SetActive(true);
-        //EnqueueModule();
-
-        //m_shieldEnemy.GetComponent<EnemyAbstract>().SetIsSpawn(true);
-        //m_slashEnemy.GetComponent<EnemyAbstract>().SetIsSpawn(true);
-        //m_groundWaveEnemy.GetComponent<EnemyAbstract>().SetIsSpawn(true);
     }
     // Render.OnBecameOInvisible()
     private void Update() 
     {
-        foreach(GameObject module in m_modulesOnMap)
+        if(m_modulesOnMap.Count > 0 && GameManager.Instance.GetRunActive())
         {
-            module.transform.position += new Vector3(0, 0, -SpeedManager.Instance.GetRunSpeed() * Time.deltaTime);
-        }
+            foreach(GameObject module in m_modulesOnMap)
+            {
+                module.transform.position += new Vector3(0, 0, -SpeedManager.Instance.GetRunSpeed() * Time.deltaTime);
+            }
 
-        if (m_modulesOnMap.Peek().transform.position.z <= m_minZDistance)
-        {
-            DequeuModule();
-            EnqueueModule();
+            if (m_modulesOnMap.Peek().transform.position.z <= m_minZDistance)
+            {
+                DequeuModule();
+                EnqueueModule();
+            }
         }
     }
 
     public void SetInitialScenario()
     {
-        if(m_modulesOnMap.Count > 0) m_modulesOnMap.Clear();
+        if(m_modulesOnMap.Count > 0)
+        {
+            for(int i = 0; i < m_maxModulesOnMap; i++)
+            {
+                DequeuModule();
+            }
+        }
         m_module0Instance.transform.position = new Vector3(0, 0, 41);
+        m_module0Instance.SetActive(true);
         m_modulesOnMap.Enqueue(m_module0Instance);
         EnqueueModule();
     }
@@ -92,7 +94,9 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
 
     private void DequeuModule()
     {
+        Debug.Log("DEQUEEEE" + m_modulesOnMap.Peek());
         m_modulesOnMap.Dequeue().gameObject.SetActive(false);
+        
     }
 
     public GameObject GetShieldEnemy()     { return m_shieldEnemy; }

@@ -310,6 +310,7 @@ public class UIManager : TemporalSingleton<UIManager>
         tapDoc.enabled = true;
         ModuleManager.Instance.SetInitialScenario();
         GameManager.Instance.GetPlayer().PlayAnimation("idle");
+        GameManager.Instance.GetPlayer().setSide(SIDE.Middle);
         Debug.Log(GameManager.Instance.GetPlayer().m_anim);
         /*btn_tap = tapDoc.rootVisualElement.Q("TapButton") as Button;
         btn_tap.RegisterCallback<ClickEvent>(ToGame);*/
