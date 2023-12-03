@@ -5,6 +5,8 @@ using UnityEngine;
 public enum PowerUpsEnum { BOOTS = 0, DRON = 1, WALLS = 2, HYPERSPEED = 3, MOTORBIKE = 4 }
 //                          35%         20%       20%         15%              10%
 
+public enum PowerUpsTierUpCosts { TO_LVL_2 = 100, TO_LVL_3 = 200, TO_LVL_4 = 300, TO_LVL_5 = 400 }
+
 public class PowerUpManager : TemporalSingleton<PowerUpManager>
 {
     private static uint      m_totalNumofPowerUps = 5;
@@ -24,20 +26,20 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
 
     private void Start()
     {
-        m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt("BootsTier");
-        if(m_bootsTierPlayerPrefs == 0) PlayerPrefs.SetInt("BootsTier", 1);
+        m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt(AppPlayePrefs.BOOTS_TIER);
+        if(m_bootsTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 1);
 
-        m_dronTierPlayerPrefs       = PlayerPrefs.GetInt("DronTier");
-        if (m_dronTierPlayerPrefs == 0) PlayerPrefs.SetInt("DronTier", 1);
+        m_dronTierPlayerPrefs       = PlayerPrefs.GetInt(AppPlayePrefs.DRON_TIER);
+        if (m_dronTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 1);
 
-        m_wallsTierPlayerPrefs      = PlayerPrefs.GetInt("WallsTier");
-        if (m_wallsTierPlayerPrefs == 0) PlayerPrefs.SetInt("WallsTier", 1);
+        m_wallsTierPlayerPrefs      = PlayerPrefs.GetInt(AppPlayePrefs.WALLS_TIER);
+        if (m_wallsTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 1);
 
-        m_motorbikeTierPlayerPrefs  = PlayerPrefs.GetInt("MotorbikeTier");
-        if (m_motorbikeTierPlayerPrefs == 0) PlayerPrefs.SetInt("MotorbikeTier", 1);
+        m_motorbikeTierPlayerPrefs  = PlayerPrefs.GetInt(AppPlayePrefs.MOTORBIKE_TIER);
+        if (m_motorbikeTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 1);
 
-        m_hyperspeedTierPlayerPrefs = PlayerPrefs.GetInt("HyperspeedTier");
-        if (m_hyperspeedTierPlayerPrefs == 0) PlayerPrefs.SetInt("HyperspeedTier", 1);
+        m_hyperspeedTierPlayerPrefs = PlayerPrefs.GetInt(AppPlayePrefs.HYPERSPEED_TIER);
+        if (m_hyperspeedTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.HYPERSPEED_TIER, 1);
 
         m_player = FindObjectOfType<PlayerController>();
         m_powerUpAppears = false;

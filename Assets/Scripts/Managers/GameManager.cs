@@ -65,6 +65,11 @@ public class GameManager : TemporalSingleton<GameManager> {
         m_runActive = true;
         SpeedManager.Instance.SetRunSpeed(m_initialRunSpeed);
         SpeedManager.Instance.SetAcceleration(m_initialAcceleration);
+        m_coinsObtained = 0;
+        m_score = 0;
+        m_metersTraveled = 0;
+        //UIManager.Instance.ToGame();
+        //ModuleManager.Instance.SetInitialScenario();
         m_player.SetIsInputEnabled(true);
         m_player.PlayAnimation("run");
     }
@@ -121,6 +126,8 @@ public class GameManager : TemporalSingleton<GameManager> {
     public bool GetRunActive() { return m_runActive; }
     public void SetRunActive(bool runSpeed) { m_runActive = runSpeed; }
     public float GetTraveledMeters() { return m_metersTraveled; }
+    public PlayerController GetPlayer() { return m_player; }   
+    public int GetPlayerAccountCoins() { return PlayerPrefs.GetInt(AppPlayePrefs.PLAYER_COINS); }
 
     public float Score { get => m_score; set => m_score = value; }
     public uint CoinsObtained { get => m_coinsObtained; set => m_coinsObtained = value; }

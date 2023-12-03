@@ -13,47 +13,282 @@ public class UIManager : TemporalSingleton<UIManager>
     [SerializeField]
     UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc, cosmeticsDoc;
 
-    Button btn_home, btn_shop, btn_resume, btn_pause, btn_close, btn_tap, btn_leaderBoard, btn_items, btn_cosmetics;
+    Button btnHome, btnShop, btnResume, btnPause, btnClose, btnTap, btnLeaderBoard, btnItems, btnCosmetics;
+    Button m_motoShopBtn, m_bootsShopBtn, m_hyperspeedShopBtn, m_wallsShopBtn, m_droneShopBtn;
 
     Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel;
 
     private void OnEnable()
     {
-        btn_tap = tapDoc.rootVisualElement.Q("TapButton") as Button;
-        btn_tap.RegisterCallback<ClickEvent>(ToGame);
+        btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
+        btnTap.RegisterCallback<ClickEvent>(ToGame);
 
-        btn_home = gameOverDoc.rootVisualElement.Q("HomeButton") as Button;
-        btn_home.RegisterCallback<ClickEvent>(ToTap);
+        btnHome = gameOverDoc.rootVisualElement.Q("HomeButton") as Button;
+        btnHome.RegisterCallback<ClickEvent>(ToTap);
 
-        btn_shop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
-        btn_shop.RegisterCallback<ClickEvent>(ToShop);
+        btnShop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
+        btnShop.RegisterCallback<ClickEvent>(ToShop);
 
-        btn_resume = pauseDoc.rootVisualElement.Q("ResumeButton") as Button;
-        btn_resume.RegisterCallback<ClickEvent>(ToResume);
+        btnResume = pauseDoc.rootVisualElement.Q("ResumeButton") as Button;
+        btnResume.RegisterCallback<ClickEvent>(ToResume);
 
-        btn_pause = inGameDoc.rootVisualElement.Q("PauseButton") as Button;
-        btn_pause.RegisterCallback<ClickEvent>(OnPause);
+        btnPause = inGameDoc.rootVisualElement.Q("PauseButton") as Button;
+        btnPause.RegisterCallback<ClickEvent>(OnPause);
 
-        btn_close = shopDoc.rootVisualElement.Q("CloseButton") as Button;
-        btn_close.RegisterCallback<ClickEvent>(OnClose);
+        btnClose = shopDoc.rootVisualElement.Q("CloseButton") as Button;
+        btnClose.RegisterCallback<ClickEvent>(OnClose);
 
-        btn_cosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
-        btn_cosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
+        btnCosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
+        btnCosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
 
-        btn_leaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
-        btn_leaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
+        btnLeaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+        btnLeaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
 
-        btn_items = cosmeticsDoc.rootVisualElement.Q("ItemsButton") as Button;
-        btn_items.RegisterCallback<ClickEvent>(ToShop);
+        btnItems = cosmeticsDoc.rootVisualElement.Q("ItemsButton") as Button;
+        btnItems.RegisterCallback<ClickEvent>(ToShop);
+
+
+        m_motoShopBtn       = shopDoc.rootVisualElement.Q("MotoShopButton") as Button;
+        m_motoShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.MOTORBIKE));
+        m_bootsShopBtn      = shopDoc.rootVisualElement.Q("BootsShopButton") as Button;
+        m_bootsShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.BOOTS));
+        m_hyperspeedShopBtn = shopDoc.rootVisualElement.Q("HyperspeedShopButton") as Button;
+        m_hyperspeedShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.HYPERSPEED));
+        m_wallsShopBtn      = shopDoc.rootVisualElement.Q("WallsShopButton") as Button;
+        m_wallsShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.WALLS));
+        m_droneShopBtn      = shopDoc.rootVisualElement.Q("DroneShopButton") as Button;
+        m_droneShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.DRON));
 
 
         scoreLabel = inGameDoc.rootVisualElement.Q("ScoreLab") as Label;
-
         coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
-
         finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
-
         comboLabel = inGameDoc.rootVisualElement.Q("ComboLab") as Label;
+    }
+
+    private void UpgradePowerUp(ClickEvent evt, PowerUpsEnum powerUp)
+    {
+        switch(powerUp)
+        {
+            case PowerUpsEnum.BOOTS:
+                switch(PlayerPrefs.GetInt(AppPlayePrefs.BOOTS_TIER))
+                {
+                    case 1:
+                        if(GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 2);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins()-(int)PowerUpsTierUpCosts.TO_LVL_2);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 2:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_3)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 3);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 3:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_4)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 4);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 4:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_5)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 5);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 5:
+                        Debug.Log("Boots have max tier");
+                        break;
+                    default:
+                        Debug.Log("Corrupted Tier for Boots PowerUp");
+                        break;
+                }
+                break;
+            case PowerUpsEnum.DRON:
+                switch (PlayerPrefs.GetInt(AppPlayePrefs.DRON_TIER))
+                {
+                    case 1:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 2);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 2:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_3)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 3);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 3:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_4)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 4);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 4:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_5)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 5);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 5:
+                        Debug.Log("Dron has max tier");
+                        break;
+                    default:
+                        Debug.Log("Corrupted Tier for Dron PowerUp");
+                        break;
+                }
+                break;
+            case PowerUpsEnum.WALLS:
+                switch (PlayerPrefs.GetInt(AppPlayePrefs.WALLS_TIER))
+                {
+                    case 1:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 2);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 2:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_3)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 3);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 3:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_4)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 4);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 4:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_5)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 5);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 5:
+                        Debug.Log("Walls have max tier");
+                        break;
+                    default:
+                        Debug.Log("Corrupted Tier for Walls PowerUp");
+                        break;
+                }
+                break;
+            case PowerUpsEnum.HYPERSPEED:
+                switch (PlayerPrefs.GetInt(AppPlayePrefs.HYPERSPEED_TIER))
+                {
+                    case 1:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.HYPERSPEED_TIER, 2);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 2:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_3)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.HYPERSPEED_TIER, 3);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 3:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_4)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.HYPERSPEED_TIER, 4);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 4:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_5)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 5);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 5:
+                        Debug.Log("Hyperspeed has max tier");
+                        break;
+                    default:
+                        Debug.Log("Corrupted Tier for Hyperspeed PowerUp");
+                        break;
+                }
+                break;
+            case PowerUpsEnum.MOTORBIKE:
+                switch (PlayerPrefs.GetInt(AppPlayePrefs.MOTORBIKE_TIER))
+                {
+                    case 1:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 2);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 2:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_3)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 3);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 3:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_4)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 4);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 4:
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_5)
+                        {
+                            PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 5);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                        }
+                        else Debug.Log("Not enough coins to level up");
+                        break;
+                    case 5:
+                        Debug.Log("Motorbike has max tier");
+                        break;
+                    default:
+                        Debug.Log("Corrupted Tier for Motorbike PowerUp");
+                        break;
+                }
+                break;
+            default:
+                Debug.Log("INVALID POWER-UP ERROR");
+                break;
+        }
     }
 
     public void ToGame(ClickEvent evt)
@@ -73,8 +308,9 @@ public class UIManager : TemporalSingleton<UIManager>
         //AQUI TIENE QUE IR EL RESTART
         gameOverDoc.enabled = false;
         tapDoc.enabled = true;
-
-
+        ModuleManager.Instance.SetInitialScenario();
+        GameManager.Instance.GetPlayer().PlayAnimation("idle");
+        Debug.Log(GameManager.Instance.GetPlayer().m_anim);
         /*btn_tap = tapDoc.rootVisualElement.Q("TapButton") as Button;
         btn_tap.RegisterCallback<ClickEvent>(ToGame);*/
         RestartUI(2);
@@ -124,6 +360,8 @@ public class UIManager : TemporalSingleton<UIManager>
         inGameDoc.enabled = false;
         gameOverDoc.enabled = true;
 
+        PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, (int)GameManager.Instance.CoinsObtained);
+
         /*btn_home = gameOverDoc.rootVisualElement.Q("HomeButton") as Button;
         btn_home.RegisterCallback<ClickEvent>(ToTap);
 
@@ -161,40 +399,40 @@ public class UIManager : TemporalSingleton<UIManager>
         switch (caso)
         {
             case 1:
-                btn_pause = inGameDoc.rootVisualElement.Q("PauseButton") as Button;
-                btn_pause.RegisterCallback<ClickEvent>(OnPause);
+                btnPause = inGameDoc.rootVisualElement.Q("PauseButton") as Button;
+                btnPause.RegisterCallback<ClickEvent>(OnPause);
                 scoreLabel = inGameDoc.rootVisualElement.Q("ScoreLab") as Label;
                 coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
                 coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
                 break;
 
             case 2:
-                btn_tap = tapDoc.rootVisualElement.Q("TapButton") as Button;
-                btn_tap.RegisterCallback<ClickEvent>(ToGame);
+                btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
+                btnTap.RegisterCallback<ClickEvent>(ToGame);
                 break;
 
             case 3:
-                btn_close = shopDoc.rootVisualElement.Q("CloseButton") as Button;
-                btn_close.RegisterCallback<ClickEvent>(OnClose);
+                btnClose = shopDoc.rootVisualElement.Q("CloseButton") as Button;
+                btnClose.RegisterCallback<ClickEvent>(OnClose);
 
-                btn_cosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
-                btn_cosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
+                btnCosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
+                btnCosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
                 break;
 
             case 4:
-                btn_resume = pauseDoc.rootVisualElement.Q("ResumeButton") as Button;
-                btn_resume.RegisterCallback<ClickEvent>(ToResume);
+                btnResume = pauseDoc.rootVisualElement.Q("ResumeButton") as Button;
+                btnResume.RegisterCallback<ClickEvent>(ToResume);
                 break;
 
             case 5:
-                btn_home = gameOverDoc.rootVisualElement.Q("HomeButton") as Button;
-                btn_home.RegisterCallback<ClickEvent>(ToTap);
+                btnHome = gameOverDoc.rootVisualElement.Q("HomeButton") as Button;
+                btnHome.RegisterCallback<ClickEvent>(ToTap);
 
-                btn_shop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
-                btn_shop.RegisterCallback<ClickEvent>(ToShop);
+                btnShop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
+                btnShop.RegisterCallback<ClickEvent>(ToShop);
 
-                btn_leaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
-                btn_leaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
+                btnLeaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+                btnLeaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
 
                 finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
 
@@ -202,8 +440,8 @@ public class UIManager : TemporalSingleton<UIManager>
                 break;
 
             case 6:
-                btn_items = cosmeticsDoc.rootVisualElement.Q("ItemsButton") as Button;
-                btn_items.RegisterCallback<ClickEvent>(ToShop);
+                btnItems = cosmeticsDoc.rootVisualElement.Q("ItemsButton") as Button;
+                btnItems.RegisterCallback<ClickEvent>(ToShop);
                 break;
         }
     }

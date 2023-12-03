@@ -238,6 +238,7 @@ public class PlayerController : MonoBehaviour {
         stopAllAnim = true;
         cameraController.ShakeCamera(0.5f, 0.2f);
         GameManager.Instance.GameOver();
+        GameManager.Instance.ResetCombo();
         //m_anim.SetLayerWeight(1, 0);
         m_anim.Play(anim);
         yield return new WaitForSeconds(0.2f);
@@ -254,6 +255,7 @@ public class PlayerController : MonoBehaviour {
         stopAllAnim = true;
         cameraController.ShakeCamera(0.5f, 0.2f);
         m_anim.Play(anim, 0, 0.0f);
+        GameManager.Instance.ResetCombo();
         if (stumbleTime < stumbleTolerance / 2f) {
             //StartCoroutine(DeathPlayer("stumbleLow"));
             StartCoroutine(DeathPlayer("deathUpper"));
@@ -337,7 +339,6 @@ public class PlayerController : MonoBehaviour {
         m_hitBoxX = GetHitBoxX(col);
         m_hitBoxY = GetHitBoxY(col);
         m_hitBoxZ = GetHitBoxZ(col);
-        GameManager.Instance.ResetCombo();
         if (m_hitBoxZ == HitBoxZ.Forward && m_hitBoxX == HitBoxX.Middle) {
             if (m_hitBoxY == HitBoxY.LowMiddle) {
                 //Stumble("stumbleLow");
