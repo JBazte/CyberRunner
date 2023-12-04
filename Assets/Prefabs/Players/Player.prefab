@@ -127,14 +127,6 @@ MonoBehaviour:
   m_hitBoxX: 3
   m_hitBoxY: 4
   m_hitBoxZ: 3
-  moveLeft: 0
-  moveRight: 0
-  moveUp: 0
-  moveDown: 0
-  isJumping: 0
-  isSliding: 0
-  Tap: 0
-  DoubleTap: 0
   forwardSpeed: 0
   dodgeSpeed: 5
   m_anim: {fileID: 0}

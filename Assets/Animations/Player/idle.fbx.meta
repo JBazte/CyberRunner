@@ -3,7 +3,12 @@ guid: 9f78e6b80ae397547aa3722764835373
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cyberpunk_MAT
+    second: {fileID: 2100000, guid: 7f0b2b6da110fb14e9a547ff8c9a9103, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
