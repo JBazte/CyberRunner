@@ -13,7 +13,7 @@ public class UIManager : TemporalSingleton<UIManager>
     [SerializeField]
     UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc, cosmeticsDoc;
 
-    Button btnHome, btnShop, btnResume, btnPause, btnCloseShop, btnCloseCosmetics, btnTap, btnLeaderBoard, btnItems, btnCosmetics;
+    Button btn_play, btnShop, btnResume, btnPause, btnCloseShop, btnCloseCosmetics, btnTap, btnLeaderBoard, btnItems, btnCosmetics;
     Button m_motoShopBtn, m_bootsShopBtn, m_hyperspeedShopBtn, m_wallsShopBtn, m_droneShopBtn;
 
     Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel;
@@ -23,8 +23,8 @@ public class UIManager : TemporalSingleton<UIManager>
         btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
         btnTap.RegisterCallback<ClickEvent>(ToGame);
 
-        btnHome = gameOverDoc.rootVisualElement.Q("HomeButton") as Button;
-        btnHome.RegisterCallback<ClickEvent>(ToTap);
+        btn_play = gameOverDoc.rootVisualElement.Q("RetryButton") as Button;
+        btn_play.RegisterCallback<ClickEvent>(ToTap);
 
         btnShop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
         btnShop.RegisterCallback<ClickEvent>(ToShop);
@@ -322,6 +322,7 @@ public class UIManager : TemporalSingleton<UIManager>
 
     public void ToShop(ClickEvent evt)
     {
+        cosmeticsDoc.enabled = false;
         shopDoc.enabled = true;
 
         /*btn_close = shopDoc.rootVisualElement.Q("CloseButton") as Button;
@@ -423,9 +424,6 @@ public class UIManager : TemporalSingleton<UIManager>
             case 3:
                 btnCloseShop = shopDoc.rootVisualElement.Q("CloseButton") as Button;
                 btnCloseShop.RegisterCallback<ClickEvent>(OnClose);
-                
-                btnCloseCosmetics = cosmeticsDoc.rootVisualElement.Q("CloseButton") as Button;
-                btnCloseCosmetics.RegisterCallback<ClickEvent>(OnClose);
 
                 btnCosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
                 btnCosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
@@ -437,8 +435,8 @@ public class UIManager : TemporalSingleton<UIManager>
                 break;
 
             case 5:
-                btnHome = gameOverDoc.rootVisualElement.Q("HomeButton") as Button;
-                btnHome.RegisterCallback<ClickEvent>(ToTap);
+                btn_play = gameOverDoc.rootVisualElement.Q("RetryButton") as Button;
+                btn_play.RegisterCallback<ClickEvent>(ToTap);
 
                 btnShop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
                 btnShop.RegisterCallback<ClickEvent>(ToShop);
@@ -454,6 +452,9 @@ public class UIManager : TemporalSingleton<UIManager>
             case 6:
                 btnItems = cosmeticsDoc.rootVisualElement.Q("ItemsButton") as Button;
                 btnItems.RegisterCallback<ClickEvent>(ToShop);
+
+                btnCloseCosmetics = cosmeticsDoc.rootVisualElement.Q("CloseButton") as Button;
+                btnCloseCosmetics.RegisterCallback<ClickEvent>(OnClose);
                 break;
         }
     }
