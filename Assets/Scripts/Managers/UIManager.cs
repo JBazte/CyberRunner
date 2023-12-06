@@ -13,7 +13,7 @@ public class UIManager : TemporalSingleton<UIManager>
     [SerializeField]
     UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc, cosmeticsDoc;
 
-    Button btn_play, btnShop, btnResume, btnPause, btnCloseShop, btnCloseCosmetics, btnTap, btnLeaderBoard, btnItems, btnCosmetics;
+    Button btnPlay, btnShop, btnResume, btnPause, btnCloseShop, btnCloseCosmetics, btnTap, btnLboard, btnItems, btnCosmetics, btnTShop, btnTLboard;
     Button m_motoShopBtn, m_bootsShopBtn, m_hyperspeedShopBtn, m_wallsShopBtn, m_droneShopBtn;
 
     Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel;
@@ -23,8 +23,14 @@ public class UIManager : TemporalSingleton<UIManager>
         btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
         btnTap.RegisterCallback<ClickEvent>(ToGame);
 
-        btn_play = gameOverDoc.rootVisualElement.Q("RetryButton") as Button;
-        btn_play.RegisterCallback<ClickEvent>(ToTap);
+        btnTShop = tapDoc.rootVisualElement.Q("ShopButton") as Button;
+        btnTShop.RegisterCallback<ClickEvent>(ToShop);
+
+        btnTLboard = tapDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+        btnTLboard.RegisterCallback<ClickEvent>(ToLeaderboard);
+
+        btnPlay = gameOverDoc.rootVisualElement.Q("RetryButton") as Button;
+        btnPlay.RegisterCallback<ClickEvent>(ToTap);
 
         btnShop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
         btnShop.RegisterCallback<ClickEvent>(ToShop);
@@ -44,8 +50,8 @@ public class UIManager : TemporalSingleton<UIManager>
         btnCosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
         btnCosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
 
-        btnLeaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
-        btnLeaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
+        btnLboard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+        btnLboard.RegisterCallback<ClickEvent>(ToLeaderboard);
 
         btnItems = cosmeticsDoc.rootVisualElement.Q("ItemsButton") as Button;
         btnItems.RegisterCallback<ClickEvent>(ToShop);
@@ -386,15 +392,24 @@ public class UIManager : TemporalSingleton<UIManager>
 
     public void ToLeaderboard(ClickEvent evt)
     {
-        gameOverDoc.enabled = false;
-        //GameManager.Instance.OpenLeaderboard();
+        if(gameOverDoc.enabled == true) 
+        {
+            gameOverDoc.enabled = false;
+        }
+        else if(tapDoc.enabled == true)
+        {
+            tapDoc.enabled = false;
+        }
+        
+        
         playFabManager.GetLeaderboardEntriesAroundPlayer();
     }
 
     public void OutLeaderboard()
     {
         playFabManager.CloseLeaderboardPanel();
-        ToGameOver();
+        tapDoc.enabled = true;
+        RestartUI(2);
     }
 
     public void ToCosmetics(ClickEvent evt)
@@ -419,6 +434,12 @@ public class UIManager : TemporalSingleton<UIManager>
             case 2:
                 btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
                 btnTap.RegisterCallback<ClickEvent>(ToGame);
+
+                btnTShop = tapDoc.rootVisualElement.Q("ShopButton") as Button;
+                btnTShop.RegisterCallback<ClickEvent>(ToShop);
+
+                btnTLboard = tapDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+                btnTLboard.RegisterCallback<ClickEvent>(ToLeaderboard);
                 break;
 
             case 3:
@@ -435,14 +456,14 @@ public class UIManager : TemporalSingleton<UIManager>
                 break;
 
             case 5:
-                btn_play = gameOverDoc.rootVisualElement.Q("RetryButton") as Button;
-                btn_play.RegisterCallback<ClickEvent>(ToTap);
+                btnPlay = gameOverDoc.rootVisualElement.Q("RetryButton") as Button;
+                btnPlay.RegisterCallback<ClickEvent>(ToTap);
 
                 btnShop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
                 btnShop.RegisterCallback<ClickEvent>(ToShop);
 
-                btnLeaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
-                btnLeaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
+                btnLboard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+                btnLboard.RegisterCallback<ClickEvent>(ToLeaderboard);
 
                 finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
 
