@@ -127,7 +127,7 @@ public class ModuleBehaviour : MonoBehaviour
 
     private void RandomizePowerUps()
     {
-        if(PowerUpManager.Instance.GetPowerUpAppears())
+        if(PowerUpManager.Instance.GetPowerUpAppears() && m_powerUps.Length > 0)
         {
             int randomPowerUpPos = Random.Range(0, m_powerUpsCount);
             int randomPowerUp    = Random.Range(0, 99);

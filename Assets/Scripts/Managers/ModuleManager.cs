@@ -25,6 +25,7 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     private void Start()
     {
         m_module0Instance = Instantiate(m_module0Prefab, transform);
+        m_module0Instance.GetComponent<ModuleBehaviour>().InitializeModule();
         m_modules = GameObject.FindGameObjectsWithTag("Module");
         foreach (GameObject module in m_modules){
             module.GetComponent<ModuleBehaviour>().InitializeModule();
@@ -48,7 +49,6 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             {
                 module.transform.position += new Vector3(0, 0, -SpeedManager.Instance.GetRunSpeed() * Time.deltaTime);
             }
-
             if (m_modulesOnMap.Peek().transform.position.z <= m_minZDistance)
             {
                 DequeuModule();
@@ -67,6 +67,7 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             }
         }
         m_module0Instance.transform.position = new Vector3(0, 0, 41);
+        m_module0Instance.GetComponent<ModuleBehaviour>().ResetModule();
         m_module0Instance.SetActive(true);
         m_modulesOnMap.Enqueue(m_module0Instance);
         EnqueueModule();
@@ -83,10 +84,10 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
 
             if (!m_modules[randomModule].activeSelf)
             {
-                m_modulesOnMap.Enqueue(m_modules[randomModule]);
                 m_modules[randomModule].SetActive(true);
                 m_modules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
                 m_modules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                m_modulesOnMap.Enqueue(m_modules[randomModule]);
                 moduleIsValid = true;
             }
         }

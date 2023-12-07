@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_weapon: {fileID: 0}
-  m_isSpawn: 1
+  m_isSpawn: 0
 --- !u!1 &5662105162702962751
 GameObject:
   m_ObjectHideFlags: 0
