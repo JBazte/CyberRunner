@@ -20,7 +20,7 @@ public  class GroundWaveEnemy : EnemyAbstract
         CollPosy = gameObject.transform.position.y;
         m_weapon.transform.position += new Vector3(0,0 , (-SpeedManager.Instance.GetRunSpeed()-1) * Time.deltaTime);
         
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 32);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 27);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.CompareTag("Player")&& !m_hasAttacked)

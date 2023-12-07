@@ -13,7 +13,7 @@ public class SlashEnemy : EnemyAbstract
     }
     void Update()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 11);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 10);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.CompareTag("Player")&& !m_hasAttacked)
@@ -26,8 +26,6 @@ public class SlashEnemy : EnemyAbstract
         if (m_weapon.transform.position.z <= -2.0f)
         {
             m_weapon.SetActive(false);
-            Slash.Play("Idle");    
-
         }
     }
     public override void Attack()
