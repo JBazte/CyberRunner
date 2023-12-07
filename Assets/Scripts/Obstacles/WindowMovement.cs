@@ -13,8 +13,9 @@ public class WindowMovement : MonoBehaviour
     private Animation    m_spawnAnimation;
     void Start()
     {
-        m_renderer = GetComponent<MeshRenderer>();
-        m_renderer.enabled = false;
+        //m_renderer = GetComponent<MeshRenderer>();
+        //m_renderer.enabled = false;
+        gameObject.SetActive(false);
         m_player = FindObjectOfType<CharacterController>().transform;
         m_distanceFromPlayer = this.transform.position.z - m_player.position.z;
     }
@@ -26,7 +27,8 @@ public class WindowMovement : MonoBehaviour
         if(m_distanceFromPlayer <= m_distanceToAppear)
         {
             //Aparecería la animación de ocupar el carril
-            m_renderer.enabled = true;
+            //m_renderer.enabled = true;
+            gameObject.SetActive(true);
         }
     }
 }
