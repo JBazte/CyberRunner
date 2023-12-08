@@ -16,6 +16,8 @@ public class UIManager : TemporalSingleton<UIManager>
     Button btnPlay, btnShop, btnResume, btnPause, btnCloseShop, btnCloseCosmetics, btnTap, btnLboard, btnItems, btnCosmetics, btnTShop, btnTLboard;
     Button m_motoShopBtn, m_bootsShopBtn, m_hyperspeedShopBtn, m_wallsShopBtn, m_droneShopBtn;
 
+    ProgressBar m_motoBar, m_botasBar, m_hyperspeedBar, m_wallsBar, m_droneBar;
+
     Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel;
 
     private void OnEnable()
@@ -43,7 +45,7 @@ public class UIManager : TemporalSingleton<UIManager>
 
         btnCloseShop = shopDoc.rootVisualElement.Q("CloseButton") as Button;
         btnCloseShop.RegisterCallback<ClickEvent>(OnClose);
-        
+
         btnCloseCosmetics = cosmeticsDoc.rootVisualElement.Q("CloseButton") as Button;
         btnCloseCosmetics.RegisterCallback<ClickEvent>(OnClose);
 
@@ -57,16 +59,22 @@ public class UIManager : TemporalSingleton<UIManager>
         btnItems.RegisterCallback<ClickEvent>(ToShop);
 
 
-        m_motoShopBtn       = shopDoc.rootVisualElement.Q("MotoShopButton") as Button;
+        m_motoShopBtn = shopDoc.rootVisualElement.Q("MotoShopButton") as Button;
         m_motoShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.MOTORBIKE));
-        m_bootsShopBtn      = shopDoc.rootVisualElement.Q("BootsShopButton") as Button;
+        m_bootsShopBtn = shopDoc.rootVisualElement.Q("BootsShopButton") as Button;
         m_bootsShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.BOOTS));
         m_hyperspeedShopBtn = shopDoc.rootVisualElement.Q("HyperspeedShopButton") as Button;
         m_hyperspeedShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.HYPERSPEED));
-        m_wallsShopBtn      = shopDoc.rootVisualElement.Q("WallsShopButton") as Button;
+        m_wallsShopBtn = shopDoc.rootVisualElement.Q("WallsShopButton") as Button;
         m_wallsShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.WALLS));
-        m_droneShopBtn      = shopDoc.rootVisualElement.Q("DroneShopButton") as Button;
+        m_droneShopBtn = shopDoc.rootVisualElement.Q("DroneShopButton") as Button;
         m_droneShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.DRON));
+
+        m_motoBar = shopDoc.rootVisualElement.Q("MotoBar") as ProgressBar;
+        m_botasBar = shopDoc.rootVisualElement.Q("BotasBar") as ProgressBar;
+        m_hyperspeedBar = shopDoc.rootVisualElement.Q("CargaBar") as ProgressBar;
+        m_wallsBar = shopDoc.rootVisualElement.Q("ParedesBar") as ProgressBar;
+        m_droneBar = shopDoc.rootVisualElement.Q("DroneBar") as ProgressBar;
 
 
         scoreLabel = inGameDoc.rootVisualElement.Q("ScoreLab") as Label;
@@ -77,16 +85,16 @@ public class UIManager : TemporalSingleton<UIManager>
 
     private void UpgradePowerUp(ClickEvent evt, PowerUpsEnum powerUp)
     {
-        switch(powerUp)
+        switch (powerUp)
         {
             case PowerUpsEnum.BOOTS:
-                switch(PlayerPrefs.GetInt(AppPlayePrefs.BOOTS_TIER))
+                switch (PlayerPrefs.GetInt(AppPlayePrefs.BOOTS_TIER))
                 {
                     case 1:
-                        if(GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
                         {
                             PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 2);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins()-(int)PowerUpsTierUpCosts.TO_LVL_2);
+                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -313,7 +321,8 @@ public class UIManager : TemporalSingleton<UIManager>
         RestartUI(1);
     }
 
-    public void ToTap(ClickEvent evt) {
+    public void ToTap(ClickEvent evt)
+    {
         //AQUI TIENE QUE IR EL RESTART
         gameOverDoc.enabled = false;
         tapDoc.enabled = true;
@@ -359,13 +368,15 @@ public class UIManager : TemporalSingleton<UIManager>
         btn_resume.RegisterCallback<ClickEvent>(ToResume);*/
         RestartUI(4);
     }
-    
+
     public void OnClose(ClickEvent evt)
     {
-        if(shopDoc.enabled == true)
+        if (shopDoc.enabled == true)
         {
             shopDoc.enabled = false;
-        }else if(cosmeticsDoc.enabled == true){
+        }
+        else if (cosmeticsDoc.enabled == true)
+        {
             cosmeticsDoc.enabled = false;
         }
     }
@@ -392,16 +403,16 @@ public class UIManager : TemporalSingleton<UIManager>
 
     public void ToLeaderboard(ClickEvent evt)
     {
-        if(gameOverDoc.enabled == true) 
+        if (gameOverDoc.enabled == true)
         {
             gameOverDoc.enabled = false;
         }
-        else if(tapDoc.enabled == true)
+        else if (tapDoc.enabled == true)
         {
             tapDoc.enabled = false;
         }
-        
-        
+
+
         playFabManager.GetLeaderboardEntriesAroundPlayer();
     }
 
@@ -483,7 +494,7 @@ public class UIManager : TemporalSingleton<UIManager>
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -491,6 +502,6 @@ public class UIManager : TemporalSingleton<UIManager>
     {
         scoreLabel.text = ((int)GameManager.Instance.Score).ToString();
         coinsLabel.text = GameManager.Instance.CoinsObtained.ToString();
-        comboLabel.text = "\nx"+GameManager.Instance.AccumulatedCombo.ToString();
+        comboLabel.text = "\nx" + GameManager.Instance.AccumulatedCombo.ToString();
     }
 }

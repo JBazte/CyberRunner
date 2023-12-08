@@ -1836,6 +1836,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5555256103807244397, guid: 89283c780bd23a84c9fef11908587558, type: 3}
   m_PrefabInstance: {fileID: 3657201855307037571}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1481552920 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4437250212069526111, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+  m_PrefabInstance: {fileID: 4740026186703445141}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1484743554
 GameObject:
   m_ObjectHideFlags: 0
@@ -4039,6 +4044,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1783685454858805645, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2404578326139840489, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4146800685036585317, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
       propertyPath: m_Name
       value: UI
@@ -4094,7 +4107,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4437250212069526111, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6415123456440007962}
   m_SourcePrefab: {fileID: 100100000, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
 --- !u!1001 &5816883676387547529
 PrefabInstance:
@@ -4219,12 +4235,26 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1783685454858805645, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
   m_PrefabInstance: {fileID: 4740026186703445141}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1481552920}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6415123456440007962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481552920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7cae290b908754ba7de071291dfc9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameOverUI: {fileID: 6415123456440007960}
+  glitchIntensity: 40
 --- !u!114 &6960651378027477884 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2404578326139840489, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
