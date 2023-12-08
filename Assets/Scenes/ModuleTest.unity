@@ -3962,6 +3962,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6546763016837163867, guid: de0d0ca903b093443ab202324a077816, type: 3}
+      propertyPath: m_isSpawn
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8889481767879996529, guid: de0d0ca903b093443ab202324a077816, type: 3}
       propertyPath: m_coinsContainer
       value: 

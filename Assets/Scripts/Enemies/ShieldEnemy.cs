@@ -13,10 +13,10 @@ public class ShieldEnemy : EnemyAbstract
     }
     void Update()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 30);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 18);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.CompareTag("Player"))
+            if (hitCollider.gameObject.CompareTag("Player")&&!m_hasAttacked)
             {
                 anim();
                 Invoke("Attack", 0.8f);
