@@ -43,7 +43,6 @@ public  class GroundWaveEnemy : EnemyAbstract
         }
 
         m_hasAttacked = true;
-        Wave.Play("Idle");
 
 
     }
