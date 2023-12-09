@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS/GamePause.uss?fileID=7433441132597879392&amp;guid=28601687146707e4a833bbad9f5a368d&amp;type=3#GamePause" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; width: auto; height: auto; background-color: rgba(0, 0, 0, 0.71); align-items: center;">
+        <ui:Label tabindex="-1" text="TUTOOOOOORIAL" parse-escape-sequences="true" display-tooltip-when-elided="true" name="TutorialText" style="align-items: center; justify-content: center; align-self: stretch; visibility: visible; opacity: 1; margin-top: 40%; padding-right: 10px; padding-left: 10px; padding-bottom: 4px; margin-right: 4%; margin-bottom: 2%; margin-left: 2%; padding-top: 4px; -unity-font: url(&apos;project://database/Assets/Art/Fonts/Dimitri/DIMITRI_.TTF?fileID=12800000&amp;guid=5e34799af4245a24fa664895c5dc5889&amp;type=3#DIMITRI_&apos;); -unity-text-align: upper-center;" />
+        <ui:VisualElement name="TutorialImage" style="flex-grow: 1; justify-content: flex-start; align-self: auto; align-items: center;" />
+    </ui:VisualElement>
+</ui:UXML>

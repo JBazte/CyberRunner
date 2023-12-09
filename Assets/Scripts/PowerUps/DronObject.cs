@@ -6,8 +6,6 @@ using UnityEngine;
 public class DronObject : MonoBehaviour
 {
     private float            m_killingDistance;
-    private MeshRenderer     m_renderer;
-    private Collider         m_collider;
     private bool             m_isActive;
     private Queue<Transform> m_enemyList;
     private LineRenderer     m_laser;
@@ -16,16 +14,14 @@ public class DronObject : MonoBehaviour
 
     private void Start()
     {
+        gameObject.SetActive(false);
         m_killingDistance  = 15.0f;
         m_isActive         = false;
-        m_renderer         = GetComponent<MeshRenderer>();
-        m_renderer.enabled = false;
-        m_collider         = GetComponent<Collider>();
-        m_collider.enabled = false;
         m_enemyList        = new Queue<Transform>();
-        m_laser            = GetComponent<LineRenderer>();
-        m_laser.positionCount = 1;
-        m_laser.enabled    = false;
+        //m_laser            = GetComponent<LineRenderer>();
+        //m_laser.positionCount = 1;
+        //m_laser.enabled    = false;
+        
     }
 
     void Update()
@@ -79,15 +75,13 @@ public class DronObject : MonoBehaviour
     public void ActivateDron()
     {
         m_isActive = true;
-        m_renderer.enabled = true;
-        m_collider.enabled = true;
+        gameObject.SetActive(true);
     }
 
     public void DeactivateDron()
     {
         m_isActive = false;
-        m_renderer.enabled = false;
-        m_collider.enabled = false;
+        gameObject.SetActive(true);
     }
 
     public void SetKillingDistance(float killingDistance) { m_killingDistance = killingDistance; }

@@ -197,7 +197,6 @@ public class PlayerController : MonoBehaviour {
             {
                 if (Time.time - m_lastClickTime < m_doubleTapTime)// HERE WE CHECK IF ITS A DOUBLE TAP
                 {
-                    ActivateMotorbike();
                     StartCoroutine(m_motorbike.StartCountDown());
                     if (PlayerPrefs.GetInt("MotorbikeCharges") <= 0)//HERE WE CHECK IF MOTORBIKE IS AVAILABLE TO USE IT
                     {

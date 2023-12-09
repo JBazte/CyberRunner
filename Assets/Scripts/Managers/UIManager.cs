@@ -11,12 +11,14 @@ public class UIManager : TemporalSingleton<UIManager>
     private PlayFabManager playFabManager;
 
     [SerializeField]
-    UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc, cosmeticsDoc;
+    UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc, cosmeticsDoc, tutorialDoc;
 
     Button btn_play, btnShop, btnResume, btnPause, btnCloseShop, btnCloseCosmetics, btnTap, btnLeaderBoard, btnItems, btnCosmetics;
     Button m_motoShopBtn, m_bootsShopBtn, m_hyperspeedShopBtn, m_wallsShopBtn, m_droneShopBtn;
 
-    Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel;
+    Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel, tutorialLabel;
+
+    VisualElement tutorialImage;
 
     private void OnEnable()
     {
@@ -67,6 +69,9 @@ public class UIManager : TemporalSingleton<UIManager>
         coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
         finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
         comboLabel = inGameDoc.rootVisualElement.Q("ComboLab") as Label;
+        tutorialLabel = tutorialDoc.rootVisualElement.Q("TutorialText") as Label;
+
+        tutorialImage = tutorialDoc.rootVisualElement.Q("TutorialImage") as Image;
     }
 
     private void UpgradePowerUp(ClickEvent evt, PowerUpsEnum powerUp)
@@ -402,6 +407,14 @@ public class UIManager : TemporalSingleton<UIManager>
         shopDoc.enabled = false;
         cosmeticsDoc.enabled = true;
         RestartUI(6);
+    }
+
+    public void SlashTutorial()
+    {
+        tutorialDoc.enabled = true;
+        tutorialLabel.text = "Slide down to dodge enemy attack...\nand finish him!!!";
+        Time.timeScale = 0.0f; ;//Mathf.Lerp(1, 0, 0.5f);
+
     }
 
     void RestartUI(int caso)

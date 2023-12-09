@@ -9,10 +9,8 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     private GameObject        m_module0Instance;
     private GameObject[]      m_modules;
     private Queue<GameObject> m_modulesOnMap;
-    private float             m_minZDistance;
-    private float             m_spawnZDistance;
     private int               m_maxModulesOnMap;
-    private Vector3           m_spawnVector;
+    private GameObject        m_auxModule;
     //private float index = 0;
 
     [SerializeField]
@@ -34,9 +32,6 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
 
         m_modulesOnMap = new Queue<GameObject>();
         m_maxModulesOnMap = 2;
-        m_minZDistance = -60.0f;
-        m_spawnZDistance = 138.0f;
-        m_spawnVector = new Vector3(0, 0, m_spawnZDistance);
 
         SetInitialScenario();
     }
@@ -45,11 +40,13 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     {
         if(m_modulesOnMap.Count > 0 && GameManager.Instance.GetRunActive())
         {
-            foreach(GameObject module in m_modulesOnMap)
+            m_auxModule = m_modulesOnMap.Peek();
+
+            foreach (GameObject module in m_modulesOnMap)
             {
                 module.transform.position += new Vector3(0, 0, -SpeedManager.Instance.GetRunSpeed() * Time.deltaTime);
             }
-            if (m_modulesOnMap.Peek().transform.position.z <= m_minZDistance)
+            if (m_auxModule.transform.position.z <= -(m_auxModule.GetComponent<ModuleBehaviour>().GetFloorsCount() * 100 - 40))
             {
                 DequeuModule();
                 EnqueueModule();
@@ -86,7 +83,8 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             {
                 m_modules[randomModule].SetActive(true);
                 m_modules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
-                m_modules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                m_modules[randomModule].transform.position = new Vector3(0.0f, 0.0f, 
+                    m_modulesOnMap.Peek().transform.position.z + (m_modulesOnMap.Peek().GetComponent<ModuleBehaviour>().GetFloorsCount() * 100.0f));
                 m_modulesOnMap.Enqueue(m_modules[randomModule]);
                 moduleIsValid = true;
             }
