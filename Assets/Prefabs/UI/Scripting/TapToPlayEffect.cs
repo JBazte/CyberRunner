@@ -35,8 +35,9 @@ public class TapButtonEffect : MonoBehaviour
 
     void Update()
     {
-        if (tapButton != null)
+        if (tapButton != null && tapDoc.enabled == true)
         {
+            tapButton = tapDoc.rootVisualElement.Q<Button>("TapButton");
             // Aplica un efecto de agrandamiento más gradual al texto del botón en el método Update
             float scaleFactor = Mathf.Lerp(0.9f, 1.1f, Mathf.PingPong(animationTime / 1.5f, 1f)); // Ajusta la velocidad y amplitud
             tapButton.text = "Tap To Play!"; // Ajusta el texto según tu necesidad

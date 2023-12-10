@@ -37,8 +37,9 @@ public class GlitchEffect : MonoBehaviour
 
     void Update()
     {
-        if (label != null)
+        if (label != null && GameOverUI.enabled == true)
         {
+            label = GameOverUI.rootVisualElement.Q("GameOverLab") as Label;
             ApplyGlitch();
         }
     }
