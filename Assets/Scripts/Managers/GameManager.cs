@@ -65,6 +65,7 @@ public class GameManager : TemporalSingleton<GameManager> {
         m_runActive = true;
         SpeedManager.Instance.SetRunSpeed(m_initialRunSpeed);
         SpeedManager.Instance.SetAcceleration(m_initialAcceleration);
+        LevelManager.Instance.ResetActualLevel();
         m_coinsObtained = 0;
         m_score = 0;
         m_metersTraveled = 0;
