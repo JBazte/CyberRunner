@@ -3,23 +3,44 @@ using UnityEngine.UIElements;
 
 public class GlitchEffect : MonoBehaviour
 {
-    [SerializeField]
     private UIDocument GameOverUI;
     private Label label;
     private float originalPositionX;
     private float originalPositionY;
 
-    public float glitchIntensity = 5f;
+    public float glitchIntensity = 2f; // Ajusta la intensidad del glitch para que sea más suave
 
     void Start()
     {
-        GameOverUI.GetComponent<UIDocument>();
-        label = GameOverUI.rootVisualElement.Q("GameOverLab") as Label;
-        originalPositionX = label.resolvedStyle.left;
-        originalPositionY = label.resolvedStyle.top;
+        // Obtén el componente UIDocument del GameObject actual
+        GameOverUI = GetComponent<UIDocument>();
 
-        // Inicia la animación de glitch
-        InvokeRepeating("ApplyGlitch", 0f, 0.1f);
+        if (GameOverUI != null)
+        {
+            label = GameOverUI.rootVisualElement.Q("GameOverLab") as Label;
+
+            if (label != null)
+            {
+                originalPositionX = label.resolvedStyle.left;
+                originalPositionY = label.resolvedStyle.top;
+            }
+            else
+            {
+                Debug.LogError("No se encontró la Label 'GameOverLab' en el UIDocument.");
+            }
+        }
+        else
+        {
+            Debug.LogError("No se encontró el componente UIDocument en el GameObject actual.");
+        }
+    }
+
+    void Update()
+    {
+        if (label != null)
+        {
+            ApplyGlitch();
+        }
     }
 
     void ApplyGlitch()
@@ -33,4 +54,3 @@ public class GlitchEffect : MonoBehaviour
         label.style.top = originalPositionY + yOffset;
     }
 }
-
