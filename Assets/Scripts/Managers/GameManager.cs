@@ -40,6 +40,7 @@ public class GameManager : TemporalSingleton<GameManager> {
         m_score = 0.0f;
         m_coinsObtained = 0;
         m_player = FindObjectOfType<PlayerController>();
+        BackgroundMusicManager.Instance.PlayBackgroundMusic("InGameMusic");
     }
 
     // Update is called once per frame
@@ -48,7 +49,14 @@ public class GameManager : TemporalSingleton<GameManager> {
         m_metersTraveled += (m_timer + Time.deltaTime) * SpeedManager.Instance.GetRunSpeed();
 
         // (s * m/s = m in one frame) * combo player has in that frame = score acumulated in the frame
-        if (m_runActive) m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo();
+        if (m_runActive)
+        {
+            m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo();
+            BackgroundMusicManager.Instance.MusicVolume += 0.4f;
+        }
+        else BackgroundMusicManager.Instance.MusicVolume = 0.5f;
+
+
     }
 
     public void AddComboPoint() { AccumulatedCombo++; }

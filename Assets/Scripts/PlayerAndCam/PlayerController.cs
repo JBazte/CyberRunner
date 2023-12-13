@@ -239,6 +239,7 @@ public class PlayerController : MonoBehaviour {
         cameraController.ShakeCamera(0.5f, 0.2f);
         GameManager.Instance.GameOver();
         GameManager.Instance.ResetCombo();
+        SfxMusicManager.Instance.PlaySfxMusic("HitSfx");
         //m_anim.SetLayerWeight(1, 0);
         m_anim.Play(anim);
         yield return new WaitForSeconds(0.2f);
