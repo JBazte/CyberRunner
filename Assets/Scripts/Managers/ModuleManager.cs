@@ -8,11 +8,13 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     public GameObject         m_module0Prefab;
     private GameObject        m_module0Instance;
     private GameObject[]      m_modules;
+    private GameObject[]      m_bossmodules;
     private Queue<GameObject> m_modulesOnMap;
     private float             m_minZDistance;
     private float             m_spawnZDistance;
     private int               m_maxModulesOnMap;
     private Vector3           m_spawnVector;
+    private bool              m_bossactive = false;
     //private float index = 0;
 
     [SerializeField]
@@ -31,7 +33,6 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             module.GetComponent<ModuleBehaviour>().InitializeModule();
             module.SetActive(false);
         }
-
         m_modulesOnMap = new Queue<GameObject>();
         m_maxModulesOnMap = 2;
         m_minZDistance = -60.0f;
@@ -80,16 +81,34 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
 
         while(!moduleIsValid)
         {
-            randomModule = Random.Range(0, m_modules.Length);
-
-            if (!m_modules[randomModule].activeSelf)
+            if (!m_bossactive)
             {
-                m_modules[randomModule].SetActive(true);
-                m_modules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
-                m_modules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
-                m_modulesOnMap.Enqueue(m_modules[randomModule]);
-                moduleIsValid = true;
+                randomModule = Random.Range(0, m_modules.Length);
+                
+                if (!m_modules[randomModule].activeSelf)
+                {
+                    m_modules[randomModule].SetActive(true);
+                    m_modules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
+                    m_modules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                    m_modulesOnMap.Enqueue(m_modules[randomModule]);
+                    moduleIsValid = true;
+                }
             }
+            else
+            {
+                randomModule = Random.Range(0, m_bossmodules.Length);
+
+                if (!m_modules[randomModule].activeSelf)
+                {
+                    m_bossmodules[randomModule].SetActive(true);
+                    m_bossmodules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
+                    m_bossmodules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                    m_modulesOnMap.Enqueue(m_bossmodules[randomModule]);
+                    moduleIsValid = true;
+                }
+
+            }
+            
         }
     }
 
