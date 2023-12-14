@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: HyperspeedPowerUp
   m_EditorClassIdentifier: 
   m_duration: 1
+  m_mesh: {fileID: 4300000, guid: 8883a56e5a53bfe429252a63ae719031, type: 3}
