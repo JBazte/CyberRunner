@@ -14,7 +14,7 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     private float             m_spawnZDistance;
     private int               m_maxModulesOnMap;
     private Vector3           m_spawnVector;
-    private bool              m_bossactive = false;
+    private bool              m_bossactive = true;
     //private float index = 0;
     [SerializeField]
     private GameObject[] m_bossmodules;
@@ -108,7 +108,6 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
                 if (!m_bossmodules[randomModule].activeSelf)
                 {
                     m_bossmodules[randomModule].SetActive(true);
-                    m_bossmodules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
                     m_bossmodules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
                     m_modulesOnMap.Enqueue(m_bossmodules[randomModule]);
                     moduleIsValid = true;
