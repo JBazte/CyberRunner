@@ -34,6 +34,10 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             module.GetComponent<ModuleBehaviour>().InitializeModule();
             module.SetActive(false);
         }
+        foreach (GameObject module in m_bossmodules)
+        {
+            module.SetActive(false);
+        }
         
         
         m_modulesOnMap = new Queue<GameObject>();
