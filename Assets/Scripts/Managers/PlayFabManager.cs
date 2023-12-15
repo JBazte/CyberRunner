@@ -22,7 +22,7 @@ public class PlayFabManager : TemporalSingleton<PlayFabManager> {
     private string userPlayFabId;
 
     void Start() {
-        LoginPlayFab();
+       LoginPlayFab();
     }
 
     private void LoginPlayFab() {
@@ -131,6 +131,7 @@ public class PlayFabManager : TemporalSingleton<PlayFabManager> {
         }
 
         GetPlayerData();
+        UIManager.Instance.Login();
     }
 
     void OnLeaderboardEntriesSuccess(GetLeaderboardResult result) {
