@@ -12,8 +12,8 @@ public class AppPlayerPrefKeys
 public class AppPaths
 {
     public static readonly String PERSISTENT_DATA = Application.persistentDataPath;
-    public static readonly String PATH_RESOURCE_SFX = "Music/MenuSfx/";
-    public static readonly String PATH_RESOURCE_MUSIC = "Music/MenuBackground/";
+    public static readonly String PATH_RESOURCE_SFX = "Music/Sfx/";
+    public static readonly String PATH_RESOURCE_MUSIC = "Music/Background/";
 
     public static readonly String MOTORBIKE_MODEL_1 = "Assets/Resources/SM_Veh_Car_Sports_01.mesh";
 }

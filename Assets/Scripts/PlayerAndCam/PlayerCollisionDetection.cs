@@ -34,6 +34,7 @@ public class PlayerCollisionDetection : MonoBehaviour {
         {
             GameManager.Instance.AddCoin();
             other.gameObject.SetActive(false);
+            SfxMusicManager.Instance.PlaySfxMusic("CoinSfx");
             return;
         }
         else if (other.gameObject.CompareTag("PowerUp"))
