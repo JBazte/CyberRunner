@@ -7,6 +7,8 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
 {
     public GameObject         m_module0Prefab;
     private GameObject        m_module0Instance;
+    public GameObject         m_tutorialModulePrefab;
+    private GameObject        m_tutorialModuleInstance;
     private GameObject[]      m_modules;
     private Queue<GameObject> m_modulesOnMap;
     private int               m_maxModulesOnMap;
@@ -22,8 +24,14 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
 
     private void Start()
     {
+        if (PlayerPrefs.GetString(AppPlayerPrefs.TutorialCompleted) == "") PlayerPrefs.SetString(AppPlayerPrefs.TutorialCompleted, "false");
+
         m_module0Instance = Instantiate(m_module0Prefab, transform);
         m_module0Instance.GetComponent<ModuleBehaviour>().InitializeModule();
+        m_module0Instance.SetActive(false);
+        m_tutorialModuleInstance = Instantiate(m_tutorialModulePrefab, transform);
+        m_tutorialModuleInstance.GetComponent<ModuleBehaviour>().InitializeModule();
+        m_tutorialModuleInstance.SetActive(false);
         m_modules = GameObject.FindGameObjectsWithTag("Module");
         foreach (GameObject module in m_modules){
             module.GetComponent<ModuleBehaviour>().InitializeModule();
@@ -63,10 +71,21 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
                 DequeuModule();
             }
         }
-        m_module0Instance.transform.position = new Vector3(0, 0, 41);
-        m_module0Instance.GetComponent<ModuleBehaviour>().ResetModule();
-        m_module0Instance.SetActive(true);
-        m_modulesOnMap.Enqueue(m_module0Instance);
+        if(PlayerPrefs.GetString(AppPlayerPrefs.TutorialCompleted) == "true")
+        {
+            m_module0Instance.transform.position = new Vector3(0, 0, 41);
+            m_module0Instance.GetComponent<ModuleBehaviour>().ResetModule();
+            m_module0Instance.SetActive(true);
+            m_modulesOnMap.Enqueue(m_module0Instance);
+        }
+        else if(PlayerPrefs.GetString(AppPlayerPrefs.TutorialCompleted) == "false")
+        {
+            m_tutorialModuleInstance.transform.position = new Vector3(0, 0, 41);
+            m_tutorialModuleInstance.GetComponent<ModuleBehaviour>().ResetModule();
+            m_tutorialModuleInstance.SetActive(true);
+            m_modulesOnMap.Enqueue(m_tutorialModuleInstance);
+        }
+            
         EnqueueModule();
     }
 

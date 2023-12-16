@@ -20,6 +20,8 @@ public class UIManager : TemporalSingleton<UIManager>
 
     VisualElement tutorialImage;
 
+    private bool m_corroutineRuning;
+
     private void OnEnable()
     {
         btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
@@ -69,9 +71,9 @@ public class UIManager : TemporalSingleton<UIManager>
         coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
         finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
         comboLabel = inGameDoc.rootVisualElement.Q("ComboLab") as Label;
-        tutorialLabel = tutorialDoc.rootVisualElement.Q("TutorialText") as Label;
+        tutorialLabel = tutorialDoc.rootVisualElement.Q("Tutorial_label") as Label;
 
-        tutorialImage = tutorialDoc.rootVisualElement.Q("TutorialImage") as Image;
+        tutorialImage = tutorialDoc.rootVisualElement.Q("Tut_img_label") as Image;
     }
 
     private void UpgradePowerUp(ClickEvent evt, PowerUpsEnum powerUp)
@@ -79,37 +81,37 @@ public class UIManager : TemporalSingleton<UIManager>
         switch(powerUp)
         {
             case PowerUpsEnum.BOOTS:
-                switch(PlayerPrefs.GetInt(AppPlayePrefs.BOOTS_TIER))
+                switch(PlayerPrefs.GetInt(AppPlayerPrefs.BOOTS_TIER))
                 {
                     case 1:
                         if(GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 2);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins()-(int)PowerUpsTierUpCosts.TO_LVL_2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.BOOTS_TIER, 2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins()-(int)PowerUpsTierUpCosts.TO_LVL_2);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 2:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_3)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 3);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.BOOTS_TIER, 3);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 3:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_4)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 4);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.BOOTS_TIER, 4);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 4:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_5)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 5);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.BOOTS_TIER, 5);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -122,37 +124,37 @@ public class UIManager : TemporalSingleton<UIManager>
                 }
                 break;
             case PowerUpsEnum.DRON:
-                switch (PlayerPrefs.GetInt(AppPlayePrefs.DRON_TIER))
+                switch (PlayerPrefs.GetInt(AppPlayerPrefs.DRON_TIER))
                 {
                     case 1:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 2);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 2:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_3)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 3);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 3);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 3:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_4)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 4);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 4);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 4:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_5)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 5);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 5);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -165,37 +167,37 @@ public class UIManager : TemporalSingleton<UIManager>
                 }
                 break;
             case PowerUpsEnum.WALLS:
-                switch (PlayerPrefs.GetInt(AppPlayePrefs.WALLS_TIER))
+                switch (PlayerPrefs.GetInt(AppPlayerPrefs.WALLS_TIER))
                 {
                     case 1:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 2);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.WALLS_TIER, 2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 2:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_3)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 3);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.WALLS_TIER, 3);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 3:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_4)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 4);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.WALLS_TIER, 4);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 4:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_5)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 5);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.WALLS_TIER, 5);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -208,37 +210,37 @@ public class UIManager : TemporalSingleton<UIManager>
                 }
                 break;
             case PowerUpsEnum.HYPERSPEED:
-                switch (PlayerPrefs.GetInt(AppPlayePrefs.HYPERSPEED_TIER))
+                switch (PlayerPrefs.GetInt(AppPlayerPrefs.HYPERSPEED_TIER))
                 {
                     case 1:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.HYPERSPEED_TIER, 2);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.HYPERSPEED_TIER, 2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 2:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_3)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.HYPERSPEED_TIER, 3);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.HYPERSPEED_TIER, 3);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 3:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_4)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.HYPERSPEED_TIER, 4);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.HYPERSPEED_TIER, 4);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 4:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_5)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 5);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 5);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -251,37 +253,37 @@ public class UIManager : TemporalSingleton<UIManager>
                 }
                 break;
             case PowerUpsEnum.MOTORBIKE:
-                switch (PlayerPrefs.GetInt(AppPlayePrefs.MOTORBIKE_TIER))
+                switch (PlayerPrefs.GetInt(AppPlayerPrefs.MOTORBIKE_TIER))
                 {
                     case 1:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 2);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.MOTORBIKE_TIER, 2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 2:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_3)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 3);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.MOTORBIKE_TIER, 3);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 3:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_4)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 4);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.MOTORBIKE_TIER, 4);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
                     case 4:
                         if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_5)
                         {
-                            PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 5);
-                            PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.MOTORBIKE_TIER, 5);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -375,7 +377,7 @@ public class UIManager : TemporalSingleton<UIManager>
         inGameDoc.enabled = false;
         gameOverDoc.enabled = true;
 
-        PlayerPrefs.SetInt(AppPlayePrefs.PLAYER_COINS, (int)GameManager.Instance.CoinsObtained);
+        PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, (int)GameManager.Instance.CoinsObtained);
 
         /*btn_home = gameOverDoc.rootVisualElement.Q("HomeButton") as Button;
         btn_home.RegisterCallback<ClickEvent>(ToTap);
@@ -413,8 +415,43 @@ public class UIManager : TemporalSingleton<UIManager>
     {
         tutorialDoc.enabled = true;
         tutorialLabel.text = "Slide down to dodge enemy attack...\nand finish him!!!";
-        Time.timeScale = 0.0f; ;//Mathf.Lerp(1, 0, 0.5f);
+        Time.timeScale = Mathf.Lerp(1, 0, 0.8f);
+        GameManager.Instance.GetPlayer().SetTutorialActive(TutorialBlock.Slash);
+        StartCoroutine(TimeScaleDecrease());
+    }
 
+    public void ShieldTutorial()
+    {
+        tutorialDoc.enabled = true;
+        tutorialLabel.text = "Jump to avoid it's shield...";
+        Time.timeScale = Mathf.Lerp(1, 0, 0.8f);
+        GameManager.Instance.GetPlayer().SetTutorialActive(TutorialBlock.Shield);
+        StartCoroutine(TimeScaleDecrease());
+    }
+
+    public void GroundWaveTutorial()
+    {
+        tutorialDoc.enabled = true;
+        tutorialLabel.text = "Jump to avoid it's attack...\nit's everything he's got!!!";
+        Time.timeScale = Mathf.Lerp(1, 0, 0.8f);
+        GameManager.Instance.GetPlayer().SetTutorialActive(TutorialBlock.GroundWave);
+        StartCoroutine(TimeScaleDecrease());
+    }
+
+    public void OutOfTutorial()
+    {
+        tutorialDoc.enabled = false;
+        m_corroutineRuning = false;
+        StopCoroutine(TimeScaleDecrease());
+        Time.timeScale = 1;
+    }
+
+    private IEnumerator TimeScaleDecrease()
+    {
+        m_corroutineRuning = true;
+        yield return new WaitForSeconds(0.5f);
+        if(m_corroutineRuning) Time.timeScale = 0.0f;
+        m_corroutineRuning = false;
     }
 
     void RestartUI(int caso)

@@ -108,7 +108,7 @@ public class GameManager : TemporalSingleton<GameManager> {
     public void SetRunActive(bool runSpeed) { m_runActive = runSpeed; }
     public float GetTraveledMeters() { return m_metersTraveled; }
     public PlayerController GetPlayer() { return m_player; }   
-    public int GetPlayerAccountCoins() { return PlayerPrefs.GetInt(AppPlayePrefs.PLAYER_COINS); }
+    public int GetPlayerAccountCoins() { return PlayerPrefs.GetInt(AppPlayerPrefs.PLAYER_COINS); }
 
     public float Score { get => m_score; set => m_score = value; }
     public uint CoinsObtained { get => m_coinsObtained; set => m_coinsObtained = value; }

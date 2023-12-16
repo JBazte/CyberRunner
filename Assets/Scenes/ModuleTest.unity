@@ -1442,7 +1442,7 @@ PrefabInstance:
     - target: {fileID: 2542921180163795369, guid: e64acbe790a98be45b13694c71f76ee2, type: 3}
       propertyPath: m_module0Prefab
       value: 
-      objectReference: {fileID: 71931606487738385, guid: 6dadd0d8fcf29c84db0881f7d7ed53f8, type: 3}
+      objectReference: {fileID: 71931606487738385, guid: 08b9596658943e348886ebee8b4a6679, type: 3}
     - target: {fileID: 2542921180163795369, guid: e64acbe790a98be45b13694c71f76ee2, type: 3}
       propertyPath: m_groundWaveEnemy
       value: 
