@@ -26,6 +26,10 @@ public class PlayerCollisionDetection : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Boss"))
+        {
+            GameManager.Instance.GameOver();
+        }
         if (other.gameObject.CompareTag("Player"))
         {
             return;

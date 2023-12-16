@@ -105,10 +105,13 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
 
     public void SetInitialScenario()
     {
+        m_bossPhase = 1;
+        m_bossactive = false;
         if(m_modulesOnMap.Count > 0)
         {
             for(int i = 0; i < m_maxModulesOnMap; i++)
             {
+                
                 DequeuModule();
             }
         }
