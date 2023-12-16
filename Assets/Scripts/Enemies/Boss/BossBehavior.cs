@@ -32,7 +32,7 @@ public class BossBehaviour : MonoBehaviour
     void Update()
     {
         BossIsActive = ModuleManager.Instance.GetTentaclesUp();
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 27);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 24);
         foreach (var hitCollider in hitColliders)
         {
             int randTent = Random.Range(0, 6);
