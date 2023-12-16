@@ -15,7 +15,9 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     private int               m_maxModulesOnMap;
 
     private bool              m_bossactive = false;
-    public int               m_bossPhase = 1;
+    private bool              m_TentaclesUp = false;
+    
+    public int                m_bossPhase = 1;
     private int               m_phaseModulesCompleted = 0;
     private bool              m_bossPhase2Starts = false;
     [SerializeField]
@@ -35,6 +37,7 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
 
     private void Start()
     {
+        m_TentaclesUp = false;
         m_module0Instance = Instantiate(m_module0Prefab, transform);
         m_module0Instance.GetComponent<ModuleBehaviour>().InitializeModule();
         m_modules = GameObject.FindGameObjectsWithTag("Module");
@@ -76,20 +79,23 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
         }
 
         if(m_phaseModulesCompleted == 3)
-        {
+        {   m_TentaclesUp = true;
             if(m_bossPhase == 1) // WHEN COMPLETING PHASE 1
             {
+                m_TentaclesUp = false;
                 m_phaseModulesCompleted = 0;
                 m_bossPhase2Starts = true;
                 m_bossPhase = 2;
             }
             else if(m_bossPhase == 2) // WHEN COMPLETING PHASE 2
             {
+                m_TentaclesUp = true;
                 m_phaseModulesCompleted = 0;
                 m_bossPhase = 3;
             }
             else if(m_bossPhase == 3) // END OF FINAL BOSS
             {
+                m_TentaclesUp = false;
                 m_bossactive = false;
                 m_bossPhase = 0;
                 m_phaseModulesCompleted = 0;
@@ -186,4 +192,5 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     public GameObject GetShieldEnemy()     { return m_shieldEnemy; }
     public GameObject GetSlashEnemy()      { return m_slashEnemy; }
     public GameObject GetGroundWaveEnemy() { return m_groundWaveEnemy; }
+    public bool GetTentaclesUp()           { return m_TentaclesUp; }
 }

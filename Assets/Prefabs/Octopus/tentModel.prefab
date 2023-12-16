@@ -200,6 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2690327776157953167}
   - component: {fileID: 8337810044284253941}
+  - component: {fileID: 4149845472540627129}
   m_Layer: 0
   m_Name: tentModel
   m_TagString: Untagged
@@ -216,8 +217,8 @@ Transform:
   m_GameObject: {fileID: 3323135869098047029}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 115.36, y: 15.3, z: 71.527}
-  m_LocalScale: {x: 1.4401925, y: 1.4226241, z: 2.1480632}
+  m_LocalPosition: {x: 114.98, y: 18.874, z: 75.027}
+  m_LocalScale: {x: 0.5911989, y: 0.5839871, z: 0.88177973}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6477622711264295953}
@@ -245,6 +246,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4149845472540627129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3323135869098047029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4b653af96c9cd44a8bc543668c1332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4181395952171520830
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,6 +267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 378932568634766326}
+  - component: {fileID: 1709374811094027766}
   m_Layer: 0
   m_Name: Bone.001
   m_TagString: Untagged
@@ -277,6 +291,29 @@ Transform:
   - {fileID: 1550592084689461299}
   m_Father: {fileID: 8755368534366494589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1709374811094027766
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4181395952171520830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.011184194
+  m_Height: 0.06300286
+  m_Direction: 1
+  m_Center: {x: -0.0000027587055, y: 0.010874602, z: -0.0008032432}
 --- !u!1 &4862455876866176603
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,8 +397,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.02, y: 0.02832701, z: 0.02}
-  m_Center: {x: 0.00040300802, y: 0.0042619854, z: -0.0006197568}
+  m_Size: {x: 0.011467923, y: 0.03042561, z: 0.012289859}
+  m_Center: {x: 0.0005536772, y: -0.0001322872, z: -0.00069989887}
 --- !u!1 &5512483687637335155
 GameObject:
   m_ObjectHideFlags: 0
