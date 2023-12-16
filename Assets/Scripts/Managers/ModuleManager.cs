@@ -13,11 +13,19 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     private float             m_minZDistance;
     private float             m_spawnZDistance;
     private int               m_maxModulesOnMap;
-    private Vector3           m_spawnVector;
-    private bool              m_bossactive = true;
-    //private float index = 0;
+
+    private bool              m_bossactive = false;
+    public int               m_bossPhase = 1;
+    private int               m_phaseModulesCompleted = 0;
+    private bool              m_bossPhase2Starts = false;
     [SerializeField]
-    private GameObject[] m_bossmodules;
+    private GameObject[] m_bossmodulesPhase1;
+
+    [SerializeField]
+    private GameObject m_module0phase2;
+    [SerializeField]
+    private GameObject[] m_bossmodulesPhase2;
+
     [SerializeField]
     private GameObject m_shieldEnemy;
     [SerializeField]
@@ -34,17 +42,20 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             module.GetComponent<ModuleBehaviour>().InitializeModule();
             module.SetActive(false);
         }
-        foreach (GameObject module in m_bossmodules)
+        foreach (GameObject module in m_bossmodulesPhase1)
         {
             module.SetActive(false);
         }
-        
-        
+        m_module0phase2.SetActive(false);
+        foreach (GameObject module in m_bossmodulesPhase2)
+        {
+            module.SetActive(false);
+        }
+
         m_modulesOnMap = new Queue<GameObject>();
         m_maxModulesOnMap = 2;
         m_minZDistance = -60.0f;
         m_spawnZDistance = 138.0f;
-        m_spawnVector = new Vector3(0, 0, m_spawnZDistance);
 
         SetInitialScenario();
     }
@@ -61,6 +72,27 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             {
                 DequeuModule();
                 EnqueueModule();
+            }
+        }
+
+        if(m_phaseModulesCompleted == 3)
+        {
+            if(m_bossPhase == 1) // WHEN COMPLETING PHASE 1
+            {
+                m_phaseModulesCompleted = 0;
+                m_bossPhase2Starts = true;
+                m_bossPhase = 2;
+            }
+            else if(m_bossPhase == 2) // WHEN COMPLETING PHASE 2
+            {
+                m_phaseModulesCompleted = 0;
+                m_bossPhase = 3;
+            }
+            else if(m_bossPhase == 3) // END OF FINAL BOSS
+            {
+                m_bossactive = false;
+                m_bossPhase = 0;
+                m_phaseModulesCompleted = 0;
             }
         }
     }
@@ -86,35 +118,60 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
         bool moduleIsValid = false;
         int randomModule;
 
-        while(!moduleIsValid)
+        if(m_bossPhase2Starts)
         {
-            if (!m_bossactive)
+            m_module0phase2.SetActive(true);
+            m_module0phase2.transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+            m_modulesOnMap.Enqueue(m_module0phase2);
+            m_bossPhase2Starts = false;
+        }
+        else
+        {
+            while (!moduleIsValid)
             {
-                randomModule = Random.Range(0, m_modules.Length);
-                
-                if (!m_modules[randomModule].activeSelf)
+                if (!m_bossactive)
                 {
-                    m_modules[randomModule].SetActive(true);
-                    m_modules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
-                    m_modules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
-                    m_modulesOnMap.Enqueue(m_modules[randomModule]);
-                    moduleIsValid = true;
-                }
-            }
-            else
-            {
-                randomModule = Random.Range(0, m_bossmodules.Length);
- 
-                if (!m_bossmodules[randomModule].activeSelf)
-                {
-                    m_bossmodules[randomModule].SetActive(true);
-                    m_bossmodules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
-                    m_modulesOnMap.Enqueue(m_bossmodules[randomModule]);
-                    moduleIsValid = true;
-                }
+                    randomModule = Random.Range(0, m_modules.Length);
 
+                    if (!m_modules[randomModule].activeSelf)
+                    {
+                        m_modules[randomModule].SetActive(true);
+                        m_modules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
+                        m_modules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                        m_modulesOnMap.Enqueue(m_modules[randomModule]);
+                        moduleIsValid = true;
+                    }
+                }
+                else
+                {
+                    if (m_bossPhase == 1 || m_bossPhase == 3)
+                    {
+                        randomModule = Random.Range(0, m_bossmodulesPhase1.Length);
+
+                        if (!m_bossmodulesPhase1[randomModule].activeSelf)
+                        {
+                            m_bossmodulesPhase1[randomModule].SetActive(true);
+                            m_bossmodulesPhase1[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                            m_modulesOnMap.Enqueue(m_bossmodulesPhase1[randomModule]);
+                            m_phaseModulesCompleted++;
+                            moduleIsValid = true;
+                        }
+                    }
+                    else if (m_bossPhase == 2)
+                    {
+                        randomModule = Random.Range(0, m_bossmodulesPhase2.Length);
+
+                        if (!m_bossmodulesPhase2[randomModule].activeSelf)
+                        {
+                            m_bossmodulesPhase2[randomModule].SetActive(true);
+                            m_bossmodulesPhase2[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                            m_modulesOnMap.Enqueue(m_bossmodulesPhase2[randomModule]);
+                            m_phaseModulesCompleted++;
+                            moduleIsValid = true;
+                        }
+                    }
+                }
             }
-            
         }
     }
 
@@ -124,7 +181,8 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
         m_modulesOnMap.Dequeue().gameObject.SetActive(false);
         
     }
-
+    
+    public void BossStarts() { m_bossactive = true; }
     public GameObject GetShieldEnemy()     { return m_shieldEnemy; }
     public GameObject GetSlashEnemy()      { return m_slashEnemy; }
     public GameObject GetGroundWaveEnemy() { return m_groundWaveEnemy; }

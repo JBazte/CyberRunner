@@ -12,7 +12,7 @@ public enum SCORE_PER_LEVEL { LVL_1 = 200, LVL_2 = 400 , LVL_3 = 600, LVL_4 = 80
 
 public class LevelManager : TemporalSingleton<LevelManager>
 {
-    private int   m_actualLevel;
+    public int   m_actualLevel;
     private float actualScore;
 
     private void Start()
@@ -62,10 +62,13 @@ public class LevelManager : TemporalSingleton<LevelManager>
                     break;
                 case 9:
                     if (actualScore >= (float)SCORE_PER_LEVEL.LVL_9)
+                    {
                         // MODULE MANAGER STARTS GENERATING BOSS MODULE
                         // BOSS APPEARS
+                        ModuleManager.Instance.BossStarts();
                         // MUSIC CHANGES?
                         m_actualLevel = 10;
+                    }
                     break;
                 default:
                     Debug.Log("Not a valid game level.");
