@@ -26,6 +26,10 @@ public class PlayerCollisionDetection : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Boss"))
+        {
+            GameManager.Instance.GameOver();
+        }
         if (other.gameObject.CompareTag("Player"))
         {
             return;
@@ -34,6 +38,7 @@ public class PlayerCollisionDetection : MonoBehaviour {
         {
             GameManager.Instance.AddCoin();
             other.gameObject.SetActive(false);
+            SfxMusicManager.Instance.PlaySfxMusic("CoinSfx");
             return;
         }
         else if (other.gameObject.CompareTag("PowerUp"))

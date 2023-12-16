@@ -10,8 +10,23 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
     public GameObject         m_tutorialModulePrefab;
     private GameObject        m_tutorialModuleInstance;
     private GameObject[]      m_modules;
+    
     private Queue<GameObject> m_modulesOnMap;
     private int               m_maxModulesOnMap;
+
+    private bool              m_bossactive = false;
+    private bool              m_TentaclesUp = false;
+    
+    public int                m_bossPhase = 1;
+    private int               m_phaseModulesCompleted = 0;
+    private bool              m_bossPhase2Starts = false;
+    [SerializeField]
+    private GameObject[] m_bossmodulesPhase1;
+
+    [SerializeField]
+    private GameObject m_module0phase2;
+    [SerializeField]
+    private GameObject[] m_bossmodulesPhase2;
     private GameObject        m_auxModule;
     //private float index = 0;
 
@@ -24,8 +39,10 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
 
     private void Start()
     {
-        if (PlayerPrefs.GetString(AppPlayerPrefs.TutorialCompleted) == "") PlayerPrefs.SetString(AppPlayerPrefs.TutorialCompleted, "false");
+        m_TentaclesUp = false;
 
+        if (PlayerPrefs.GetString(AppPlayerPrefs.TutorialCompleted) == "") PlayerPrefs.SetString(AppPlayerPrefs.TutorialCompleted, "false");
+        
         m_module0Instance = Instantiate(m_module0Prefab, transform);
         m_module0Instance.GetComponent<ModuleBehaviour>().InitializeModule();
         m_module0Instance.SetActive(false);
@@ -37,9 +54,20 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             module.GetComponent<ModuleBehaviour>().InitializeModule();
             module.SetActive(false);
         }
+        foreach (GameObject module in m_bossmodulesPhase1)
+        {
+            module.SetActive(false);
+        }
+        m_module0phase2.SetActive(false);
+        foreach (GameObject module in m_bossmodulesPhase2)
+        {
+            module.SetActive(false);
+        }
 
         m_modulesOnMap = new Queue<GameObject>();
         m_maxModulesOnMap = 2;
+        m_minZDistance = -60.0f;
+        m_spawnZDistance = 138.0f;
 
         SetInitialScenario();
     }
@@ -60,14 +88,41 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
                 EnqueueModule();
             }
         }
+
+        if(m_phaseModulesCompleted == 3)
+        {   m_TentaclesUp = true;
+            if(m_bossPhase == 1) // WHEN COMPLETING PHASE 1
+            {
+                m_TentaclesUp = false;
+                m_phaseModulesCompleted = 0;
+                m_bossPhase2Starts = true;
+                m_bossPhase = 2;
+            }
+            else if(m_bossPhase == 2) // WHEN COMPLETING PHASE 2
+            {
+                m_TentaclesUp = true;
+                m_phaseModulesCompleted = 0;
+                m_bossPhase = 3;
+            }
+            else if(m_bossPhase == 3) // END OF FINAL BOSS
+            {
+                m_TentaclesUp = false;
+                m_bossactive = false;
+                m_bossPhase = 0;
+                m_phaseModulesCompleted = 0;
+            }
+        }
     }
 
     public void SetInitialScenario()
     {
+        m_bossPhase = 1;
+        m_bossactive = false;
         if(m_modulesOnMap.Count > 0)
         {
             for(int i = 0; i < m_maxModulesOnMap; i++)
             {
+                
                 DequeuModule();
             }
         }
@@ -94,18 +149,67 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
         bool moduleIsValid = false;
         int randomModule;
 
-        while(!moduleIsValid)
+        if(m_bossPhase2Starts)
         {
-            randomModule = Random.Range(0, m_modules.Length);
-
-            if (!m_modules[randomModule].activeSelf)
+            m_module0phase2.SetActive(true);
+            m_module0phase2.transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+            m_modulesOnMap.Enqueue(m_module0phase2);
+            m_bossPhase2Starts = false;
+        }
+        else
+        {
+            while (!moduleIsValid)
             {
+                if (!m_bossactive)
+                {
+                    randomModule = Random.Range(0, m_modules.Length);
+
+                    if (!m_modules[randomModule].activeSelf)
+                    {
+                        m_modules[randomModule].SetActive(true);
+                        m_modules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
+                        m_modules[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                        m_modulesOnMap.Enqueue(m_modules[randomModule]);
+                        moduleIsValid = true;
+                    }
+                }
+                else
+                {
+                    if (m_bossPhase == 1 || m_bossPhase == 3)
+                    {
+                        randomModule = Random.Range(0, m_bossmodulesPhase1.Length);
+
+                        if (!m_bossmodulesPhase1[randomModule].activeSelf)
+                        {
+                            m_bossmodulesPhase1[randomModule].SetActive(true);
+                            m_bossmodulesPhase1[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                            m_modulesOnMap.Enqueue(m_bossmodulesPhase1[randomModule]);
+                            m_phaseModulesCompleted++;
+                            moduleIsValid = true;
+                        }
+                    }
+                    else if (m_bossPhase == 2)
+                    {
+                        randomModule = Random.Range(0, m_bossmodulesPhase2.Length);
+
+                        if (!m_bossmodulesPhase2[randomModule].activeSelf)
+                        {
+                            m_bossmodulesPhase2[randomModule].SetActive(true);
+                            m_bossmodulesPhase2[randomModule].transform.position = new Vector3(0.0f, 0.0f, m_modulesOnMap.Peek().transform.position.z + 100.0f);
+                            m_modulesOnMap.Enqueue(m_bossmodulesPhase2[randomModule]);
+                            m_phaseModulesCompleted++;
+                            moduleIsValid = true;
+                        }
+                    }
+                }
+                /*
                 m_modules[randomModule].SetActive(true);
                 m_modules[randomModule].GetComponent<ModuleBehaviour>().ResetModule();
                 m_modules[randomModule].transform.position = new Vector3(0.0f, 0.0f, 
                     m_modulesOnMap.Peek().transform.position.z + (m_modulesOnMap.Peek().GetComponent<ModuleBehaviour>().GetFloorsCount() * 100.0f));
                 m_modulesOnMap.Enqueue(m_modules[randomModule]);
                 moduleIsValid = true;
+                */
             }
         }
     }
@@ -116,8 +220,10 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
         m_modulesOnMap.Dequeue().gameObject.SetActive(false);
         
     }
-
+    
+    public void BossStarts() { m_bossactive = true; }
     public GameObject GetShieldEnemy()     { return m_shieldEnemy; }
     public GameObject GetSlashEnemy()      { return m_slashEnemy; }
     public GameObject GetGroundWaveEnemy() { return m_groundWaveEnemy; }
+    public bool GetTentaclesUp()           { return m_TentaclesUp; }
 }

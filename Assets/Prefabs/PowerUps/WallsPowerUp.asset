@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: WallsPowerUp
   m_EditorClassIdentifier: 
   m_duration: 10
+  m_mesh: {fileID: 4300000, guid: 9becb4de22c6e254c950eca3f6bce331, type: 3}
   m_wallLeft: {fileID: 0}
   m_wallRight: {fileID: 0}
   m_walls:

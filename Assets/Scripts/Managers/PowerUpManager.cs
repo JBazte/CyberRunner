@@ -14,6 +14,7 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
     [SerializeField]
     private PowerUpEffect[]  m_allPowerUps = new PowerUpEffect[m_totalNumofPowerUps];
     private float            m_powerUpTimer;
+    private int              m_chosenPowerUp;
     [SerializeField]
     private float            m_powerUpSpawnTime;
     private PlayerController m_player;
@@ -23,6 +24,17 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
     private int m_wallsTierPlayerPrefs;
     private int m_motorbikeTierPlayerPrefs;
     private int m_hyperspeedTierPlayerPrefs;
+
+    [SerializeField]
+    private Mesh m_bootsMesh;
+    [SerializeField]
+    private Mesh m_dronMesh;
+    [SerializeField]
+    private Mesh m_motorbikeMesh;
+    [SerializeField]
+    private Mesh m_wallsMesh;
+    [SerializeField]
+    private Mesh m_hyperspeedMesh;
 
     private void Start()
     {
@@ -74,12 +86,55 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
     public uint GetTotalNumOfPowerUps() { return m_totalNumofPowerUps; }
     public PowerUpEffect GetPowerUpEffect(int pu)
     {
-        if (0 <= pu && pu < 35) return m_allPowerUps[0];
-        else if (35 <= pu && pu < 55) return m_allPowerUps[1];
-        else if (55 <= pu && pu < 75) return m_allPowerUps[2];
-        else if (75 <= pu && pu < 90) return m_allPowerUps[3];
-        else if (90 <= pu && pu < 100) return m_allPowerUps[4];
-        else return m_allPowerUps[0];
+        if (0 <= pu && pu < 35)
+        {
+            m_chosenPowerUp = (int)PowerUpsEnum.BOOTS;
+            return m_allPowerUps[m_chosenPowerUp];
+        }
+        else if (35 <= pu && pu < 55)
+        {
+            m_chosenPowerUp = (int)PowerUpsEnum.DRON;
+            return m_allPowerUps[m_chosenPowerUp];
+        }
+        else if (55 <= pu && pu < 75)
+        {
+            m_chosenPowerUp = (int)PowerUpsEnum.WALLS;
+            return m_allPowerUps[m_chosenPowerUp];
+        }
+        else if (75 <= pu && pu < 90)
+        {
+            m_chosenPowerUp = (int)PowerUpsEnum.HYPERSPEED;
+            return m_allPowerUps[m_chosenPowerUp];
+        }
+        else if (90 <= pu && pu < 100)
+        {
+            m_chosenPowerUp = (int)PowerUpsEnum.MOTORBIKE;
+            return m_allPowerUps[m_chosenPowerUp];
+        }
+        else
+        {
+            m_chosenPowerUp = (int)PowerUpsEnum.BOOTS;
+            return m_allPowerUps[(int)PowerUpsEnum.BOOTS];
+        }
+    }
+
+    public Mesh GetPowerUpMesh()
+    {
+        switch(m_chosenPowerUp)
+        {
+            case (int)PowerUpsEnum.BOOTS:
+                return m_bootsMesh;
+            case (int)PowerUpsEnum.DRON:
+                return m_dronMesh;
+            case (int)PowerUpsEnum.WALLS:
+                return m_wallsMesh;
+            case (int)PowerUpsEnum.HYPERSPEED:
+                return m_hyperspeedMesh;
+            case (int)PowerUpsEnum.MOTORBIKE:
+                return m_motorbikeMesh;
+            default:
+                return m_bootsMesh;
+        }
     }
 
     public HyperspeedPowerUp GetHyperspeedPowerUp()

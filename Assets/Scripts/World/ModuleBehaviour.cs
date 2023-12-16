@@ -119,7 +119,8 @@ public class ModuleBehaviour : MonoBehaviour
 
             m_powerUps[randomPowerUpPos].SetActive(true); //If the powerUp is inactive it activates it
                                                            //It asks the GameManager for the instance of the random powerUp effect
-            m_powerUps[randomPowerUpPos].GetComponent<PowerUp>().SetPowerUpEffect(PowerUpManager.Instance.GetPowerUpEffect(randomPowerUp));
+            m_powerUps[randomPowerUpPos].GetComponent<PowerUp>().
+                SetPowerUpEffect(PowerUpManager.Instance.GetPowerUpEffect(randomPowerUp), PowerUpManager.Instance.GetPowerUpMesh());
             m_lastPowerUp = randomPowerUpPos;
 
             PowerUpManager.Instance.SetPowerUpAppears(false);
