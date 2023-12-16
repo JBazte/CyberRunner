@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3676683102640687542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8334248756169373681}
+  m_Layer: 0
+  m_Name: Floors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8334248756169373681
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3676683102640687542}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8409330303159222495}
+  m_Father: {fileID: 3663425226803673921}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4944664883414536695
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,7 +62,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8409330303159222495}
+  - {fileID: 8334248756169373681}
   - {fileID: 8848960978332406222}
   - {fileID: 2396731232518511718}
   - {fileID: 716952592752715494}
@@ -49,12 +81,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f9566d01441a54ba3242ab8f1fa2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_obstaclesContainer: {fileID: 0}
-  m_enemiesContainer: {fileID: 0}
-  m_enemies: []
-  m_enemiesCount: 0
-  m_coinsContainer: {fileID: 0}
-  m_powerUpsContainer: {fileID: 0}
+  m_moduleFloorsContainer: {fileID: 3676683102640687542}
+  m_floorsCount: 0
+  m_obstaclesContainer: {fileID: 7890689786432224743}
+  m_enemiesContainer: {fileID: 5160211190352441039}
+  m_coinsContainer: {fileID: 8021320108103138566}
+  m_powerUpsContainer: {fileID: 6439692418486714173}
 --- !u!1 &5160211190352441039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,7 +1133,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 3663425226803673921}
+    m_TransformParent: {fileID: 8334248756169373681}
     m_Modifications:
     - target: {fileID: 5197070678898095302, guid: e52b445b6e70cac4bb9064ab8c1747df, type: 3}
       propertyPath: m_Name

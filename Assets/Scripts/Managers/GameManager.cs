@@ -51,7 +51,11 @@ public class GameManager : TemporalSingleton<GameManager> {
         if (m_runActive) m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo();
     }
 
-    public void AddComboPoint() { AccumulatedCombo++; }
+    public void AddComboPoint() { 
+        
+        AccumulatedCombo++;
+        Debug.Log("COMBO: " + AccumulatedCombo);
+    }
     public void ResetCombo() { AccumulatedCombo = 0; }
 
     public void AddCoin() { CoinsObtained++; }
@@ -100,34 +104,11 @@ public class GameManager : TemporalSingleton<GameManager> {
         UIManager.Instance.ToGameOver();
     }
 
-    /*public void OnShop() {
-        //m_UIOnShop.enabled = true;
-        //m_UIGameOver.enabled = false;
-    }
-
-    public void OutShop() {
-        //m_UIOnShop.enabled = false;
-        //m_UIGameOver.enabled = true;
-    }*/
-
-    public void OpenLeaderboard() {
-        //m_UIGameOver.enabled = false;
-        //m_UIGameOver.gameObject.SetActive(false);
-        //playFabManager.GetLeaderboardEntriesAroundPlayer();
-    }
-
-    public void CloseLeaderboard() {
-        //m_UIGameOver.enabled = true;
-        //m_UIGameOver.gameObject.SetActive(true);
-        //playFabManager.CloseLeaderboardPanel();
-        //UIManager.Instance.ToGameOver();
-    }
-
     public bool GetRunActive() { return m_runActive; }
     public void SetRunActive(bool runSpeed) { m_runActive = runSpeed; }
     public float GetTraveledMeters() { return m_metersTraveled; }
     public PlayerController GetPlayer() { return m_player; }   
-    public int GetPlayerAccountCoins() { return PlayerPrefs.GetInt(AppPlayePrefs.PLAYER_COINS); }
+    public int GetPlayerAccountCoins() { return PlayerPrefs.GetInt(AppPlayerPrefs.PLAYER_COINS); }
 
     public float Score { get => m_score; set => m_score = value; }
     public uint CoinsObtained { get => m_coinsObtained; set => m_coinsObtained = value; }

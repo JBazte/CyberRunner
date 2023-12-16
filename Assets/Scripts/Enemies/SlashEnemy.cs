@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlashEnemy : EnemyAbstract
 {
-    private bool       m_isAttaking = false;
+    private bool     m_isAttaking = false;
     private Animator Slash;
     
     void Start()
@@ -36,11 +36,10 @@ public class SlashEnemy : EnemyAbstract
             m_isAttaking = true;
         }
         m_hasAttacked = true;
-
-        
-
     }
+
     public void anim()
     {
-        Slash.Play("Attack");    }
+        Slash.Play("Attack");    
+    }
 }

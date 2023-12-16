@@ -14,6 +14,7 @@ TagManager:
   - Coin
   - PowerUp
   - Spawn
+  - Tutorial
   layers:
   - Default
   - TransparentFX

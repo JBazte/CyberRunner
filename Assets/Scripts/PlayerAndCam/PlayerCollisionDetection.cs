@@ -55,9 +55,12 @@ public class PlayerCollisionDetection : MonoBehaviour {
         }
         else if(other.gameObject.CompareTag("Enemy"))
         {
-            Enemy = other.gameObject.GetComponentInChildren<Animator>();
-            Enemy.Play("Die");
-            other.gameObject.GetComponent<EnemyAbstract>().Invoke("Die",2f);
+            Debug.Log("COLISIOOONA " + other.gameObject);
+            other.gameObject.GetComponent<EnemyAbstract>().Die();
+        }
+        else if (other.gameObject.CompareTag("Tutorial"))
+        {
+            //if(other.gameObject.GetComponent<TutorialSlashEnemy>() != null) UIManager.Instance.SlashTutorial();
         }
         else if (!playerController.GetInvulneravility())
         {
