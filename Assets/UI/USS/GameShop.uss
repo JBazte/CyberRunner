@@ -3,3 +3,22 @@
     -unity-text-outline-color: rgb(0, 0, 0);
     color: rgb(255, 255, 255);
 }
+
+.shop-button {
+    border-left-color: rgb(110, 0, 156);
+    border-right-color: rgb(110, 0, 156);
+    border-top-color: rgb(110, 0, 156);
+    border-bottom-color: rgb(110, 0, 156);
+    border-top-width: 8px;
+    border-right-width: 8px;
+    border-bottom-width: 8px;
+    border-left-width: 8px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: rgb(110, 61, 156);
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}

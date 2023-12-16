@@ -20,7 +20,7 @@ public class UIManager : TemporalSingleton<UIManager>
 
     int lvl_moto = 1, lvl_botas = 1, lvl_hypspeed = 1, lvl_walls = 1, lvl_drone = 1;
 
-    Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel;
+    Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel, moneyLabel;
 
     private void OnEnable()
     {
@@ -72,6 +72,12 @@ public class UIManager : TemporalSingleton<UIManager>
         m_droneShopBtn = shopDoc.rootVisualElement.Q("DroneShopButton") as Button;
         m_droneShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.DRON));
 
+        m_motoShopBtn.text = "Upgrade to tier  " + PlayerPrefs.GetInt(AppPlayePrefs.MOTORBIKE_TIER);
+        m_bootsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayePrefs.BOOTS_TIER);
+        m_hyperspeedShopBtn.text = "Upgrade to  tier " + PlayerPrefs.GetInt(AppPlayePrefs.HYPERSPEED_TIER);
+        m_wallsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayePrefs.WALLS_TIER);
+        m_droneShopBtn.text = "Upgrade to tier " + PlayerPrefs.GetInt(AppPlayePrefs.DRON_TIER);
+
         m_motoBar = shopDoc.rootVisualElement.Q("MotoBar") as ProgressBar;
         m_botasBar = shopDoc.rootVisualElement.Q("BotasBar") as ProgressBar;
         m_hyperspeedBar = shopDoc.rootVisualElement.Q("CargaBar") as ProgressBar;
@@ -83,6 +89,7 @@ public class UIManager : TemporalSingleton<UIManager>
         coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
         finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
         comboLabel = inGameDoc.rootVisualElement.Q("ComboLab") as Label;
+        moneyLabel = shopDoc.rootVisualElement.Q("CoinsDisplayLabel") as Label;
     }
 
     private void UpgradePowerUp(ClickEvent evt, PowerUpsEnum powerUp)
@@ -328,6 +335,12 @@ public class UIManager : TemporalSingleton<UIManager>
                 Debug.Log("INVALID POWER-UP ERROR");
                 break;
         }
+
+        m_motoShopBtn.text = "Upgrade to tier  " + PlayerPrefs.GetInt(AppPlayePrefs.MOTORBIKE_TIER);
+        m_bootsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayePrefs.BOOTS_TIER);
+        m_hyperspeedShopBtn.text = "Upgrade to  tier " + PlayerPrefs.GetInt(AppPlayePrefs.HYPERSPEED_TIER);
+        m_wallsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayePrefs.WALLS_TIER);
+        m_droneShopBtn.text = "Upgrade to tier " + PlayerPrefs.GetInt(AppPlayePrefs.DRON_TIER);
     }
 
     public void ToGame(ClickEvent evt)
@@ -499,6 +512,14 @@ public class UIManager : TemporalSingleton<UIManager>
                 m_hyperspeedBar.value = lvl_hypspeed;
                 m_wallsBar.value = lvl_walls;
                 m_droneBar.value = lvl_drone;
+
+                moneyLabel = shopDoc.rootVisualElement.Q("CoinsDisplayLabel") as Label;
+
+                m_motoShopBtn.text = "Upgrade to tier  " + PlayerPrefs.GetInt(AppPlayePrefs.MOTORBIKE_TIER);
+                m_bootsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayePrefs.BOOTS_TIER);
+                m_hyperspeedShopBtn.text = "Upgrade to  tier " + PlayerPrefs.GetInt(AppPlayePrefs.HYPERSPEED_TIER);
+                m_wallsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayePrefs.WALLS_TIER);
+                m_droneShopBtn.text = "Upgrade to tier " + PlayerPrefs.GetInt(AppPlayePrefs.DRON_TIER);
                 break;
 
             case 4:
@@ -543,5 +564,6 @@ public class UIManager : TemporalSingleton<UIManager>
         scoreLabel.text = ((int)GameManager.Instance.Score).ToString();
         coinsLabel.text = GameManager.Instance.CoinsObtained.ToString();
         comboLabel.text = "\nx" + GameManager.Instance.AccumulatedCombo.ToString();
+        moneyLabel.text = GameManager.Instance.GetPlayerAccountCoins().ToString();
     }
 }
