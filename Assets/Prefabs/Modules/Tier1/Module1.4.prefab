@@ -145,6 +145,39 @@ Transform:
   - {fileID: 5816575282251370978}
   - {fileID: 2413596090219203597}
   - {fileID: 2279212364075475119}
+  - {fileID: 1604966442221367913}
+  m_Father: {fileID: 5953366887314671537}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7104293104715240362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 222207019151107959}
+  m_Layer: 0
+  m_Name: Floors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &222207019151107959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104293104715240362}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2682651257416631553}
   m_Father: {fileID: 5953366887314671537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7818537954009432030
@@ -210,12 +243,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2682651257416631553}
+  - {fileID: 222207019151107959}
   - {fileID: 4650702951745958329}
   - {fileID: 1895401598146433169}
   - {fileID: 7354629822332215322}
   - {fileID: 4851402809367625110}
-  - {fileID: 1604966442221367913}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7984356766233025152
@@ -230,12 +262,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f9566d01441a54ba3242ab8f1fa2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_obstaclesContainer: {fileID: 0}
-  m_enemiesContainer: {fileID: 0}
-  m_enemies: []
-  m_enemiesCount: 0
-  m_coinsContainer: {fileID: 0}
-  m_powerUpsContainer: {fileID: 0}
+  m_moduleFloorsContainer: {fileID: 7104293104715240362}
+  m_floorsCount: 0
+  m_obstaclesContainer: {fileID: 3575697712502801829}
+  m_enemiesContainer: {fileID: 7818537954009432030}
+  m_coinsContainer: {fileID: 3369588051002204949}
+  m_powerUpsContainer: {fileID: 610101933458533331}
 --- !u!1001 &111000892944124323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -626,7 +658,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 5953366887314671537}
+    m_TransformParent: {fileID: 4650702951745958329}
     m_Modifications:
     - target: {fileID: 469586924855343411, guid: ef467498a8b9ab543b6af133bb4f0ca8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -646,15 +678,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469586924855343411, guid: ef467498a8b9ab543b6af133bb4f0ca8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 469586924855343411, guid: ef467498a8b9ab543b6af133bb4f0ca8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 469586924855343411, guid: ef467498a8b9ab543b6af133bb4f0ca8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 469586924855343411, guid: ef467498a8b9ab543b6af133bb4f0ca8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2180,7 +2212,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 5953366887314671537}
+    m_TransformParent: {fileID: 222207019151107959}
     m_Modifications:
     - target: {fileID: 5197070678898095302, guid: e52b445b6e70cac4bb9064ab8c1747df, type: 3}
       propertyPath: m_Name

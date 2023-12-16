@@ -38,20 +38,20 @@ public class PowerUpManager : TemporalSingleton<PowerUpManager>
 
     private void Start()
     {
-        m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt(AppPlayePrefs.BOOTS_TIER);
-        if(m_bootsTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.BOOTS_TIER, 1);
+        m_bootsTierPlayerPrefs      = PlayerPrefs.GetInt(AppPlayerPrefs.BOOTS_TIER);
+        if(m_bootsTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayerPrefs.BOOTS_TIER, 1);
 
-        m_dronTierPlayerPrefs       = PlayerPrefs.GetInt(AppPlayePrefs.DRON_TIER);
-        if (m_dronTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.DRON_TIER, 1);
+        m_dronTierPlayerPrefs       = PlayerPrefs.GetInt(AppPlayerPrefs.DRON_TIER);
+        if (m_dronTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 1);
 
-        m_wallsTierPlayerPrefs      = PlayerPrefs.GetInt(AppPlayePrefs.WALLS_TIER);
-        if (m_wallsTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.WALLS_TIER, 1);
+        m_wallsTierPlayerPrefs      = PlayerPrefs.GetInt(AppPlayerPrefs.WALLS_TIER);
+        if (m_wallsTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayerPrefs.WALLS_TIER, 1);
 
-        m_motorbikeTierPlayerPrefs  = PlayerPrefs.GetInt(AppPlayePrefs.MOTORBIKE_TIER);
-        if (m_motorbikeTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.MOTORBIKE_TIER, 1);
+        m_motorbikeTierPlayerPrefs  = PlayerPrefs.GetInt(AppPlayerPrefs.MOTORBIKE_TIER);
+        if (m_motorbikeTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayerPrefs.MOTORBIKE_TIER, 1);
 
-        m_hyperspeedTierPlayerPrefs = PlayerPrefs.GetInt(AppPlayePrefs.HYPERSPEED_TIER);
-        if (m_hyperspeedTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayePrefs.HYPERSPEED_TIER, 1);
+        m_hyperspeedTierPlayerPrefs = PlayerPrefs.GetInt(AppPlayerPrefs.HYPERSPEED_TIER);
+        if (m_hyperspeedTierPlayerPrefs == 0) PlayerPrefs.SetInt(AppPlayerPrefs.HYPERSPEED_TIER, 1);
 
         m_player = FindObjectOfType<PlayerController>();
         m_powerUpAppears = false;

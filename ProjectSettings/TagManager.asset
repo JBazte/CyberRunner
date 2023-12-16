@@ -16,6 +16,7 @@ TagManager:
   - Spawn
   - ModuleBoss
   - Boss
+  - Tutorial
   layers:
   - Default
   - TransparentFX
