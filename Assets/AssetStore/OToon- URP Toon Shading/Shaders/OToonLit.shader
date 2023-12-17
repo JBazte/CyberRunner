@@ -125,7 +125,6 @@ Shader "URP/OToonLit"
         [HideInInspector] _QueueOffset ("Queue offset", Float) = 0.0
 
         // ObsoleteProperties
-        [HideInInspector] _MainTex ("BaseMap", 2D) = "white" { }
         [HideInInspector] _Color ("Base Color", Color) = (1, 1, 1, 1)
         [HideInInspector] _GlossMapScale ("Smoothness", Float) = 0.0
         [HideInInspector] _Glossiness ("Smoothness", Float) = 0.0
@@ -134,6 +133,11 @@ Shader "URP/OToonLit"
         [HideInInspector][NoScaleOffset]unity_Lightmaps ("unity_Lightmaps", 2DArray) = "" { }
         [HideInInspector][NoScaleOffset]unity_LightmapsInd ("unity_LightmapsInd", 2DArray) = "" { }
         [HideInInspector][NoScaleOffset]unity_ShadowMasks ("unity_ShadowMasks", 2DArray) = "" { }
+
+        // CurvedWorldProperties
+        _MainTex ("BaseMap", 2D) = "white" { }
+        _QOffset ("Offset", Vector) = (0, 0, 0, 0)
+        _Dist ("Distance", Float) = 100.0
     }
 
     SubShader
@@ -158,6 +162,7 @@ Shader "URP/OToonLit"
             #pragma shader_feature_local _OUTLINE
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Library/OToonOutline.hlsl"
+
             ENDHLSL
 
         }
@@ -237,43 +242,50 @@ Shader "URP/OToonLit"
             #include "Library/OToonLitForwardPass.hlsl"
             ENDHLSL
 
-        }
-
+        }/*
         Pass
         {
-            Name "ShadowCaster"
-            Tags { "LightMode" = "ShadowCaster" }
+            Name "PerspectiveDistortion"
+            Tags {"RenderType" = "Opaque" }
 
             ZWrite On
-            ZTest LEqual
-            ColorMask 0
-            Cull[_Cull]
+            Blend SrcAlpha OneMinusSrcAlpha
+            Cull Off
 
-            HLSLPROGRAM
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include "UnityCG.cginc"
 
-            #pragma prefer_hlslcc gles
-            #pragma exclude_renderers d3d11_9x
-            #pragma target 2.0
+            // Define your variables for the perspective distortion pass
+            sampler2D _MainTex;
+            float4 _QOffset;
+            float _Dist;
 
-            // -------------------------------------
-            // Material Keywords
-            #pragma shader_feature_local_fragment _ALPHATEST_ON
-            #pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+            struct v2f {
+                float4 pos : SV_POSITION;
+                float4 uv : TEXCOORD0;
+            };
 
-            //--------------------------------------
-            // GPU Instancing
-            #pragma multi_compile_instancing
-            #pragma multi_compile _ DOTS_INSTANCING_ON
+            v2f vert(appdata_base v)
+            {
+                v2f o;
+                float4 vPos = mul(UNITY_MATRIX_MV, v.vertex);
+                float zOff = vPos.z / _Dist;
+                vPos += _QOffset * zOff * zOff;
+                o.pos = mul(UNITY_MATRIX_P, vPos);
+                o.uv = v.texcoord;
+                return o;
+            }
 
-            #pragma vertex ShadowPassVertex
-            #pragma fragment ShadowPassFragment
-
-            #include "Library/OToonLitInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
-            ENDHLSL
-
+            half4 frag(v2f i) : COLOR
+            {
+                half4 col = tex2D(_MainTex, i.uv.xy);
+                return col;
+            }
+            ENDCG
         }
-
+        */
         Pass
         {
             Name "DepthOnly"
