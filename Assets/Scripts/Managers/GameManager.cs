@@ -78,6 +78,7 @@ public class GameManager : TemporalSingleton<GameManager> {
         SpeedManager.Instance.SetRunSpeed(m_initialRunSpeed);
         SpeedManager.Instance.SetAcceleration(m_initialAcceleration);
         LevelManager.Instance.ResetActualLevel();
+        if (ModuleManager.Instance.HasCollisionObject()) ModuleManager.Instance.ReactivateCollisionObject();
         m_coinsObtained = 0;
         m_score = 0;
         m_metersTraveled = 0;

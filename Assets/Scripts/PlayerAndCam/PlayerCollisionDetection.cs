@@ -19,6 +19,8 @@ public class PlayerCollisionDetection : MonoBehaviour {
             if (playerController.GetMotoActive()) {
                 playerController.MotorbikeCrashed();
             } else {
+                //col.gameObject.GetComponent<Collider>().enabled = false;
+                ModuleManager.Instance.SetCollisionObject(col.gameObject);
                 playerController.OnPlayerColliderHit(col.collider);
             }
         }

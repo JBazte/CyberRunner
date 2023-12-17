@@ -20,18 +20,15 @@ public class BossBehaviour : MonoBehaviour
     void Start()
     {
         Boss = gameObject.GetComponent<Animator>();
-    }
-
-    private void OnEnable()
-    {
         Boss.Play("Idle");
+        Debug.Log("BOOOOOSSS" + Boss);
         m_hasAttacked = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        BossIsActive = ModuleManager.Instance.GetTentaclesUp();
+        //BossIsActive = ModuleManager.Instance.GetTentaclesUp();
         Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 24);
         foreach (var hitCollider in hitColliders)
         {
