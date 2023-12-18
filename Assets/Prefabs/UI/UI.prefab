@@ -68,6 +68,54 @@ MonoBehaviour:
   - {fileID: 9000000, guid: 9f78e6b80ae397547aa3722764835373, type: 3}
   - {fileID: 9000000, guid: 22ce23d1cdbfdd24eac694a4a2de0ac5, type: 3}
   currentAvatar: {fileID: 0}
+--- !u!1 &454359774734950676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8375748162058407400}
+  - component: {fileID: 5803165819306095252}
+  m_Layer: 0
+  m_Name: UITutorial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8375748162058407400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454359774734950676}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7453418370162295368}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5803165819306095252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454359774734950676}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 645db06d704b7054cb913802d8b0e815, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 7089b695b0d30bf4aac1af7ebbed595f, type: 3}
+  m_SortingOrder: 0
 --- !u!1 &4146800685036585317
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,6 +152,7 @@ Transform:
   - {fileID: 4241845364647748415}
   - {fileID: 7955242494689659182}
   - {fileID: 6278955755112728615}
+  - {fileID: 8375748162058407400}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5879959561391492014
@@ -125,6 +174,7 @@ MonoBehaviour:
   gameOverDoc: {fileID: 1783685454858805645}
   shopDoc: {fileID: 4383204609374988202}
   cosmeticsDoc: {fileID: 6900477664158701961}
+  tutorialDoc: {fileID: 5803165819306095252}
 --- !u!1 &4437250212069526111
 GameObject:
   m_ObjectHideFlags: 0

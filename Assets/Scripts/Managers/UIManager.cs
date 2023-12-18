@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 public class UIManager : TemporalSingleton<UIManager>
 {
     [SerializeField]
     private PlayFabManager playFabManager;
-
     [SerializeField]
     UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc, cosmeticsDoc, tutorialDoc;
 
@@ -25,7 +23,6 @@ public class UIManager : TemporalSingleton<UIManager>
     VisualElement tutorialImage;
 
     private bool m_corroutineRuning;
-
     private void OnEnable()
     {
         btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
@@ -42,10 +39,8 @@ public class UIManager : TemporalSingleton<UIManager>
 
         btnShop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
         btnShop.RegisterCallback<ClickEvent>(ToShop);
-
         btnResume = pauseDoc.rootVisualElement.Q("ResumeButton") as Button;
         btnResume.RegisterCallback<ClickEvent>(ToResume);
-
         btnPause = inGameDoc.rootVisualElement.Q("PauseButton") as Button;
         btnPause.RegisterCallback<ClickEvent>(OnPause);
 
@@ -355,7 +350,6 @@ public class UIManager : TemporalSingleton<UIManager>
         tapDoc.enabled = false;
         GameManager.Instance.StartRun();
         inGameDoc.enabled = true;
-
         /*btn_pause = inGameDoc.rootVisualElement.Q("PauseButton") as Button;
         btn_pause.RegisterCallback<ClickEvent>(OnPause);
         scoreLabel = inGameDoc.rootVisualElement.Q("ScoreLab") as Label;
@@ -366,7 +360,7 @@ public class UIManager : TemporalSingleton<UIManager>
     public void Login()
     {
         tapDoc.enabled = true;
-        
+
     }
 
     public void ToTap(ClickEvent evt)
@@ -382,31 +376,25 @@ public class UIManager : TemporalSingleton<UIManager>
         btn_tap.RegisterCallback<ClickEvent>(ToGame);*/
         RestartUI(2);
     }
-
     public void ToShop(ClickEvent evt)
     {
         cosmeticsDoc.enabled = false;
         shopDoc.enabled = true;
-
         /*btn_close = shopDoc.rootVisualElement.Q("CloseButton") as Button;
         btn_close.RegisterCallback<ClickEvent>(OnClose);*/
-
         RestartUI(3);
     }
-
     public void ToResume(ClickEvent evt)
     {
         GameManager.Instance.Resume();
         pauseDoc.enabled = false;
         inGameDoc.enabled = true;
-
         /*btn_pause = inGameDoc.rootVisualElement.Q("PauseButton") as Button;
         btn_pause.RegisterCallback<ClickEvent>(OnPause);
         scoreLabel = inGameDoc.rootVisualElement.Q("ScoreLab") as Label;
         coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;*/
         RestartUI(1);
     }
-
     public void OnPause(ClickEvent evt)
     {
         GameManager.Instance.PauseRun();
@@ -427,7 +415,7 @@ public class UIManager : TemporalSingleton<UIManager>
         {
             cosmeticsDoc.enabled = false;
         }
-        if(tapDoc.enabled == false) tapDoc.enabled = true;
+        if (tapDoc.enabled == false) tapDoc.enabled = true;
     }
 
     public void ToGameOver()
@@ -435,17 +423,12 @@ public class UIManager : TemporalSingleton<UIManager>
         //GameManager.Instance.GameOver();
         inGameDoc.enabled = false;
         gameOverDoc.enabled = true;
-
         PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, (int)GameManager.Instance.CoinsObtained);
-
         /*btn_home = gameOverDoc.rootVisualElement.Q("HomeButton") as Button;
         btn_home.RegisterCallback<ClickEvent>(ToTap);
-
         btn_shop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
         btn_shop.RegisterCallback<ClickEvent>(ToShop);
-
         finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
-
         finalScoreLabel.text = scoreLabel.text;*/
         RestartUI(5);
     }
@@ -474,7 +457,6 @@ public class UIManager : TemporalSingleton<UIManager>
 
     public void ToCosmetics(ClickEvent evt)
     {
-        Debug.Log("EEEEEEEE");
         shopDoc.enabled = false;
         cosmeticsDoc.enabled = true;
         tapDoc.enabled = false;
@@ -483,31 +465,31 @@ public class UIManager : TemporalSingleton<UIManager>
 
     public void SlashTutorial()
     {
+        tutorialLabel = tutorialDoc.rootVisualElement.Q("Tutorial_label") as Label;
         tutorialDoc.enabled = true;
         tutorialLabel.text = "Slide down to dodge enemy attack...\nand finish him!!!";
         Time.timeScale = Mathf.Lerp(1, 0, 0.8f);
         GameManager.Instance.GetPlayer().SetTutorialActive(TutorialBlock.Slash);
         StartCoroutine(TimeScaleDecrease());
     }
-
     public void ShieldTutorial()
     {
         tutorialDoc.enabled = true;
+        tutorialLabel = tutorialDoc.rootVisualElement.Q("Tutorial_label") as Label;
         tutorialLabel.text = "Jump to avoid it's shield...";
         Time.timeScale = Mathf.Lerp(1, 0, 0.8f);
         GameManager.Instance.GetPlayer().SetTutorialActive(TutorialBlock.Shield);
         StartCoroutine(TimeScaleDecrease());
     }
-
     public void GroundWaveTutorial()
     {
         tutorialDoc.enabled = true;
+        tutorialLabel = tutorialDoc.rootVisualElement.Q("Tutorial_label") as Label;
         tutorialLabel.text = "Jump to avoid it's attack...\nit's everything he's got!!!";
         Time.timeScale = Mathf.Lerp(1, 0, 0.8f);
         GameManager.Instance.GetPlayer().SetTutorialActive(TutorialBlock.GroundWave);
         StartCoroutine(TimeScaleDecrease());
     }
-
     public void OutOfTutorial()
     {
         tutorialDoc.enabled = false;
@@ -515,15 +497,13 @@ public class UIManager : TemporalSingleton<UIManager>
         StopCoroutine(TimeScaleDecrease());
         Time.timeScale = 1;
     }
-
     private IEnumerator TimeScaleDecrease()
     {
         m_corroutineRuning = true;
         yield return new WaitForSeconds(0.5f);
-        if(m_corroutineRuning) Time.timeScale = 0.0f;
+        if (m_corroutineRuning) Time.timeScale = 0.0f;
         m_corroutineRuning = false;
     }
-
     void RestartUI(int caso)
     {
         switch (caso)
@@ -535,7 +515,6 @@ public class UIManager : TemporalSingleton<UIManager>
                 coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
                 coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
                 break;
-
             case 2:
                 btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
                 btnTap.RegisterCallback<ClickEvent>(ToGame);
@@ -594,23 +573,19 @@ public class UIManager : TemporalSingleton<UIManager>
 
                 finalScoreLabel.text = scoreLabel.text;
                 break;
-
             case 6:
                 btnItems = cosmeticsDoc.rootVisualElement.Q("ItemsButton") as Button;
                 btnItems.RegisterCallback<ClickEvent>(ToShop);
-
                 btnCloseCosmetics = cosmeticsDoc.rootVisualElement.Q("CloseButton") as Button;
                 btnCloseCosmetics.RegisterCallback<ClickEvent>(OnClose);
                 break;
         }
     }
-
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
 
+    }
     // Update is called once per frame
     void Update()
     {
