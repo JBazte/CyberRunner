@@ -3619,6 +3619,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1463888669}
     m_Modifications:
+    - target: {fileID: 1864246844960640134, guid: 1c078fc045844a240abbde480493ff10, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2352422310834773753, guid: 1c078fc045844a240abbde480493ff10, type: 3}
       propertyPath: m_coinsContainer
       value: 
@@ -3735,9 +3739,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5113354488717872424, guid: 1c078fc045844a240abbde480493ff10, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -27.81
+      objectReference: {fileID: 0}
     - target: {fileID: 6236067602750013342, guid: 1c078fc045844a240abbde480493ff10, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7578737302488620871, guid: 1c078fc045844a240abbde480493ff10, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0125828
+      objectReference: {fileID: 0}
+    - target: {fileID: 7578737302488620871, guid: 1c078fc045844a240abbde480493ff10, type: 3}
+      propertyPath: m_Center.y
+      value: -0.0062885843
+      objectReference: {fileID: 0}
+    - target: {fileID: 7578737302488620871, guid: 1c078fc045844a240abbde480493ff10, type: 3}
+      propertyPath: m_Center.z
+      value: -14.361263
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
