@@ -23,6 +23,8 @@ public class UIManager : TemporalSingleton<UIManager>
     VisualElement tutorialImage;
 
     private bool m_corroutineRuning;
+
+    bool to_game_over;
     private void OnEnable()
     {
         btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
@@ -415,7 +417,20 @@ public class UIManager : TemporalSingleton<UIManager>
         {
             cosmeticsDoc.enabled = false;
         }
-        if (tapDoc.enabled == false) tapDoc.enabled = true;
+
+        if (to_game_over == false)
+        {
+            tapDoc.enabled = true;
+            ModuleManager.Instance.SetInitialScenario();
+            GameManager.Instance.GetPlayer().PlayAnimation("idle");
+            GameManager.Instance.GetPlayer().setSide(SIDE.Middle);
+            RestartUI(2);
+        }
+        else if(to_game_over == true)
+        {
+            gameOverDoc.enabled = true;
+            RestartUI(5);
+        }
     }
 
     public void ToGameOver()
@@ -457,6 +472,8 @@ public class UIManager : TemporalSingleton<UIManager>
 
     public void ToCosmetics(ClickEvent evt)
     {
+        to_game_over = gameOverDoc.enabled;
+        gameOverDoc.enabled = false;
         shopDoc.enabled = false;
         cosmeticsDoc.enabled = true;
         tapDoc.enabled = false;
