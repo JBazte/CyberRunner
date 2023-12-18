@@ -8,14 +8,18 @@ using UnityEngine;
 public class ModuleBehaviour : MonoBehaviour
 {
     [SerializeField]
+    private GameObject   m_moduleFloorsContainer;
+    public int          m_floorsCount;
+
+    [SerializeField]
     private GameObject   m_obstaclesContainer;
     private GameObject[] m_obstacles;
     private int          m_obstacleCount;
 
     [SerializeField]
     private GameObject   m_enemiesContainer;
-    public GameObject[] m_enemies;
-    public int          m_enemiesCount;
+    private GameObject[] m_enemies;
+    private int          m_enemiesCount;
 
     [SerializeField]
     private GameObject   m_coinsContainer;
@@ -32,9 +36,10 @@ public class ModuleBehaviour : MonoBehaviour
     {
         //We save the lenght to use it lately to access count os arrays when any GameObject of them is not active
         m_obstacleCount = m_obstaclesContainer.transform.childCount;
-        m_enemiesCount = m_enemiesContainer.transform.childCount;
-        m_coinsCount = m_coinsContainer.transform.childCount;
+        m_enemiesCount  = m_enemiesContainer.transform.childCount;
+        m_coinsCount    = m_coinsContainer.transform.childCount;
         m_powerUpsCount = m_powerUpsContainer.transform.childCount;
+        m_floorsCount   = m_moduleFloorsContainer.transform.childCount;
 
         m_obstacles = new GameObject[m_obstacleCount];
         m_enemies = new GameObject[m_enemiesCount];
@@ -92,29 +97,6 @@ public class ModuleBehaviour : MonoBehaviour
                 enemyAux.DeactivateWeapon();
             }
         }
-
-        //for(int i = 0; i < m_enemiesCount; i++)
-        //{
-        //    if (m_enemies[i].GetComponent<SpawnPoint>() != null)
-        //    {
-        //        m_enemies[i].GetComponent<SpawnPoint>().SpawnRandomEnemy();
-        //    }
-        //    else if(m_enemies[i].GetComponent<EnemyAbstract>() != null)
-        //    {
-        //        EnemyAbstract enemyAux = m_enemies[i].GetComponent<EnemyAbstract>();
-        //        if (enemyAux.GetIsSpawn())
-        //        {
-        //            Debug.Log("ELIMINADO ENEMIGO " + m_enemies[i].GetComponent<EnemyAbstract>().GetIsSpawn());
-        //            Destroy(m_enemies[i]);
-        //        }
-        //        else
-        //        {
-        //            enemyAux.SetHasAttacked(false);
-        //            if (!enemy.activeSelf) enemy.SetActive(true);
-        //            enemyAux.DeactivateWeapon();
-        //        }
-        //    }
-        //}
     }
 
     private void ResetCoins()
@@ -127,7 +109,7 @@ public class ModuleBehaviour : MonoBehaviour
 
     private void RandomizePowerUps()
     {
-        if(PowerUpManager.Instance.GetPowerUpAppears())
+        if(PowerUpManager.Instance.GetPowerUpAppears() && m_powerUps.Length > 0)
         {
             int randomPowerUpPos = Random.Range(0, m_powerUpsCount);
             int randomPowerUp    = Random.Range(0, 99);
@@ -137,7 +119,8 @@ public class ModuleBehaviour : MonoBehaviour
 
             m_powerUps[randomPowerUpPos].SetActive(true); //If the powerUp is inactive it activates it
                                                            //It asks the GameManager for the instance of the random powerUp effect
-            m_powerUps[randomPowerUpPos].GetComponent<PowerUp>().SetPowerUpEffect(PowerUpManager.Instance.GetPowerUpEffect(randomPowerUp));
+            m_powerUps[randomPowerUpPos].GetComponent<PowerUp>().
+                SetPowerUpEffect(PowerUpManager.Instance.GetPowerUpEffect(randomPowerUp), PowerUpManager.Instance.GetPowerUpMesh());
             m_lastPowerUp = randomPowerUpPos;
 
             PowerUpManager.Instance.SetPowerUpAppears(false);
@@ -151,4 +134,6 @@ public class ModuleBehaviour : MonoBehaviour
             powerUp.SetActive(false);
         }
     }
+
+    public int GetFloorsCount() { return m_floorsCount; }
 }

@@ -19,6 +19,8 @@ public class PlayerCollisionDetection : MonoBehaviour {
             if (playerController.GetMotoActive()) {
                 playerController.MotorbikeCrashed();
             } else {
+                //col.gameObject.GetComponent<Collider>().enabled = false;
+                ModuleManager.Instance.SetCollisionObject(col.gameObject);
                 playerController.OnPlayerColliderHit(col.collider);
             }
         }
@@ -26,6 +28,10 @@ public class PlayerCollisionDetection : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Boss"))
+        {
+            GameManager.Instance.GameOver();
+        }
         if (other.gameObject.CompareTag("Player"))
         {
             return;
@@ -34,6 +40,7 @@ public class PlayerCollisionDetection : MonoBehaviour {
         {
             GameManager.Instance.AddCoin();
             other.gameObject.SetActive(false);
+            SfxMusicManager.Instance.PlaySfxMusic("CoinSfx");
             return;
         }
         else if (other.gameObject.CompareTag("PowerUp"))
@@ -55,9 +62,12 @@ public class PlayerCollisionDetection : MonoBehaviour {
         }
         else if(other.gameObject.CompareTag("Enemy"))
         {
-            Enemy = other.gameObject.GetComponentInChildren<Animator>();
-            Enemy.Play("Die");
-            other.gameObject.GetComponent<EnemyAbstract>().Invoke("Die",2f);
+            Debug.Log("COLISIOOONA " + other.gameObject);
+            other.gameObject.GetComponent<EnemyAbstract>().Die();
+        }
+        else if (other.gameObject.CompareTag("Tutorial"))
+        {
+            //if(other.gameObject.GetComponent<TutorialSlashEnemy>() != null) UIManager.Instance.SlashTutorial();
         }
         else if (!playerController.GetInvulneravility())
         {

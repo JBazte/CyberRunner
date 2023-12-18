@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_powerUpEffect: {fileID: 0}
+  m_meshFilter: {fileID: 2286983335704024208}
 --- !u!95 &2560811933780049098
 Animator:
   serializedVersion: 5

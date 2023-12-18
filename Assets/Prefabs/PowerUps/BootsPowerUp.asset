@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: BootsPowerUp
   m_EditorClassIdentifier: 
   m_duration: 10
+  m_mesh: {fileID: 4300000, guid: 573c85288e966254ca301a24b2f82e52, type: 3}
   m_jumpIncrease: 13

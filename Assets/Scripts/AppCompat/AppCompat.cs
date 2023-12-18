@@ -12,21 +12,23 @@ public class AppPlayerPrefKeys
 public class AppPaths
 {
     public static readonly String PERSISTENT_DATA = Application.persistentDataPath;
-    public static readonly String PATH_RESOURCE_SFX = "Music/MenuSfx/";
-    public static readonly String PATH_RESOURCE_MUSIC = "Music/MenuBackground/";
+    public static readonly String PATH_RESOURCE_SFX = "Music/Sfx/";
+    public static readonly String PATH_RESOURCE_MUSIC = "Music/Background/";
 
     public static readonly String MOTORBIKE_MODEL_1 = "Assets/Resources/SM_Veh_Car_Sports_01.mesh";
 }
 
-public class AppPlayePrefs
+public class AppPlayerPrefs
 {
-    public static readonly String BOOTS_TIER      = "BootsTier";
-    public static readonly String MOTORBIKE_TIER  = "MotorbikeTier";
-    public static readonly String DRON_TIER       = "DronTier";
-    public static readonly String WALLS_TIER      = "WallsTier";
-    public static readonly String HYPERSPEED_TIER = "HyperspeedTier";
+    public static readonly String TutorialCompleted = "TutorialCompleted";
 
-    public static readonly String PLAYER_COINS    = "PlayerCoins";
+    public static readonly String BOOTS_TIER        = "BootsTier";
+    public static readonly String MOTORBIKE_TIER    = "MotorbikeTier";
+    public static readonly String DRON_TIER         = "DronTier";
+    public static readonly String WALLS_TIER        = "WallsTier";
+    public static readonly String HYPERSPEED_TIER   = "HyperspeedTier";
+                                                    
+    public static readonly String PLAYER_COINS      = "PlayerCoins";
 }
 
 public class AppSounds

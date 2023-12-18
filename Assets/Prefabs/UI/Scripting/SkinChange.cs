@@ -24,7 +24,7 @@ public class SkinChange : MonoBehaviour
     // Método para cambiar el modelo del jugador
     public void CambiarModelo(ClickEvent evt)
     {
-        Debug.Log("AAAAAAAAAAAAAAAAAAA");
+        Debug.Log(currentAvatar.avatar);
         if (characterModels[0].activeSelf)
         {
             currentAvatar.avatar = characterAvatar[0];
