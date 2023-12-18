@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class GameManager : TemporalSingleton<GameManager> {
     [SerializeField]
@@ -29,6 +30,7 @@ public class GameManager : TemporalSingleton<GameManager> {
     private UIDocument m_UIInGame;
     [SerializeField]
     private UIDocument m_UIOnShop;
+    private int target;
 
     // Start is called before the first frame update
     void Start() {
@@ -43,15 +45,26 @@ public class GameManager : TemporalSingleton<GameManager> {
         BackgroundMusicManager.Instance.PlayBackgroundMusic("InGameMusic");
     }
 
+    private void Awake()
+    {
+        base.Awake();
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = target;
+    }
+
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
+        if (Application.targetFrameRate != target)
+            Application.targetFrameRate = target;
+
         //e = v * t
         m_metersTraveled += (m_timer + Time.deltaTime) * SpeedManager.Instance.GetRunSpeed();
 
         // (s * m/s = m in one frame) * combo player has in that frame = score acumulated in the frame
         if (m_runActive)
         {
-            m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo()*20;
+            m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo();
             BackgroundMusicManager.Instance.MusicVolume += 0.4f;
         }
         else BackgroundMusicManager.Instance.MusicVolume = 0.5f;
