@@ -21,8 +21,13 @@ public class BossBehaviour : MonoBehaviour
     {
         Boss = gameObject.GetComponent<Animator>();
         Boss.Play("Idle");
+        
+    }
+
+    void OnEnable()
+    {
         Debug.Log("BOOOOOSSS" + Boss);
-        m_hasAttacked = false;
+        m_hasAttacked = false;    
     }
 
     // Update is called once per frame
@@ -54,7 +59,7 @@ public class BossBehaviour : MonoBehaviour
         {
             Boss.Play("Attack1");
         }
-        else if (randTent == 4 || randTent == 5)
+        else if (randTent == 4 || randTent == 5 || randTent == 3)
         {
             Boss.Play("Attack2");
         }
