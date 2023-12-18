@@ -13,10 +13,14 @@ public class UIManager : TemporalSingleton<UIManager>
     [SerializeField]
     UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc, cosmeticsDoc, tutorialDoc;
 
-    Button btn_play, btnShop, btnResume, btnPause, btnCloseShop, btnCloseCosmetics, btnTap, btnLeaderBoard, btnItems, btnCosmetics;
+    Button btnPlay, btnShop, btnResume, btnPause, btnCloseShop, btnCloseCosmetics, btnTap, btnLboard, btnItems, btnCosmetics, btnTShop, btnTLboard;
     Button m_motoShopBtn, m_bootsShopBtn, m_hyperspeedShopBtn, m_wallsShopBtn, m_droneShopBtn;
 
-    Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel, tutorialLabel;
+    ProgressBar m_motoBar, m_botasBar, m_hyperspeedBar, m_wallsBar, m_droneBar;
+
+    int lvl_moto = 1, lvl_botas = 1, lvl_hypspeed = 1, lvl_walls = 1, lvl_drone = 1;
+
+    Label scoreLabel, finalScoreLabel, coinsLabel, comboLabel, moneyLabel, tutorialLabel;
 
     VisualElement tutorialImage;
 
@@ -27,8 +31,14 @@ public class UIManager : TemporalSingleton<UIManager>
         btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
         btnTap.RegisterCallback<ClickEvent>(ToGame);
 
-        btn_play = gameOverDoc.rootVisualElement.Q("RetryButton") as Button;
-        btn_play.RegisterCallback<ClickEvent>(ToTap);
+        btnTShop = tapDoc.rootVisualElement.Q("ShopButton") as Button;
+        btnTShop.RegisterCallback<ClickEvent>(ToShop);
+
+        btnTLboard = tapDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+        btnTLboard.RegisterCallback<ClickEvent>(ToLeaderboard);
+
+        btnPlay = gameOverDoc.rootVisualElement.Q("RetryButton") as Button;
+        btnPlay.RegisterCallback<ClickEvent>(ToTap);
 
         btnShop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
         btnShop.RegisterCallback<ClickEvent>(ToShop);
@@ -41,36 +51,49 @@ public class UIManager : TemporalSingleton<UIManager>
 
         btnCloseShop = shopDoc.rootVisualElement.Q("CloseButton") as Button;
         btnCloseShop.RegisterCallback<ClickEvent>(OnClose);
-        
+
         btnCloseCosmetics = cosmeticsDoc.rootVisualElement.Q("CloseButton") as Button;
         btnCloseCosmetics.RegisterCallback<ClickEvent>(OnClose);
 
         btnCosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
         btnCosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
 
-        btnLeaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
-        btnLeaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
+        btnLboard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+        btnLboard.RegisterCallback<ClickEvent>(ToLeaderboard);
 
         btnItems = cosmeticsDoc.rootVisualElement.Q("ItemsButton") as Button;
         btnItems.RegisterCallback<ClickEvent>(ToShop);
 
 
-        m_motoShopBtn       = shopDoc.rootVisualElement.Q("MotoShopButton") as Button;
+        m_motoShopBtn = shopDoc.rootVisualElement.Q("MotoShopButton") as Button;
         m_motoShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.MOTORBIKE));
-        m_bootsShopBtn      = shopDoc.rootVisualElement.Q("BootsShopButton") as Button;
+        m_bootsShopBtn = shopDoc.rootVisualElement.Q("BootsShopButton") as Button;
         m_bootsShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.BOOTS));
         m_hyperspeedShopBtn = shopDoc.rootVisualElement.Q("HyperspeedShopButton") as Button;
         m_hyperspeedShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.HYPERSPEED));
-        m_wallsShopBtn      = shopDoc.rootVisualElement.Q("WallsShopButton") as Button;
+        m_wallsShopBtn = shopDoc.rootVisualElement.Q("WallsShopButton") as Button;
         m_wallsShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.WALLS));
-        m_droneShopBtn      = shopDoc.rootVisualElement.Q("DroneShopButton") as Button;
+        m_droneShopBtn = shopDoc.rootVisualElement.Q("DroneShopButton") as Button;
         m_droneShopBtn.RegisterCallback<ClickEvent>(evt => UpgradePowerUp(evt, PowerUpsEnum.DRON));
+
+        m_motoShopBtn.text = "Upgrade to tier  " + PlayerPrefs.GetInt(AppPlayerPrefs.MOTORBIKE_TIER);
+        m_bootsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayerPrefs.BOOTS_TIER);
+        m_hyperspeedShopBtn.text = "Upgrade to  tier " + PlayerPrefs.GetInt(AppPlayerPrefs.HYPERSPEED_TIER);
+        m_wallsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayerPrefs.WALLS_TIER);
+        m_droneShopBtn.text = "Upgrade to tier " + PlayerPrefs.GetInt(AppPlayerPrefs.DRON_TIER);
+
+        m_motoBar = shopDoc.rootVisualElement.Q("MotoBar") as ProgressBar;
+        m_botasBar = shopDoc.rootVisualElement.Q("BotasBar") as ProgressBar;
+        m_hyperspeedBar = shopDoc.rootVisualElement.Q("CargaBar") as ProgressBar;
+        m_wallsBar = shopDoc.rootVisualElement.Q("ParedesBar") as ProgressBar;
+        m_droneBar = shopDoc.rootVisualElement.Q("DroneBar") as ProgressBar;
 
 
         scoreLabel = inGameDoc.rootVisualElement.Q("ScoreLab") as Label;
         coinsLabel = inGameDoc.rootVisualElement.Q("CoinsLab") as Label;
         finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
         comboLabel = inGameDoc.rootVisualElement.Q("ComboLab") as Label;
+        moneyLabel = shopDoc.rootVisualElement.Q("CoinsDisplayLabel") as Label;
         tutorialLabel = tutorialDoc.rootVisualElement.Q("Tutorial_label") as Label;
 
         tutorialImage = tutorialDoc.rootVisualElement.Q("Tut_img_label") as Image;
@@ -78,16 +101,17 @@ public class UIManager : TemporalSingleton<UIManager>
 
     private void UpgradePowerUp(ClickEvent evt, PowerUpsEnum powerUp)
     {
-        switch(powerUp)
+        switch (powerUp)
         {
             case PowerUpsEnum.BOOTS:
-                switch(PlayerPrefs.GetInt(AppPlayerPrefs.BOOTS_TIER))
+                switch (PlayerPrefs.GetInt(AppPlayerPrefs.BOOTS_TIER))
                 {
                     case 1:
-                        if(GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
+                        if (GameManager.Instance.GetPlayerAccountCoins() >= (int)PowerUpsTierUpCosts.TO_LVL_2)
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.BOOTS_TIER, 2);
-                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins()-(int)PowerUpsTierUpCosts.TO_LVL_2);
+                            PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                            lvl_botas = 2;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -96,6 +120,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.BOOTS_TIER, 3);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                            lvl_botas = 3;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -104,6 +129,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.BOOTS_TIER, 4);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                            lvl_botas = 4;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -112,6 +138,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.BOOTS_TIER, 5);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                            lvl_botas = 5;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -131,6 +158,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 2);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                            lvl_drone = 2;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -139,6 +167,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 3);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                            lvl_drone = 3;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -147,6 +176,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 4);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                            lvl_drone = 4;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -155,6 +185,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 5);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                            lvl_drone = 5;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -174,6 +205,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.WALLS_TIER, 2);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                            lvl_walls = 2;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -182,6 +214,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.WALLS_TIER, 3);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                            lvl_walls = 3;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -190,6 +223,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.WALLS_TIER, 4);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                            lvl_walls = 4;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -198,6 +232,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.WALLS_TIER, 5);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                            lvl_walls = 5;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -217,6 +252,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.HYPERSPEED_TIER, 2);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                            lvl_hypspeed = 2;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -225,6 +261,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.HYPERSPEED_TIER, 3);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                            lvl_hypspeed = 3;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -233,6 +270,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.HYPERSPEED_TIER, 4);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                            lvl_hypspeed = 4;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -241,6 +279,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.DRON_TIER, 5);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                            lvl_hypspeed = 5;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -260,6 +299,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.MOTORBIKE_TIER, 2);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_2);
+                            lvl_moto = 2;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -268,6 +308,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.MOTORBIKE_TIER, 3);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_3);
+                            lvl_moto = 3;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -276,6 +317,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.MOTORBIKE_TIER, 4);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_4);
+                            lvl_moto = 4;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -284,6 +326,7 @@ public class UIManager : TemporalSingleton<UIManager>
                         {
                             PlayerPrefs.SetInt(AppPlayerPrefs.MOTORBIKE_TIER, 5);
                             PlayerPrefs.SetInt(AppPlayerPrefs.PLAYER_COINS, GameManager.Instance.GetPlayerAccountCoins() - (int)PowerUpsTierUpCosts.TO_LVL_5);
+                            lvl_moto = 5;
                         }
                         else Debug.Log("Not enough coins to level up");
                         break;
@@ -299,6 +342,12 @@ public class UIManager : TemporalSingleton<UIManager>
                 Debug.Log("INVALID POWER-UP ERROR");
                 break;
         }
+
+        m_motoShopBtn.text = "Upgrade to tier  " + PlayerPrefs.GetInt(AppPlayerPrefs.MOTORBIKE_TIER);
+        m_bootsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayerPrefs.BOOTS_TIER);
+        m_hyperspeedShopBtn.text = "Upgrade to  tier " + PlayerPrefs.GetInt(AppPlayerPrefs.HYPERSPEED_TIER);
+        m_wallsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayerPrefs.WALLS_TIER);
+        m_droneShopBtn.text = "Upgrade to tier " + PlayerPrefs.GetInt(AppPlayerPrefs.DRON_TIER);
     }
 
     public void ToGame(ClickEvent evt)
@@ -314,7 +363,14 @@ public class UIManager : TemporalSingleton<UIManager>
         RestartUI(1);
     }
 
-    public void ToTap(ClickEvent evt) {
+    public void Login()
+    {
+        tapDoc.enabled = true;
+        
+    }
+
+    public void ToTap(ClickEvent evt)
+    {
         //AQUI TIENE QUE IR EL RESTART
         gameOverDoc.enabled = false;
         tapDoc.enabled = true;
@@ -360,15 +416,18 @@ public class UIManager : TemporalSingleton<UIManager>
         btn_resume.RegisterCallback<ClickEvent>(ToResume);*/
         RestartUI(4);
     }
-    
+
     public void OnClose(ClickEvent evt)
     {
-        if(shopDoc.enabled == true)
+        if (shopDoc.enabled == true)
         {
             shopDoc.enabled = false;
-        }else if(cosmeticsDoc.enabled == true){
+        }
+        else if (cosmeticsDoc.enabled == true)
+        {
             cosmeticsDoc.enabled = false;
         }
+        if(tapDoc.enabled == false) tapDoc.enabled = true;
     }
 
     public void ToGameOver()
@@ -393,21 +452,32 @@ public class UIManager : TemporalSingleton<UIManager>
 
     public void ToLeaderboard(ClickEvent evt)
     {
-        gameOverDoc.enabled = false;
-        //GameManager.Instance.OpenLeaderboard();
+        if (gameOverDoc.enabled == true)
+        {
+            gameOverDoc.enabled = false;
+        }
+        else if (tapDoc.enabled == true)
+        {
+            tapDoc.enabled = false;
+        }
+
+
         playFabManager.GetLeaderboardEntriesAroundPlayer();
     }
 
     public void OutLeaderboard()
     {
         playFabManager.CloseLeaderboardPanel();
-        ToGameOver();
+        tapDoc.enabled = true;
+        RestartUI(2);
     }
 
     public void ToCosmetics(ClickEvent evt)
     {
+        Debug.Log("EEEEEEEE");
         shopDoc.enabled = false;
         cosmeticsDoc.enabled = true;
+        tapDoc.enabled = false;
         RestartUI(6);
     }
 
@@ -469,6 +539,12 @@ public class UIManager : TemporalSingleton<UIManager>
             case 2:
                 btnTap = tapDoc.rootVisualElement.Q("TapButton") as Button;
                 btnTap.RegisterCallback<ClickEvent>(ToGame);
+
+                btnTShop = tapDoc.rootVisualElement.Q("ShopButton") as Button;
+                btnTShop.RegisterCallback<ClickEvent>(ToShop);
+
+                btnTLboard = tapDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+                btnTLboard.RegisterCallback<ClickEvent>(ToLeaderboard);
                 break;
 
             case 3:
@@ -477,6 +553,26 @@ public class UIManager : TemporalSingleton<UIManager>
 
                 btnCosmetics = shopDoc.rootVisualElement.Q("CostemticsButton") as Button;
                 btnCosmetics.RegisterCallback<ClickEvent>(ToCosmetics);
+
+                m_motoBar = shopDoc.rootVisualElement.Q("MotoBar") as ProgressBar;
+                m_botasBar = shopDoc.rootVisualElement.Q("BotasBar") as ProgressBar;
+                m_hyperspeedBar = shopDoc.rootVisualElement.Q("CargaBar") as ProgressBar;
+                m_wallsBar = shopDoc.rootVisualElement.Q("ParedesBar") as ProgressBar;
+                m_droneBar = shopDoc.rootVisualElement.Q("DroneBar") as ProgressBar;
+
+                m_motoBar.value = lvl_moto;
+                m_botasBar.value = lvl_botas;
+                m_hyperspeedBar.value = lvl_hypspeed;
+                m_wallsBar.value = lvl_walls;
+                m_droneBar.value = lvl_drone;
+
+                moneyLabel = shopDoc.rootVisualElement.Q("CoinsDisplayLabel") as Label;
+
+                m_motoShopBtn.text = "Upgrade to tier  " + PlayerPrefs.GetInt(AppPlayerPrefs.MOTORBIKE_TIER);
+                m_bootsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayerPrefs.BOOTS_TIER);
+                m_hyperspeedShopBtn.text = "Upgrade to  tier " + PlayerPrefs.GetInt(AppPlayerPrefs.HYPERSPEED_TIER);
+                m_wallsShopBtn.text = "Upgrade to tier" + PlayerPrefs.GetInt(AppPlayerPrefs.WALLS_TIER);
+                m_droneShopBtn.text = "Upgrade to tier " + PlayerPrefs.GetInt(AppPlayerPrefs.DRON_TIER);
                 break;
 
             case 4:
@@ -485,14 +581,14 @@ public class UIManager : TemporalSingleton<UIManager>
                 break;
 
             case 5:
-                btn_play = gameOverDoc.rootVisualElement.Q("RetryButton") as Button;
-                btn_play.RegisterCallback<ClickEvent>(ToTap);
+                btnPlay = gameOverDoc.rootVisualElement.Q("RetryButton") as Button;
+                btnPlay.RegisterCallback<ClickEvent>(ToTap);
 
                 btnShop = gameOverDoc.rootVisualElement.Q("ShopButton") as Button;
                 btnShop.RegisterCallback<ClickEvent>(ToShop);
 
-                btnLeaderBoard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
-                btnLeaderBoard.RegisterCallback<ClickEvent>(ToLeaderboard);
+                btnLboard = gameOverDoc.rootVisualElement.Q("LeaderboardButton") as Button;
+                btnLboard.RegisterCallback<ClickEvent>(ToLeaderboard);
 
                 finalScoreLabel = gameOverDoc.rootVisualElement.Q("ScoreLab") as Label;
 
@@ -520,6 +616,7 @@ public class UIManager : TemporalSingleton<UIManager>
     {
         scoreLabel.text = ((int)GameManager.Instance.Score).ToString();
         coinsLabel.text = GameManager.Instance.CoinsObtained.ToString();
-        comboLabel.text = "\nx"+GameManager.Instance.AccumulatedCombo.ToString();
+        comboLabel.text = "\nx" + GameManager.Instance.AccumulatedCombo.ToString();
+        moneyLabel.text = GameManager.Instance.GetPlayerAccountCoins().ToString();
     }
 }

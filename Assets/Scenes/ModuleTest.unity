@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.2242729, g: 0.19521362, b: 0.2546949, a: 1}
+  m_IndirectSpecularColor: {r: 0.32121477, g: 0.10750633, b: 0.2812733, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -242,6 +242,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3617665571789341449, guid: a67e80f2de9a3144cbc0bd0bbfc89b7f, type: 3}
+      propertyPath: m_Name
+      value: DestroyedModel
+      objectReference: {fileID: 0}
     - target: {fileID: 8039245739943830426, guid: a67e80f2de9a3144cbc0bd0bbfc89b7f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -259,6 +263,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7945624144880599854, guid: 0124eb5d9f51dd9479226a2c2b8f967e, type: 3}
   m_PrefabInstance: {fileID: 1920341847}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &136536892 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3617665571789341449, guid: a67e80f2de9a3144cbc0bd0bbfc89b7f, type: 3}
+  m_PrefabInstance: {fileID: 111209172}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &146112319 stripped
 Transform:
@@ -524,6 +533,11 @@ MonoBehaviour:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3374489038161354180, guid: f50438227c69aba478a0c24e007927c9, type: 3}
   m_PrefabInstance: {fileID: 8192124023362233942}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &382583419 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8198371587497010729, guid: a67e80f2de9a3144cbc0bd0bbfc89b7f, type: 3}
+  m_PrefabInstance: {fileID: 111209172}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &408822317
 GameObject:
@@ -3572,6 +3586,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939632338}
   m_CullTransparentMesh: 1
+--- !u!1 &1956464929 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6788440640091265637, guid: a67e80f2de9a3144cbc0bd0bbfc89b7f, type: 3}
+  m_PrefabInstance: {fileID: 111209172}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1977536064 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3369588051002204949, guid: 680978978a9b6854b95b9a498d49aeee, type: 3}
@@ -4970,6 +4989,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2961924149686863119, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: currentAvatar
+      value: 
+      objectReference: {fileID: 382583419}
+    - target: {fileID: 2961924149686863119, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: characterModels.Array.data[0]
+      value: 
+      objectReference: {fileID: 136536892}
+    - target: {fileID: 2961924149686863119, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: characterModels.Array.data[1]
+      value: 
+      objectReference: {fileID: 1956464929}
     - target: {fileID: 4146800685036585317, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
       propertyPath: m_Name
       value: UIManager
@@ -5470,7 +5501,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 4740026186703445141}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
