@@ -56,6 +56,7 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             module.GetComponent<ModuleBehaviour>().InitializeModule();
             module.SetActive(false);
         }
+        m_module0phase2.GetComponent<ModuleBehaviour>().InitializeModule();
         m_module0phase2.SetActive(false);
         foreach (GameObject module in m_bossmodulesPhase2)
         {
@@ -86,7 +87,7 @@ public class ModuleManager : TemporalSingleton<ModuleManager>
             }
         }
 
-        if(m_phaseModulesCompleted == 3)
+        if(m_bossactive && m_phaseModulesCompleted == 3)
         {   
             if(m_bossPhase == 1) // WHEN COMPLETING PHASE 1
             {

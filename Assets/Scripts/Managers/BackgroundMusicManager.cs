@@ -13,7 +13,7 @@ public class BackgroundMusicManager : TemporalSingleton<BackgroundMusicManager>
 
     private AudioSource m_backgroundMusic;
 
-    private void Start()
+    private void Awake()
     {
         m_backgroundMusic = CreteAudioSource("Music", true);
 

@@ -64,7 +64,7 @@ public class GameManager : TemporalSingleton<GameManager> {
         // (s * m/s = m in one frame) * combo player has in that frame = score acumulated in the frame
         if (m_runActive)
         {
-            m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo();
+            m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo() * 10.0f;
             BackgroundMusicManager.Instance.MusicVolume += 0.4f;
         }
         else BackgroundMusicManager.Instance.MusicVolume = 0.5f;
