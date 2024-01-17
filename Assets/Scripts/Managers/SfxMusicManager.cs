@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class SfxMusicManager : TemporalSingleton<SfxMusicManager>
 {
-    public float m_sfxVolume = 0.2f;
+    private float m_sfxVolume = 0.2f;
 
     private Dictionary<string, AudioClip> m_sfxSoundDictionary = null;
 

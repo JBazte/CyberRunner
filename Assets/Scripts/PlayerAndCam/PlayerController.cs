@@ -389,8 +389,8 @@ public class PlayerController : MonoBehaviour {
             // TODO: check animation duration
             slideTimer = 0.8f;
             transitionYPos -= 10f;
-            m_player.center = new Vector3(0, m_colCenterY / 2, 0);
-            m_player.height = m_initHeight / 2f;
+            //m_player.center = new Vector3(0, m_colCenterY / 2, 0);
+            //m_player.height = m_initHeight / 2f;
             m_anim.CrossFadeInFixedTime("sliding", 0.1f);
             isSliding = true;
             isJumping = false;
