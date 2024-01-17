@@ -30,7 +30,7 @@ public class GameManager : TemporalSingleton<GameManager> {
     private UIDocument m_UIInGame;
     [SerializeField]
     private UIDocument m_UIOnShop;
-    private int target;
+    private int target = 60;
 
     // Start is called before the first frame update
     void Start() {
@@ -45,16 +45,14 @@ public class GameManager : TemporalSingleton<GameManager> {
         BackgroundMusicManager.Instance.PlayBackgroundMusic("InGameMusic");
     }
 
-    private void Awake()
-    {
+    private void Awake() {
         base.Awake();
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = target;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if (Application.targetFrameRate != target)
             Application.targetFrameRate = target;
 
@@ -62,18 +60,16 @@ public class GameManager : TemporalSingleton<GameManager> {
         m_metersTraveled += (m_timer + Time.deltaTime) * SpeedManager.Instance.GetRunSpeed();
 
         // (s * m/s = m in one frame) * combo player has in that frame = score acumulated in the frame
-        if (m_runActive)
-        {
+        if (m_runActive) {
             m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo() * 10.0f;
             BackgroundMusicManager.Instance.MusicVolume += 0.4f;
-        }
-        else BackgroundMusicManager.Instance.MusicVolume = 0.5f;
+        } else BackgroundMusicManager.Instance.MusicVolume = 0.5f;
 
 
     }
 
-    public void AddComboPoint() { 
-        
+    public void AddComboPoint() {
+
         AccumulatedCombo++;
         Debug.Log("COMBO: " + AccumulatedCombo);
     }
@@ -130,7 +126,7 @@ public class GameManager : TemporalSingleton<GameManager> {
     public bool GetRunActive() { return m_runActive; }
     public void SetRunActive(bool runSpeed) { m_runActive = runSpeed; }
     public float GetTraveledMeters() { return m_metersTraveled; }
-    public PlayerController GetPlayer() { return m_player; }   
+    public PlayerController GetPlayer() { return m_player; }
     public int GetPlayerAccountCoins() { return PlayerPrefs.GetInt(AppPlayerPrefs.PLAYER_COINS); }
 
     public float Score { get => m_score; set => m_score = value; }
