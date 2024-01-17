@@ -30,7 +30,7 @@ public class GameManager : TemporalSingleton<GameManager> {
     private UIDocument m_UIInGame;
     [SerializeField]
     private UIDocument m_UIOnShop;
-    private int target = 60;
+    private int target = 30;
 
     // Start is called before the first frame update
     void Start() {
