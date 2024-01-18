@@ -56,6 +56,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 469586924855343411}
     m_Modifications:
+    - target: {fileID: 1951846157958934622, guid: af6298509fc118848b5688bb264a4cfc, type: 3}
+      propertyPath: m_Size.x
+      value: 1.0127518
+      objectReference: {fileID: 0}
+    - target: {fileID: 1951846157958934622, guid: af6298509fc118848b5688bb264a4cfc, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0277317
+      objectReference: {fileID: 0}
+    - target: {fileID: 1951846157958934622, guid: af6298509fc118848b5688bb264a4cfc, type: 3}
+      propertyPath: m_Size.z
+      value: 2.2632964
+      objectReference: {fileID: 0}
+    - target: {fileID: 1951846157958934622, guid: af6298509fc118848b5688bb264a4cfc, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0063758893
+      objectReference: {fileID: 0}
+    - target: {fileID: 1951846157958934622, guid: af6298509fc118848b5688bb264a4cfc, type: 3}
+      propertyPath: m_Center.y
+      value: 0.013866024
+      objectReference: {fileID: 0}
+    - target: {fileID: 1951846157958934622, guid: af6298509fc118848b5688bb264a4cfc, type: 3}
+      propertyPath: m_Center.z
+      value: 0.33326548
+      objectReference: {fileID: 0}
     - target: {fileID: 6091568620446896374, guid: af6298509fc118848b5688bb264a4cfc, type: 3}
       propertyPath: m_Name
       value: Window (1)

@@ -26,7 +26,6 @@ public class BossBehaviour : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Log("BOOOOOSSS" + Boss);
         m_hasAttacked = false;    
     }
 

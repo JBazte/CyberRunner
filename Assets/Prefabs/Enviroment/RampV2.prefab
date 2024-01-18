@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 148998604782553718}
   m_Layer: 0
   m_Name: RampV2
-  m_TagString: Obstacle
+  m_TagString: Ramp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,15 +121,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1608841072984860645, guid: 3f8938f4234a9db42a076b2f4aa165d9, type: 3}
       propertyPath: m_Size.y
-      value: 1.005806
+      value: 1.0388315
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608841072984860645, guid: 3f8938f4234a9db42a076b2f4aa165d9, type: 3}
+      propertyPath: m_Size.z
+      value: 30.429981
       objectReference: {fileID: 0}
     - target: {fileID: 1608841072984860645, guid: 3f8938f4234a9db42a076b2f4aa165d9, type: 3}
       propertyPath: m_Center.y
-      value: -0.0029003008
+      value: -0.019412516
       objectReference: {fileID: 0}
     - target: {fileID: 1608841072984860645, guid: 3f8938f4234a9db42a076b2f4aa165d9, type: 3}
       propertyPath: m_Center.z
-      value: -14.361263
+      value: -14.0075445
       objectReference: {fileID: 0}
     - target: {fileID: 4015121228572336427, guid: 3f8938f4234a9db42a076b2f4aa165d9, type: 3}
       propertyPath: m_LocalScale.z
@@ -189,7 +193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8483497259242179080, guid: 3f8938f4234a9db42a076b2f4aa165d9, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Ramp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

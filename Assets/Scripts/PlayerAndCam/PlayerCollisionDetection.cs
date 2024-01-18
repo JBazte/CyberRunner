@@ -57,12 +57,10 @@ public class PlayerCollisionDetection : MonoBehaviour {
                 StartCoroutine(powerUp.StartCountDown());
             }
             other.gameObject.SetActive(false);
-            Debug.Log("COGIDO : " + powerUp);
             return;
         }
         else if(other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("COLISIOOONA " + other.gameObject);
             other.gameObject.GetComponent<EnemyAbstract>().Die();
         }
         else if (other.gameObject.CompareTag("Tutorial"))
