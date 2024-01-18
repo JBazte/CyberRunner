@@ -4233,7 +4233,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 4740026186703445141}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
@@ -4972,6 +4972,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1783685454858805645, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1783685454858805645, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: cc0efb8b45032cc44826f082062f8578, type: 3}
+    - target: {fileID: 2404578326139840489, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2404578326139840489, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 4f13208e4ee9cfe4295ed2bac759e372, type: 3}
     - target: {fileID: 2961924149686863119, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
       propertyPath: currentAvatar
       value: 
@@ -4988,10 +5004,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4383204609374988202, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383204609374988202, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: b64f2d9af0e24d64f96146d352c83df2, type: 3}
+    - target: {fileID: 5803165819306095252, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5879959561391492014, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
       propertyPath: playFabManager
       value: 
       objectReference: {fileID: 2007789269}
+    - target: {fileID: 6900477664158701961, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7453418370162295368, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.86670697
@@ -5032,6 +5064,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8778633125816724223, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778633125816724223, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 7b0f9a485a92f0447866b32b86d01796, type: 3}
+    - target: {fileID: 8785005889897377424, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785005889897377424, guid: 167c6722f1b08e949a3efa2acecfe5e8, type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: dbad8cc3c2d1e034c82b47a2e7056fb3, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
