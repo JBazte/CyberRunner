@@ -6,7 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
-public class GameManager : TemporalSingleton<GameManager> {
+public class GameManager : TemporalSingleton<GameManager>
+{
     [SerializeField]
     private bool m_runActive;
     private float m_timer;
@@ -33,7 +34,8 @@ public class GameManager : TemporalSingleton<GameManager> {
     private int target = 30;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         m_runActive = false;
         m_metersTraveled = 0.0f;
         m_timer = 0.0f;
@@ -45,14 +47,16 @@ public class GameManager : TemporalSingleton<GameManager> {
         BackgroundMusicManager.Instance.PlayBackgroundMusic("InGameMusic");
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         base.Awake();
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = target;
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         if (Application.targetFrameRate != target)
             Application.targetFrameRate = target;
 
@@ -60,15 +64,18 @@ public class GameManager : TemporalSingleton<GameManager> {
         m_metersTraveled += (m_timer + Time.deltaTime) * SpeedManager.Instance.GetRunSpeed();
 
         // (s * m/s = m in one frame) * combo player has in that frame = score acumulated in the frame
-        if (m_runActive) {
+        if (m_runActive)
+        {
             m_score += Time.deltaTime * SpeedManager.Instance.GetRunSpeed() * TranslateCombo() * 10.0f;
             BackgroundMusicManager.Instance.MusicVolume += 0.4f;
-        } else BackgroundMusicManager.Instance.MusicVolume = 0.5f;
+        }
+        else BackgroundMusicManager.Instance.MusicVolume = 0.5f;
 
 
     }
 
-    public void AddComboPoint() {
+    public void AddComboPoint()
+    {
 
         AccumulatedCombo++;
         Debug.Log("COMBO: " + AccumulatedCombo);
@@ -82,7 +89,8 @@ public class GameManager : TemporalSingleton<GameManager> {
         return 1 + AccumulatedCombo / 10;
     }
 
-    public void StartRun() {
+    public void StartRun()
+    {
         m_runActive = true;
         SpeedManager.Instance.SetRunSpeed(m_initialRunSpeed);
         SpeedManager.Instance.SetAcceleration(m_initialAcceleration);
@@ -97,7 +105,8 @@ public class GameManager : TemporalSingleton<GameManager> {
         m_player.PlayAnimation("run");
     }
 
-    public void PauseRun() {
+    public void PauseRun()
+    {
         m_auxRunSpeed = SpeedManager.Instance.GetRunSpeed();
         SpeedManager.Instance.SetRunSpeed(0.0f);
         m_runActive = false;
@@ -106,14 +115,16 @@ public class GameManager : TemporalSingleton<GameManager> {
         m_player.SetIsInputEnabled(false);
     }
 
-    public void Resume() {
+    public void Resume()
+    {
         SpeedManager.Instance.SetRunSpeed(m_auxRunSpeed);
         m_runActive = true;
         //m_UIOnPause.enabled = false;
         //m_UIInGame.enabled = true;
         m_player.SetIsInputEnabled(true);
     }
-    public void GameOver() {
+    public void GameOver()
+    {
         m_auxRunSpeed = SpeedManager.Instance.GetRunSpeed();
         SpeedManager.Instance.SetRunSpeed(0.0f);
         //m_UIInGame.enabled = false;
