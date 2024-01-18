@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 148998604782553718}
+  - component: {fileID: 1281898076208417608}
   m_Layer: 0
   m_Name: RampV2
   m_TagString: Ramp
@@ -33,6 +34,27 @@ Transform:
   - {fileID: 1968320585030497070}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1281898076208417608
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8616160575439752877}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.13418898, y: 0.045021296, z: 0.04335618}
+  m_Center: {x: 0.00010578334, y: -0.62879145, z: 1.6793686}
 --- !u!1001 &2079071320555492549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -193,7 +215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8483497259242179080, guid: 3f8938f4234a9db42a076b2f4aa165d9, type: 3}
       propertyPath: m_TagString
-      value: Ramp
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

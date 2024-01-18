@@ -31,20 +31,18 @@ public class MotorbikeObject : MonoBehaviour {
     }
 
     public void ActivateMotorbike() {
-        m_playerScript.SetMotoActive(true);
         PlayerPrefs.SetInt("MotorbikeCharges", PlayerPrefs.GetInt("MotorbikeCharges") - 1);
         Debug.Log(PlayerPrefs.GetInt("MotorbikeCharges"));
     }
 
     public void DeactivateMotorbike() {
         DestroyObstacles(m_player.transform.position, 30.0f);
-        m_playerScript.SetMotoActive(false);
     }
 
     public void DestroyObstacles(Vector3 center, float radius) {
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
         foreach (var hitCollider in hitColliders) {
-            if (hitCollider.gameObject.CompareTag("Obstacle") || hitCollider.gameObject.CompareTag("Ramp")) {
+            if (hitCollider.gameObject.CompareTag("Obstacle") || hitCollider.gameObject.CompareTag("Ramp") || hitCollider.gameObject.CompareTag("Enemy")) {
                 hitCollider.gameObject.SetActive(false);
             }
         }
@@ -54,6 +52,6 @@ public class MotorbikeObject : MonoBehaviour {
     {
         yield return new WaitForSeconds(m_duration);
         if(m_playerScript.GetMotoActive())
-            DeactivateMotorbike();
+            m_playerScript.MotorbikeCrashed();
     }
 }

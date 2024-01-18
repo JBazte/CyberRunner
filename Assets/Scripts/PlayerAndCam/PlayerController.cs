@@ -347,11 +347,13 @@ public class PlayerController : MonoBehaviour {
         m_motorbike.ActivateMotorbike();
         m_motorbikeModel.SetActive(true);
         m_currentPlayerModel.SetActive(false);
+        m_motorbikeActive = true;
     }
     public void MotorbikeCrashed() {
         m_motorbike.DeactivateMotorbike();
         m_motorbikeModel.SetActive(false);
         m_currentPlayerModel.SetActive(true);
+        m_motorbikeActive = false;
     }
 
     private void ActivateHyperspeed() {
