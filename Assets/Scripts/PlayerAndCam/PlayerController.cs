@@ -45,13 +45,12 @@ public class PlayerController : MonoBehaviour {
     private float m_wallWalkCooldown;
     private bool m_wallOnCooldown = false;
     private RaycastHit m_hitLeft, m_hitRight;
-    private bool m_motorbikeActive = false;
+    public bool m_motorbikeActive = false;
+
     [SerializeField]
-    private MeshFilter m_currentPlayerModel;
+    private GameObject m_currentPlayerModel;
     [SerializeField]
-    private Mesh m_playerModel;
-    [SerializeField]
-    private Mesh m_motorbikeModel;
+    private GameObject m_motorbikeModel;
     private MotorbikeObject m_motorbike;
     private HyperspeedAbility m_hyperspeedAbility;
     private bool m_isOnHyperspeed;
@@ -71,14 +70,11 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake()
     {
-        m_motorbikeModel = Resources.Load<Mesh>(AppPaths.MOTORBIKE_MODEL_1);
-        m_motorbike = new MotorbikeObject(gameObject, m_motorbikeModel);
+        m_motorbike = new MotorbikeObject(gameObject);
         m_hyperspeedAbility = new HyperspeedAbility(gameObject);
     }
 
     void Start() {
-        m_playerModel = gameObject.GetComponent<MeshFilter>().mesh;
-        m_currentPlayerModel = gameObject.GetComponent<MeshFilter>();
         m_player = GetComponent<CharacterController>();
         m_anim = GetComponentInChildren<Animator>();
         cameraController = FindObjectOfType<CameraController>();
@@ -94,7 +90,7 @@ public class PlayerController : MonoBehaviour {
         m_wallWalkCooldown = 1.0f;
         m_isOnTutorial = false;
 
-        m_motorbike = new MotorbikeObject(gameObject, m_motorbikeModel);
+        m_motorbike = new MotorbikeObject(gameObject);
         m_hyperspeedAbility = new HyperspeedAbility(gameObject);
         m_isOnHyperspeed = false;
         PlayAnimation("idle");
@@ -229,6 +225,7 @@ public class PlayerController : MonoBehaviour {
                 {
                     if (Time.time - m_lastClickTime < m_doubleTapTime)// HERE WE CHECK IF ITS A DOUBLE TAP
                     {
+                        ActivateMotorbike();
                         StartCoroutine(m_motorbike.StartCountDown());
                         if (PlayerPrefs.GetInt("MotorbikeCharges") <= 0)//HERE WE CHECK IF MOTORBIKE IS AVAILABLE TO USE IT
                         {
@@ -345,12 +342,20 @@ public class PlayerController : MonoBehaviour {
         m_hyperspeedAbility.setMetersDuration(PowerUpManager.Instance.GetHyperspeedPowerUp().GetHyperspeedMetersDuration());
         m_motorbike.SetDuration(PowerUpManager.Instance.GetMotorbikePowerUp().GetMotorbikeDuration());
     }
+
     private void ActivateMotorbike() {
         m_motorbike.ActivateMotorbike();
+        m_motorbikeModel.SetActive(true);
+        m_currentPlayerModel.SetActive(false);
+        m_motorbikeActive = true;
     }
     public void MotorbikeCrashed() {
         m_motorbike.DeactivateMotorbike();
+        m_motorbikeModel.SetActive(false);
+        m_currentPlayerModel.SetActive(true);
+        m_motorbikeActive = false;
     }
+
     private void ActivateHyperspeed() {
         m_hyperspeedAbility.ActivateHyperspeed();
     }
@@ -389,8 +394,8 @@ public class PlayerController : MonoBehaviour {
             // TODO: check animation duration
             slideTimer = 0.8f;
             transitionYPos -= 10f;
-            m_player.center = new Vector3(0, m_colCenterY / 2, 0);
-            m_player.height = m_initHeight / 2f;
+            //m_player.center = new Vector3(0, m_colCenterY / 2, 0);
+            //m_player.height = m_initHeight / 2f;
             m_anim.CrossFadeInFixedTime("sliding", 0.1f);
             isSliding = true;
             isJumping = false;
@@ -518,8 +523,6 @@ public class PlayerController : MonoBehaviour {
     public bool GetMotoActive() { return m_motorbikeActive; }
     public void SetMotoActive(bool Activate) { m_motorbikeActive = Activate; }
     public MotorbikeObject GetMotorbike() { return m_motorbike; }
-    public void SetMesh(Mesh mesh) { m_currentPlayerModel.mesh = mesh; }
-    public Mesh GetPlayerMesh() { return m_playerModel; }
     public void SetInvulneravility(bool invulnerability) { m_invulnerability = invulnerability; }
     public bool GetInvulneravility() { return m_invulnerability; }
     public void SetIsOnHyperspeed(bool isOnHS) { m_isOnHyperspeed = isOnHS; }

@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class BackgroundMusicManager : TemporalSingleton<BackgroundMusicManager>
 {
-    public float m_musicVolume = 0.5f;
+    private float m_musicVolume = 0.5f;
 
     private Dictionary<string, AudioClip> m_musicSoundDictionary = null;
 

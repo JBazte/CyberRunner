@@ -3,36 +3,56 @@ using UnityEngine.UIElements;
 
 public class SkinChange : MonoBehaviour
 {
-    // Prefab del nuevo modelo que se asigna por serialización
     [SerializeField]
-    private GameObject[] characterModels;
+    private GameObject defaultSkin;
     [SerializeField]
-    private Avatar[] characterAvatar;
+    private Avatar     defaultAvatar;
+
     [SerializeField]
-    private Animator currentAvatar;
+    private GameObject destroyedSkin;
+    [SerializeField]
+    private Avatar     destroyedAvatar;
+
+
+    [SerializeField]
+    private Animator   currentAvatar;
+    private GameObject currentSkin;
 
     UIDocument cosmeticsDoc;
-    Button new_skin_btn;
+    Button     default_skin_btn;
+    Button     destroyed_skin_btn;
 
     private void OnEnable()
     {
-        cosmeticsDoc = GetComponent<UIDocument>();   
-        new_skin_btn = cosmeticsDoc.rootVisualElement.Q("Skin_button") as Button;
-        new_skin_btn.RegisterCallback<ClickEvent>(CambiarModelo);
+        cosmeticsDoc = GetComponent<UIDocument>();
+        RootElements();
     }
 
-    // Método para cambiar el modelo del jugador
-    public void CambiarModelo(ClickEvent evt)
+    public void RootElements()
     {
-        Debug.Log(currentAvatar.avatar);
-        if (characterModels[0].activeSelf)
-        {
-            currentAvatar.avatar = characterAvatar[0];
-        } else {
-            currentAvatar.avatar = characterAvatar[1];
-        }
-        characterModels[0].SetActive(!characterModels[0].activeSelf);
-        characterModels[1].SetActive(!characterModels[1].activeSelf);
+        default_skin_btn = cosmeticsDoc.rootVisualElement.Q("Default_skin_button") as Button;
+        default_skin_btn.RegisterCallback<ClickEvent>(evt => ChangeSkin(evt, defaultSkin, defaultAvatar));
+        destroyed_skin_btn = cosmeticsDoc.rootVisualElement.Q("Destroyed_skin_button") as Button;
+        destroyed_skin_btn.RegisterCallback<ClickEvent>(evt => ChangeSkin(evt, destroyedSkin, destroyedAvatar));
     }
-    
+
+    private void Start()
+    {
+        if(!defaultSkin.activeSelf) defaultSkin.SetActive(true);
+        destroyedSkin.SetActive(false);
+        // It should get the skin that the player has last used
+        currentSkin = defaultSkin;
+    }
+
+    public void ChangeSkin(ClickEvent evt, GameObject modelToChange, Avatar avatarToChange)
+    {
+        currentAvatar.avatar = avatarToChange;
+
+        if(!modelToChange.activeSelf)
+        {
+            modelToChange.SetActive(true);
+            currentSkin.SetActive(false);
+            currentSkin = modelToChange;
+        }
+    }
 }

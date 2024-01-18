@@ -17,7 +17,6 @@ public class PowerUp : MonoBehaviour
     {
         m_powerUpEffect   = powerUpEffect;
         m_meshFilter.mesh = powerUpMesh;
-        Debug.Log("MEEEEEEESHHH" + powerUpMesh);
     }
 
     public PowerUpEffect GetPowerUpEffect() { return m_powerUpEffect; }

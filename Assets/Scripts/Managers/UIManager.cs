@@ -12,7 +12,9 @@ public class UIManager : TemporalSingleton<UIManager>
     UIDocument tapDoc, inGameDoc, pauseDoc, gameOverDoc, shopDoc, cosmeticsDoc, tutorialDoc;
 
     Button btnPlay, btnShop, btnResume, btnPause, btnCloseShop, btnCloseCosmetics, btnTap, btnLboard, btnItems, btnCosmetics, btnTShop, btnTLboard;
-    Button m_motoShopBtn, m_bootsShopBtn, m_hyperspeedShopBtn, m_wallsShopBtn, m_droneShopBtn;
+    Button m_motoShopBtn, m_bootsShopBtn, m_hyperspeedShopBtn, m_wallsShopBtn, m_droneShopBtn, default_skin_btn, destroyed_skin_btn;
+
+    public SkinChange m_skinChangeFunction;
 
     ProgressBar m_motoBar, m_botasBar, m_hyperspeedBar, m_wallsBar, m_droneBar;
 
@@ -110,6 +112,15 @@ public class UIManager : TemporalSingleton<UIManager>
         tutorialLabel = tutorialDoc.rootVisualElement.Q("Tutorial_label") as Label;
 
         tutorialImage = tutorialDoc.rootVisualElement.Q("Tut_img_label") as Image;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        scoreLabel.text = ((int)GameManager.Instance.Score).ToString();
+        coinsLabel.text = GameManager.Instance.CoinsObtained.ToString();
+        comboLabel.text = "\nx" + GameManager.Instance.AccumulatedCombo.ToString();
+        moneyLabel.text = GameManager.Instance.GetPlayerAccountCoins().ToString();
     }
 
     private void UpgradePowerUp(ClickEvent evt, PowerUpsEnum powerUp)
@@ -618,20 +629,8 @@ public class UIManager : TemporalSingleton<UIManager>
                 btnItems.RegisterCallback<ClickEvent>(ToShop);
                 btnCloseCosmetics = cosmeticsDoc.rootVisualElement.Q("CloseButton") as Button;
                 btnCloseCosmetics.RegisterCallback<ClickEvent>(OnClose);
+                m_skinChangeFunction.RootElements();
                 break;
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        scoreLabel.text = ((int)GameManager.Instance.Score).ToString();
-        coinsLabel.text = GameManager.Instance.CoinsObtained.ToString();
-        comboLabel.text = "\nx" + GameManager.Instance.AccumulatedCombo.ToString();
-        moneyLabel.text = GameManager.Instance.GetPlayerAccountCoins().ToString();
     }
 }

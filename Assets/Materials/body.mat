@@ -15,7 +15,8 @@ Material:
   - _HALFTONESHAPE_DOT
   - _OUTLINE
   - _TOON_SHADING_ON
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _STEPVIARAMPTEXTURE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
