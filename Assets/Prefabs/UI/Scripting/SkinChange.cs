@@ -46,9 +46,6 @@ public class SkinChange : MonoBehaviour
 
     public void ChangeSkin(ClickEvent evt, GameObject modelToChange, Avatar avatarToChange)
     {
-        Debug.Log("CURRENT SKIN: "  + currentAvatar.avatar);
-        Debug.Log("SELECTED SKIN: " + modelToChange);
-
         currentAvatar.avatar = avatarToChange;
 
         if(!modelToChange.activeSelf)
